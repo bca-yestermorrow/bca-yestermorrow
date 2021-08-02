@@ -1,0 +1,25 @@
+{
+  "name": "bca-yestermorrow",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bca-yestermorrow/bca-yestermorrow.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/bca-yestermorrow/bca-yestermorrow/issues"
+  },
+  "homepage": "https://github.com/bca-yestermorrow/bca-yestermorrow#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "leaflet": "^1.7.1",
+    "mongoose": "^5.13.5"
+  }
+}

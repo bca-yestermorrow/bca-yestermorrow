@@ -20,6 +20,8 @@
   "dependencies": {
     "express": "^4.17.1",
     "leaflet": "^1.7.1",
-    "mongoose": "^5.13.5"
-  }
+    "mongoose": "^5.13.5",
+    "react-leaflet": "^3.2.1"
+  },
+  "devDependencies": {}
 }

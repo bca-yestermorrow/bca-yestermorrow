@@ -20,9 +20,10 @@ const UserSchema = new mongoose.Schema({
   program: {
       type: String
   },
-  // picture: {
-  //   type: Image,
-  // },
+   picture: {
+     data: Buffer,
+     contentType: String
+   },
   location: {
       city: {
           type: String

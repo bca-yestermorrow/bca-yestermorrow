@@ -7,7 +7,7 @@ const Landing = () => {
       <header id="header">YESTERMORROW LANDING PAGE</header>
       <div id="mainLanding">
         <div id="form">
-          <form id="Signup" action="/signup" method="POST">
+          <form id="Signup">
             SIGN UP
             <input type="text" name="email" placeholder="Enter your email..." />
             <input
@@ -23,7 +23,7 @@ const Landing = () => {
             <input type="submit" value="Sign Up" />
           </form>
           <h1 id="or">OR</h1>
-          <form id="Login">
+          <form id="Login" action="/login" method="GET">
             Log In
             <input type="text" name="email" placeholder="Enter your email..." />
             <input

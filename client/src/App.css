@@ -1,38 +1,77 @@
-.App {
+* {
+  margin: 0;
+}
+
+#header {
+  width: 100vw;
+  height: 5vh;
+  text-align: center;
+  padding: 2.5vh;
+  font-size: 5vh;
+  background-color: rgba(0, 0, 0, 0.432);
+}
+
+#mainLanding {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+#form {
+  border: solid black;
+  width: 20vw;
+  margin-top: 10vh;
+  margin-left: 10vw;
+}
+
+#Signup {
+  display: flex;
+  flex-direction: column;
+  width: 15vw;
+  padding-left: 2.5vw;
+  margin-top: 10vh;
+  padding-bottom: 5vh;
+}
+
+#or {
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+#Login {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  width: 15vw;
+  padding-left: 2.5vw;
+  margin-top: 5vh;
 }
 
-.App-link {
-  color: #61dafb;
+#checkItOut {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  border: solid black;
+  width: 45vw;
+  float: right;
+  margin-right: 10vw;
+  margin-top: 10vh;
+  height: 60vh;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+#checkTitle {
+  text-align: center;
+  height: 10vh;
+  width: 45vw;
+}
+
+#map {
+  border: solid black;
+  width: 40vw;
+  height: 40vh;
+  margin-left: 2.5vw;
+}
+
+#other {
+  float: right;
+  border: solid black;
+  width: 15vw;
+  height: 40vh;
 }

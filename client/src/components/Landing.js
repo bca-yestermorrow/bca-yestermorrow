@@ -2,8 +2,47 @@
 import React from "react";
 import "../App.css";
 import yesterLogo from "../assets/Copy of YESTER_logo_No background. Square PNG.png";
+import { useState, useEffect } from "react";
 //landing page function
 const Landing = () => {
+  const [users, setUsers] = useState(null);
+  const [loginUser, setLoginUser] = useState("")
+  const [loginEmail, setLoginEmail] = useState("")
+  const [loginPassword, setLoginPassword] = useState("")
+
+  function handleLogin(evt) {
+    evt.preventDefault()
+    setLoginUser({
+      email: loginEmail,
+      password: loginPassword
+    })
+  }
+
+  function handleEmail(evt) {
+    setLoginEmail(evt.target.value)
+  }
+
+  function handlePassword(evt) {
+    setLoginPassword(evt.target.value)
+  }
+
+  console.log(loginUser)
+
+  useEffect(() => {
+    if (!users) {
+      fetch("/userCollection")
+        .then((res) => res.json())
+        .then((col) => {
+          console.log(col)
+          setUsers(col);
+        });
+    }
+  });
+
+
+  //check user entered login info against database to authenticate
+  
+
   //return holds sign up / log in containers and check this out container
   return (
     <div>
@@ -49,19 +88,23 @@ const Landing = () => {
             {/* between sign up and log in containers */}
             <h1 id="or">OR</h1>
             {/* login form */}
-            <form id="Login">
+            <form id="Login" onSubmit={handleLogin}>
               <h1>Log In</h1>
               <input
                 className="loginForm"
                 type="text"
                 name="email"
                 placeholder="Enter your email..."
+                value={loginEmail}
+                onChange={handleEmail}
               />
               <input
                 className="loginForm"
                 type="text"
                 name="password"
                 placeholder="Enter your password..."
+                value={loginPassword}
+                onChange={handlePassword}
               />
               <input className="loginForm" type="submit" value="Login" />
             </form>

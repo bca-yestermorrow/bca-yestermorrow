@@ -26,15 +26,9 @@ app.post("/signup", async (req, res) => {
   }
 });
 
-app.get("/login", async (req, res) => {
-  console.log("where r we")
-  let currentUser = await User.find({email: req.body.email, password: req.body.password})
-  let array = []
-  await currentUser.forEach((user) => {
-    array.push(user)
-  })
-  console.log(array)
-  console.log("in login")
+app.get("/userCollection", async (req, res) => {
+  let allUsers = await User.find({})
+  res.send(allUsers)
 })
 
 app.listen(port, () => {

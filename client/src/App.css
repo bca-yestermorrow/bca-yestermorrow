@@ -1,5 +1,5 @@
 * {
-  margin: 0
+  margin: 0;
 }
 
 #header {
@@ -7,6 +7,7 @@
   height: 5vh;
   text-align: center;
   padding: 2.5vh;
+  font-size: 5vh;
   background-color: rgba(0, 0, 0, 0.432);
 }
 
@@ -22,11 +23,55 @@
   margin-left: 10vw;
 }
 
-#map {
+#Signup {
+  display: flex;
+  flex-direction: column;
+  width: 15vw;
+  padding-left: 2.5vw;
+  margin-top: 10vh;
+  padding-bottom: 5vh;
+}
+
+#or {
+  text-align: center;
+}
+
+#Login {
+  display: flex;
+  flex-direction: column;
+  width: 15vw;
+  padding-left: 2.5vw;
+  margin-top: 5vh;
+}
+
+#checkItOut {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
   border: solid black;
   width: 45vw;
   float: right;
   margin-right: 10vw;
   margin-top: 10vh;
   height: 60vh;
+}
+
+#checkTitle {
+  text-align: center;
+  height: 10vh;
+  width: 45vw;
+}
+
+#map {
+  border: solid black;
+  width: 40vw;
+  height: 40vh;
+  margin-left: 2.5vw;
+}
+
+#other {
+  float: right;
+  border: solid black;
+  width: 15vw;
+  height: 40vh;
 }

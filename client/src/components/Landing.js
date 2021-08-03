@@ -1,41 +1,49 @@
-import React from 'react'
+import React from "react";
 import "../App.css";
-import Map from './Map' 
-import "leaflet/dist/leaflet.css";
-import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
-
 
 const Landing = () => {
-      
-    return(
+  return (
     <div id="landing">
-            <header id="header">
-                YESTERMORROW
-            </header>
-            <div id="mainLanding">
+      <header id="header">YESTERMORROW LANDING PAGE</header>
+      <div id="mainLanding">
         <div id="form">
+          <form id="Signup" action="/signup" method="POST">
             SIGN UP
-            <form id="Signup">
-                <input type="text" name="email" placeholder="Enter your email..."/>
-                <input type="text" name="password" placeholder="Enter a password..."/>
-                <input type="text" name="confirmPassword" placeholder="Enter your password again..."/>
-                <input type="submit" value="Sign Up"/>
-            </form>
+            <input type="text" name="email" placeholder="Enter your email..." />
+            <input
+              type="text"
+              name="password"
+              placeholder="Enter a password..."
+            />
+            <input
+              type="text"
+              name="confirmPassword"
+              placeholder="Enter your password again..."
+            />
+            <input type="submit" value="Sign Up" />
+          </form>
+          <h1 id="or">OR</h1>
+          <form id="Login">
             Log In
-            <form id="Login">
-                <input type="text" name="email" placeholder="Enter your email..."/>
-                <input type="text" name="password" placeholder="Enter your password..."/>
-                <input type="submit" value="Login"/>
-            </form>
+            <input type="text" name="email" placeholder="Enter your email..." />
+            <input
+              type="text"
+              name="password"
+              placeholder="Enter your password..."
+            />
+            <input type="submit" value="Login" />
+          </form>
         </div>
-        <div id="map">
-            <Map />
+        <div id="checkItOut">
+          <h1 id="checkTitle">CHECK THIS OUT!</h1>
+          <div id="map">
+            ACTUAL MAP
+            <div id="other">OTHER CONTENT</div>
+          </div>
         </div>
-        </div>
+      </div>
     </div>
-     
-        
-    )
-}
+  );
+};
 
-export default Landing 
+export default Landing;

@@ -1,17 +1,11 @@
-import Landing from "./components/Landing"
-import './App.css';
-import Map from "./components/Map";
-
-import "leaflet/dist/leaflet.css";
-
-
+import Landing from "./components/Landing";
+import "./App.css";
 
 function App() {
   return (
     <div>
       <div>
-      <Map />
-      <Landing/>
+        <Landing />
       </div>
     </div>
   );

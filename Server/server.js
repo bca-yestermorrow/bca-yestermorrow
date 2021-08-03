@@ -1,14 +1,11 @@
-require("dotenv").config();
-const mongoose = require("mongoose");
-const express = require("express");
-const port = process.env.PORT || 5000;
-const app = express();
-const staticDir = "./client/public";
-const User = require("./Models/userSchema.js");
-mongoose.connect(
-  `mongodb+srv://YestermorrowAdmin:${process.env.PASS}@cluster0.u2itl.mongodb.net/yestermorrow?retryWrites=true&w=majority`,
-  { useNewUrlParser: true, useUnifiedTopology: true }
-);
+require("dotenv").config()
+const mongoose = require("mongoose")
+const express = require("express")
+const port = process.env.PORT || 5000
+const app = express()
+const staticDir = "./client/public"
+const User = require("./Models/userSchema.js")
+mongoose.connect(`mongodb+srv://YestermorrowAdmin:${process.env.PASS}@cluster0.u2itl.mongodb.net/yestermorrow?retryWrites=true&w=majority`, {useNewUrlParser: true, useUnifiedTopology: true})
 
 app.use(express.static(staticDir));
 app.use(express.urlencoded({ extended: true }));

@@ -21,9 +21,9 @@ const UserSchema = new mongoose.Schema({
   program: {
       type: String
   },
-  picture: {
-    type: Image,
-  },
+  // picture: {
+  //   type: Image,
+  // },
   location: {
       city: {
           type: String

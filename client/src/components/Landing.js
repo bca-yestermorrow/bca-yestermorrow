@@ -2,6 +2,7 @@
 import React from "react";
 import "../App.css";
 import yesterLogo from "../assets/Copy of YESTER_logo_No background. Square PNG.png";
+import Map from "./Map";
 //landing page function
 const Landing = () => {
   //return holds sign up / log in containers and check this out container
@@ -70,7 +71,7 @@ const Landing = () => {
           <div id="checkItOut">
             <h1 id="checkTitle">CHECK THIS OUT!</h1>
             <div id="map">
-              ACTUAL MAP
+              <Map />
               <div id="other">OTHER CONTENT</div>
             </div>
           </div>

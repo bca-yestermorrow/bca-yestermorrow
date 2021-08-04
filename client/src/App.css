@@ -1,5 +1,24 @@
+@import url("https://fonts.googleapis.com/css2?family=Raleway:wght@202&display=swap");
+
 * {
-  margin: 0
+  margin: 0;
+}
+
+#landing {
+  overflow: hidden;
+  z-index: 1;
+}
+
+#background {
+  display: block;
+  position: fixed;
+  background-image: url("./assets/Yestermorrow Map Pinboard.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 100vh;
+  width: 100vw;
+  filter: blur(5px);
+  z-index: -1;
 }
 
 #header {
@@ -7,7 +26,13 @@
   height: 5vh;
   text-align: center;
   padding: 2.5vh;
-  background-color: rgba(0, 0, 0, 0.432);
+  font-size: 5vh;
+}
+
+#yesterLogo {
+  float: left;
+  height: 10vh;
+  width: 8vw;
 }
 
 #mainLanding {
@@ -16,17 +41,87 @@
 }
 
 #form {
-  border: solid black;
   width: 20vw;
-  margin-top: 10vh;
-  margin-left: 10vw;
+  margin-left: 5vw;
+  font-family: "Raleway", sans-serif;
 }
 
-#map {
-  border: solid black;
+#Signup {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 15vw;
+  margin-top: 7.5vh;
+  margin-bottom:5vh ;
+  padding-left: 2.5vw;
+  padding-right: 2.5vw;
+  padding-top: 2.5vh;
+  padding-bottom: 2.5vh;
+  background-color: rgba(147, 149, 152, 0.603);
+  border-radius: 3vh;
+  box-shadow: 1vh 1vh rgba(0, 0, 0, 0.336);
+}
+
+.signForm {
+  margin: 1vh;
+  padding: .5vh;
+}
+
+#or {
+  text-align: center;
+}
+
+#Login {
+  display: flex;
+  flex-direction: column;
+  width: 15vw;
+  padding-left: 2.5vw;
+  padding-right: 2.5vw;
+  padding-top: 2.5vh;
+  padding-bottom: 2.5vh;
+  margin-top: 5vh;
+  margin-bottom: 2vh;
+  background-color: rgba(147, 149, 152, 0.603);
+  border-radius: 3vh;
+  box-shadow: 1vh 1vh rgba(0, 0, 0, 0.336);
+}
+
+.loginForm {
+  margin: 1vh;
+  padding: .5vh;
+}
+
+#checkItOut {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
   width: 45vw;
   float: right;
   margin-right: 10vw;
   margin-top: 10vh;
   height: 60vh;
+}
+
+#checkTitle {
+  text-align: center;
+  height: 10vh;
+  width: 45vw;
+  font-family: "Raleway", sans-serif;
+}
+
+#map {
+  border: solid black;
+  width: 40vw;
+  height: 40vh;
+  margin-left: 2.5vw;
+  background-color: rgba(147, 149, 152, 0.603);
+  border-radius: 3vh;
+  box-shadow: 1vh 1vh rgba(0, 0, 0, 0.336);
+}
+
+#other {
+  float: right;
+  width: 15vw;
+  height: 40vh;
+  border-left: solid black;
 }

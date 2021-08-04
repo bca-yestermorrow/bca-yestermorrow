@@ -10,7 +10,7 @@ mongoose.connect(`mongodb+srv://YestermorrowAdmin:${process.env.PASS}@cluster0.u
 app.use(express.static(staticDir))
 app.use(express.urlencoded({extended: true}))
 
-app.post('/signup', async (req, res) => {
+app.post('/signUp', async (req, res) => {
     
     if (req.body.password === req.body.confirmPassword){
         const user = new User({
@@ -18,7 +18,7 @@ app.post('/signup', async (req, res) => {
         password: req.body.password
     })
     await user.save()
-    res.redirect('/')
+    res.redirect('/home')
     } else {
         // stops user from being sent to the database
         return res.sendStatus(400)

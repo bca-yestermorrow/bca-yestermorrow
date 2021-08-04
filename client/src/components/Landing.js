@@ -1,12 +1,11 @@
 import React from 'react'
 import "../App.css";
 import Map from './Map' 
-import "leaflet/dist/leaflet.css";
-import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+import { useState, useEffect } from 'react';
 
 
 const Landing = () => {
-      
+   
     return(
     <div id="landing">
             <header id="header">

@@ -18,8 +18,10 @@
   },
   "homepage": "https://github.com/bca-yestermorrow/bca-yestermorrow#readme",
   "dependencies": {
+    "dotenv": "^10.0.0",
     "express": "^4.17.1",
     "leaflet": "^1.7.1",
+    "mongodb": "^3.6.10",
     "mongoose": "^5.13.5",
     "react-leaflet": "^3.2.1"
   },

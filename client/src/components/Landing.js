@@ -70,9 +70,10 @@ const Landing = () => {
           {/* check this out container with map and other content */}
           <div id="checkItOut">
             <h1 id="checkTitle">CHECK THIS OUT!</h1>
+            <p id="mapDescription">MAP DESCRIPTION</p>
             <div id="map">
               <Map />
-              <div id="other">OTHER CONTENT</div>
+              {/* <div id="other">OTHER CONTENT</div> */}
             </div>
           </div>
         </div>

@@ -10,6 +10,10 @@ mongoose.connect(`mongodb+srv://YestermorrowAdmin:${process.env.PASS}@cluster0.u
 app.use(express.static(staticDir))
 app.use(express.urlencoded({extended: true}))
 
+app.get('/', (req, res) =>{
+    res.sendFile(__dirname + '../client/public/index.html')
+})
+
 app.post('/signup', async (req, res) => {
     
     if (req.body.password === req.body.confirmPassword){
@@ -39,3 +43,22 @@ mongoose.connection.on("error", err => {
 mongoose.connection.on("connected", (err, res) => {
     console.log("Mongoose is connected")
   })
+
+
+  //For map
+  
+
+app.get('/lat', (req, res) =>{
+    res.sendFile(__dirname + "/client/public/lat.json")
+})
+
+app.get('/lng', (req, res) =>{
+    res.sendFile(__dirname + "/client/public/lng.json")
+})
+
+app.get('/work', (req, res) =>{
+    res.sendFile(__dirname + "/work.json")
+})
+
+
+

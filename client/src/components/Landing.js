@@ -5,6 +5,7 @@ import "../App.css";
 import yesterLogo from "../assets/Copy of YESTER_logo_No background. Square PNG.png";
 import Map from "./Map";
 import SignUp from "./SignUp";
+import Login from "./Login";
 //landing page function
 const Landing = () => {
   const [signUp, setSignUp] = useState(false);
@@ -43,22 +44,7 @@ const Landing = () => {
             {/* between sign up and log in containers */}
             <h1 id="or">OR</h1>
             {/* login form */}
-            <form id="Login">
-              <h1>Log In</h1>
-              <input
-                className="loginForm"
-                type="text"
-                name="email"
-                placeholder="Enter your email..."
-              />
-              <input
-                className="loginForm"
-                type="text"
-                name="password"
-                placeholder="Enter your password..."
-              />
-              <input className="loginForm" type="submit" value="Login" />
-            </form>
+            <Login />
           </div>
           {/* check this out container with map and other content */}
           <div id="checkItOut">

@@ -17,7 +17,7 @@ const SignUp = ({ handleSignUpClose }) => {
   async function handleSubmit(e) {
     e.preventDefault();
 
-    if (passwordRef.current.value !== confirmPasswordRef.current) {
+    if (passwordRef.current.value !== confirmPasswordRef.current.value) {
       return setPasswordError("Passwords do not match");
     }
 
@@ -26,7 +26,7 @@ const SignUp = ({ handleSignUpClose }) => {
       setLoading(true);
       await signup(emailRef.current.value, passwordRef.current.value);
     } catch {
-      setPasswordError("account no work");
+      setPasswordError("error message");
     }
     setLoading(false);
   }
@@ -76,7 +76,7 @@ const SignUp = ({ handleSignUpClose }) => {
           value="Create"
         />
       </form>
-      {passwordError && <h1>Error</h1>}
+      {passwordError && <h4>{passwordError}</h4>}
       <button className="signForm" onClick={handleSignUpClose}>
         Close
       </button>

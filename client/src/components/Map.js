@@ -1,11 +1,10 @@
 import { useEffect, useState } from "react";
 import React from "react";
 import "leaflet/dist/leaflet.css";
-import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+import { MapContainer, TileLayer, Marker } from "react-leaflet";
 import L, { map } from "leaflet";
 import icon from "leaflet/dist/images/marker-icon.png";
 import shadow from "leaflet/dist/images/marker-shadow.png";
-import { set } from "mongoose";
 
 const leafIcon = L.icon({
   iconUrl: icon,

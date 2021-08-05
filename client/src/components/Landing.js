@@ -3,6 +3,8 @@ import React from "react";
 import "../App.css";
 import yesterLogo from "../assets/Copy of YESTER_logo_No background. Square PNG.png";
 import Map from "./Map";
+import { SignUp } from "./SignUp";
+
 //landing page function
 const Landing = () => {
   //return holds sign up / log in containers and check this out container
@@ -25,28 +27,7 @@ const Landing = () => {
         <div id="mainLanding">
           <div id="form">
             {/* sign up form */}
-            <form id="Signup" action="/signup" method="POST">
-              <h1>SIGN UP</h1>
-              <input
-                className="signForm"
-                type="text"
-                name="email"
-                placeholder="Enter your email..."
-              />
-              <input
-                className="signForm"
-                type="text"
-                name="password"
-                placeholder="Enter a password..."
-              />
-              <input
-                className="signForm"
-                type="text"
-                name="confirmPassword"
-                placeholder="Enter your password again..."
-              />
-              <input className="signForm" type="submit" value="Sign Up" />
-            </form>
+           <SignUp />
             {/* between sign up and log in containers */}
             <h1 id="or">OR</h1>
             {/* login form */}

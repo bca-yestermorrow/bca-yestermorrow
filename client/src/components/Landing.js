@@ -1,22 +1,21 @@
 //importing React CSS and the yestermorrow logo
 import React from "react";
-import { useState } from "react"
+import { useState } from "react";
 import "../App.css";
 import yesterLogo from "../assets/Copy of YESTER_logo_No background. Square PNG.png";
 import Map from "./Map";
-import SignUp from "./SignUp"
+import SignUp from "./SignUp";
 //landing page function
 const Landing = () => {
+  const [signUp, setSignUp] = useState(false);
 
-    const [signUp, setSignUp] = useState(false)
+  function handleSignUpClose() {
+    setSignUp(false);
+  }
 
-    function handleSignUpClose() {
-        setSignUp(false)
-    }
-
-function handleSignUp() {
-    setSignUp(true)
-}
+  function handleSignUp() {
+    setSignUp(true);
+  }
 
   //return holds sign up / log in containers and check this out container
   return (
@@ -37,8 +36,10 @@ function handleSignUp() {
         {/* main body */}
         <div id="mainLanding">
           <div id="form">
-            <button id="signUpButton" onClick={handleSignUp}>SIGN UP</button>
-            {signUp && <SignUp handleSignUpClose={handleSignUpClose}/>}
+            <button id="signUpButton" onClick={handleSignUp}>
+              SIGN UP
+            </button>
+            {signUp && <SignUp handleSignUpClose={handleSignUpClose} />}
             {/* between sign up and log in containers */}
             <h1 id="or">OR</h1>
             {/* login form */}

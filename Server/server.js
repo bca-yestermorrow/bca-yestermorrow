@@ -30,6 +30,13 @@ app.listen(port, () => {
     console.log(`Listening on port ${port}`)
 })
 
+app.get('/lat', (req, res) =>{
+    res.sendFile(__dirname + "/../client/public/lat.json")
+})
+
+app.get('/lng', (req, res) =>{
+    res.sendFile(__dirname + "/../client/public/lng.json")
+})
 
 
 mongoose.connection.on("error", err => {

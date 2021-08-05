@@ -48,13 +48,17 @@
   margin-left: 5vw;
   font-family: "Raleway", sans-serif;
 }
+
+#signUpButton {
+  margin-left: 8vw;
+  margin-bottom: 2vh;
+}
 /* landing page sign up form */
 #Signup {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   width: 15vw;
-  margin-top: 7.5vh;
   margin-bottom:5vh ;
   padding-left: 2.5vw;
   padding-right: 2.5vw;

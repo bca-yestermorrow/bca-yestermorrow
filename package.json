@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/bca-yestermorrow/bca-yestermorrow#readme",
   "dependencies": {
+    "chai": "^4.3.4",
     "csvtojson": "^2.0.10",
     "dotenv": "^10.0.0",
     "express": "^4.17.1",

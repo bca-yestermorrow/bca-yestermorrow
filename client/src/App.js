@@ -9,12 +9,8 @@ function App() {
     <AuthProvider>
     <BrowserRouter>
       <Switch>
-        <Route exact path="/">
-          <Landing />
-        </Route>
-        <Route path="/home">
-          <Home />
-        </Route>
+        <Route exact path="/" component={Landing}></Route>
+        <Route path="/home" component={Home}></Route>
       </Switch>
     </BrowserRouter>
     </AuthProvider>

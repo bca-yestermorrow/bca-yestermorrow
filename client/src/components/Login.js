@@ -2,27 +2,35 @@ import React from "react";
 import "../App.css";
 import { useRef, useState } from "react";
 import { useAuth } from "../context/AuthContext";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
-const Login = () => {
+
+const Login = ({currentUser}) => {
   //Gives us a reference to the value of input
   const emailRef = useRef();
   const passwordRef = useRef();
-  const { signup } = useAuth();
+  const { login } = useAuth();
   const [passwordError, setPasswordError] = useState("");
   const [loading, setLoading] = useState(false);
+
+  const history = useHistory()
+ 
+  
 
   async function handleSubmit(e) {
     e.preventDefault();
 
     try {
       setPasswordError("");
-      setLoading(true);
-      await signup(emailRef.current.value, passwordRef.current.value);
+
+      await login(emailRef.current.value, passwordRef.current.value);
+     
+      history.push('/home')
     } catch {
       setPasswordError("Your email or password is wrong");
     }
     setLoading(false);
+ 
   }
 
   return (
@@ -43,9 +51,8 @@ const Login = () => {
           ref={passwordRef}
           placeholder="Enter your password..."
         />
-        <Link to="/home">
-          <input className="loginForm" type="submit" value="Login" />
-        </Link>
+        
+        <input disabled={loading} className="loginForm" type="submit" value="Login" />
         {passwordError && <h4>{passwordError}</h4>}
       </form>
     </div>

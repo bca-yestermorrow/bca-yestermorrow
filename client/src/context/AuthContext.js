@@ -14,28 +14,37 @@ export function useAuth() {
 export const AuthProvider = ({children}) => {
     const [currentUser, setCurrentUser] = useState(null)
     //needs this because
-    const [loading, setLoading] = useState(false)
+    const [loading, setLoading] = useState(true)
 
 
     const value = {
         currentUser,
-        signup
+        signup,
+        login
+    }
+
+    function login(email, password) {
+        return auth.signInWithEmailAndPassword(email, password)
     }
 
     function signup(email, password) {
         return auth.createUserWithEmailAndPassword(email, password)
     }
 
+
     //notifies
     useEffect(() =>{
         const unsubscribe = auth.onAuthStateChanged(user => {
             setCurrentUser(user)
             setLoading(false)
+            console.log(user)
             
         })
 
         return unsubscribe
     }, [])
+
+ 
     
 
     //only want this running when mounting component 

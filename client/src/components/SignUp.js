@@ -3,7 +3,8 @@ import "../App.css";
 import { useRef, useState } from "react";
 import { useAuth } from "../context/AuthContext";
 import { Link, useHistory } from "react-router-dom";
-
+//importing db "database" from firebase js file
+import { db } from "../firebase";
 
 const SignUp = ({ handleSignUpClose }) => {
   //Gives us a reference to the value of input
@@ -15,9 +16,7 @@ const SignUp = ({ handleSignUpClose }) => {
   const { signup } = useAuth();
   const [passwordError, setPasswordError] = useState("");
   const [loading, setLoading] = useState(false);
-  
-  
-  const history = useHistory()
+  const history = useHistory();
 
   const passwordValidation = new RegExp(/(?=.*\d)(?=.*[A-Z])(?=.*?[!@#\$&*~])/)
 
@@ -39,9 +38,14 @@ const SignUp = ({ handleSignUpClose }) => {
 
     try {
       setPasswordError("");
-      console.log(firstNameRef.current.value)
       await signup(emailRef.current.value, passwordRef.current.value);
-      history.push('/home')
+      //saving user to the database
+      await db.collection("users").add({
+        firstName: firstNameRef.current.value,
+        lastName: lastNameRef.current.value,
+        email: emailRef.current.value,
+      });
+      history.push("/home");
     } catch {
       setPasswordError("Invalid Email");
     }
@@ -86,12 +90,12 @@ const SignUp = ({ handleSignUpClose }) => {
           ref={confirmPasswordRef}
           placeholder="Enter your password again..."
         />
-     <input
-        className="signForm"
-        disabled={loading}
-        type="submit"
-        value="Create"
-      />
+        <input
+          className="signForm"
+          disabled={loading}
+          type="submit"
+          value="Create"
+        />
       </form>
       {passwordError && <h4>{passwordError}</h4>}
       <button className="signForm" onClick={handleSignUpClose}>

@@ -128,8 +128,8 @@ const start = async () => {
   console.log('Done.')
 }
 
-// run the program
-start()
+// uncomment to run the program
+// start()
 
 // export all functions for testing
 module.exports = {

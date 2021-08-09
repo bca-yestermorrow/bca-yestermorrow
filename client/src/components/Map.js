@@ -1,64 +1,58 @@
-import { useEffect, useState } from "react";
-import React from "react";
-import "leaflet/dist/leaflet.css";
-import { MapContainer, TileLayer, Marker } from "react-leaflet";
-import L, { map } from "leaflet";
-import icon from "leaflet/dist/images/marker-icon.png";
-import shadow from "leaflet/dist/images/marker-shadow.png";
+import { useEffect, useState } from 'react'
+import React from 'react'
+import 'leaflet/dist/leaflet.css'
+import { MapContainer, TileLayer, Marker } from 'react-leaflet'
+import L, { map } from 'leaflet'
+import icon from 'leaflet/dist/images/marker-icon.png'
+import shadow from 'leaflet/dist/images/marker-shadow.png'
 
 const leafIcon = L.icon({
   iconUrl: icon,
   iconSize: [10, 15],
   shadowUrl: shadow,
-  shadowSize: [10, 15]
-});
+  shadowSize: [10, 15],
+})
 
 const Map = () => {
-  const [lat, setLat] = useState([]);
+  // stores location objects - Obj :
+  // {Address: {City,State}, latlong: [45.027, -72.234], _id}
+  const [alumniLocations, setAlumniLocations] = useState([])
 
+  // fetch alumni locations
   useEffect(() => {
-    if (lat.length === 0) {
-      fetch("/lat")
+    if (alumniLocations.length === 0) {
+      fetch('/alumni-latlong')
         .then((res) => res.json())
         .then((result) => {
-          setLat(result);
-        });
+          setAlumniLocations(result)
+        })
     }
-  });
+  })
 
-  const [lng, setLng] = useState([]);
-
-  useEffect(() => {
-    if (lng.length === 0) {
-      fetch("/lng")
-        .then((res) => res.json())
-        .then((result) => {
-          setLng(result);
-        });
-    }
-  });
-
-  //have two arrays lat and lng 
+  // create markers using alumniLocation latlong pairs.
   const lnglats = []
-  for(let i = 0; i < lng.length; i++){
-    lnglats.push(<Marker icon={leafIcon} position={[lat[i], lng[i]]} />)
+  for (let i = 0; i < alumniLocations.length; i++) {
+    lnglats.push(
+      <Marker key={i} icon={leafIcon} position={alumniLocations[i].latlong} />
+    )
   }
 
   return (
     <MapContainer
-      style={{ height: "100%" }}
-      zoom={5}
+      style={{ height: '100%' }}
+      zoom={13}
       scrollWheelZoom={false}
       center={[44.149398498395676, -72.83771521960242]}
     >
-      {lng.length > 0 && lnglats}
+      {/* Insert map markers: */}
+      {lnglats.length > 0 ? lnglats : 'Loading...'}
 
       <TileLayer
-        attribution=""
-        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+        attribution=''
+        url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
       />
     </MapContainer>
-  );
-};
+  )
+}
 
-export default Map;
+export default Map

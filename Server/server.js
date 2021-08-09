@@ -1,41 +1,29 @@
-require("dotenv").config()
-const mongoose = require("mongoose")
-const express = require("express")
-const port = process.env.PORT || 5000
+require('dotenv').config()
+const path = require('path')
+const express = require('express')
+
 const app = express()
-const staticDir = "./client/public"
-const User = require("./Models/userSchema.js")
-mongoose.connect(`mongodb+srv://YestermorrowAdmin:${process.env.PASS}@cluster0.u2itl.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`, {useNewUrlParser: true, useUnifiedTopology: true})
 
-app.use(express.static(staticDir))
-app.use(express.urlencoded({extended: true}))
+let port = process.env.PORT || 5000
 
-app.post('/signup', async (req, res) => {
-    
-    if (req.body.password === req.body.confirmPassword){
-        const user = new User({
-        email: req.body.email,
-        password: req.body.password
-    })
-    await user.save()
-    res.redirect('/')
-    } else {
-        // stops user from being sent to the database
-        return res.sendStatus(400)
-    }
-    
+app.use(express.urlencoded({ extended: true }))
+app.use(express.static('public'))
+
+const toplevelDir = path.resolve('.')
+// console.log('toplevel', toplevelDir)
+
+app.get('/', (req, res) => {
+  res.sendFile(toplevelDir + '/client/public/index.html')
+})
+
+app.get('/lat', (req, res) => {
+  res.sendFile(toplevelDir + '/client/public/lat.json')
+})
+
+app.get('/lng', (req, res) => {
+  res.sendFile(toplevelDir + '/client/public/lng.json')
 })
 
 app.listen(port, () => {
-    console.log(`Listening on port ${port}`)
+  console.log('listening on port' + port)
 })
-
-
-
-mongoose.connection.on("error", err => {
-    console.log("err", err)
-})
-
-mongoose.connection.on("connected", (err, res) => {
-    console.log("Mongoose is connected")
-  })

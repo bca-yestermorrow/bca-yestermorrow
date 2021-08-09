@@ -1,44 +1,59 @@
+//importing React CSS and the yestermorrow logo
 import React from "react";
+import { useState } from "react";
 import "../App.css";
-
+import yesterLogo from "../assets/Copy of YESTER_logo_No background. Square PNG.png";
+import Map from "./Map";
+import SignUp from "./SignUp";
+import Login from "./Login";
+//landing page function
 const Landing = () => {
+  const [signUp, setSignUp] = useState(false);
+
+  function handleSignUpClose() {
+    setSignUp(false);
+  }
+
+  function handleSignUp() {
+    setSignUp(true);
+  }
+
+  //return holds sign up / log in containers and check this out container
   return (
-    <div id="landing">
-      <header id="header">YESTERMORROW LANDING PAGE</header>
-      <div id="mainLanding">
-        <div id="form">
-          <form id="Signup" action="/signup" method="POST">
-            SIGN UP
-            <input type="text" name="email" placeholder="Enter your email..." />
-            <input
-              type="text"
-              name="password"
-              placeholder="Enter a password..."
+    <div>
+      {/* background image div */}
+      <div id="background"></div>
+      <div id="landing">
+        {/* header */}
+        <header id="header">
+          <a href="https://yestermorrow.org/">
+            <img
+              id="yesterLogo"
+              src={`${yesterLogo}`}
+              alt="Yestermorrow Logo"
             />
-            <input
-              type="text"
-              name="confirmPassword"
-              placeholder="Enter your password again..."
-            />
-            <input type="submit" value="Sign Up" />
-          </form>
-          <h1 id="or">OR</h1>
-          <form id="Login">
-            Log In
-            <input type="text" name="email" placeholder="Enter your email..." />
-            <input
-              type="text"
-              name="password"
-              placeholder="Enter your password..."
-            />
-            <input type="submit" value="Login" />
-          </form>
-        </div>
-        <div id="checkItOut">
-          <h1 id="checkTitle">CHECK THIS OUT!</h1>
-          <div id="map">
-            ACTUAL MAP
-            <div id="other">OTHER CONTENT</div>
+          </a>
+        </header>
+        {/* main body */}
+        <div id="mainLanding">
+          <div id="form">
+            <button id="signUpButton" onClick={handleSignUp}>
+              SIGN UP
+            </button>
+            {signUp && <SignUp handleSignUpClose={handleSignUpClose} />}
+            {/* between sign up and log in containers */}
+            <h1 id="or">OR</h1>
+            {/* login form */}
+            <Login />
+          </div>
+          {/* check this out container with map and other content */}
+          <div id="checkItOut">
+            <h1 id="checkTitle">CHECK THIS OUT!</h1>
+            <p id="mapDescription">MAP DESCRIPTION</p>
+            <div id="map">
+              <Map />
+              {/* <div id="other">OTHER CONTENT</div> */}
+            </div>
           </div>
         </div>
       </div>

@@ -1,6 +1,8 @@
 import React from "react";
 import "../App.css";
 import yesterLogo from "../assets/Copy of YESTER_logo_No background. Square PNG.png";
+import { SignOut } from "./SignOut";
+import SignUp from "./SignUp";
 
 const Home = () => {
   return (
@@ -15,6 +17,7 @@ const Home = () => {
         <div id="jobs">JOBS</div>
         <div id="connect">COLLAB & CONNECT</div>
       </div>
+      <SignOut/>
     </div>
   );
 };

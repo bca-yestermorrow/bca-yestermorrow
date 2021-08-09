@@ -3,7 +3,8 @@ import "../App.css";
 import { useRef, useState } from "react";
 import { useAuth } from "../context/AuthContext";
 import { Link, useHistory } from "react-router-dom";
-
+//importing db "database" from firebase js file
+import { db } from "../firebase";
 
 const SignUp = ({ handleSignUpClose }) => {
   //Gives us a reference to the value of input
@@ -15,9 +16,9 @@ const SignUp = ({ handleSignUpClose }) => {
   const { signup } = useAuth();
   const [passwordError, setPasswordError] = useState("");
   const [loading, setLoading] = useState(false);
-  console.log(currentUser)
-  const {currentUser} = useAuth()
-  const history = useHistory()
+  const history = useHistory();
+
+  const passwordValidation = new RegExp(/(?=.*\d)(?=.*[A-Z])(?=.*?[!@#\$&*~])/)
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -26,13 +27,27 @@ const SignUp = ({ handleSignUpClose }) => {
       return setPasswordError("Passwords do not match");
     }
 
+    if(firstNameRef.current.value === '' || lastNameRef.current.value === ''){
+      return setPasswordError("Please enter your first and last name")
+    }
+
+    if(!passwordValidation.test(passwordRef.current.value)){
+      return setPasswordError("password must contain atleast one number, atleast one symbol, and be atleast 6 characters long ")
+    }
+
+
     try {
       setPasswordError("");
-      
       await signup(emailRef.current.value, passwordRef.current.value);
-      history.push('/home')
+      //saving user to the database
+      await db.collection("users").add({
+        firstName: firstNameRef.current.value,
+        lastName: lastNameRef.current.value,
+        email: emailRef.current.value,
+      });
+      history.push("/home");
     } catch {
-      setPasswordError("error message");
+      setPasswordError("Invalid Email");
     }
     setLoading(false);
   }
@@ -75,12 +90,12 @@ const SignUp = ({ handleSignUpClose }) => {
           ref={confirmPasswordRef}
           placeholder="Enter your password again..."
         />
-     <input
-        className="signForm"
-        disabled={loading}
-        type="submit"
-        value="Create"
-      />
+        <input
+          className="signForm"
+          disabled={loading}
+          type="submit"
+          value="Create"
+        />
       </form>
       {passwordError && <h4>{passwordError}</h4>}
       <button className="signForm" onClick={handleSignUpClose}>

@@ -1,14 +1,18 @@
+/* imported custom google font */
 @import url("https://fonts.googleapis.com/css2?family=Raleway:wght@202&display=swap");
 
 * {
   margin: 0;
 }
 
+/* LANDING PAGE */
+
+/* entire landing page */
 #landing {
   overflow: hidden;
   z-index: 1;
 }
-
+/* background for landing page and home page */
 #background {
   display: block;
   position: fixed;
@@ -20,57 +24,60 @@
   filter: blur(5px);
   z-index: -1;
 }
-
+/* landing page header */
 #header {
   width: 100vw;
   height: 5vh;
-  text-align: center;
   padding: 2.5vh;
   font-size: 5vh;
 }
-
+/* yestermorrow logo for header on landing page */
 #yesterLogo {
   float: left;
-  height: 10vh;
+  height: 12vh;
   width: 8vw;
 }
-
+/* body container for landing page */
 #mainLanding {
   display: grid;
   grid-template-columns: 1fr 1fr;
 }
-
+/* form container holding both sign up and log in */
 #form {
   width: 20vw;
   margin-left: 5vw;
   font-family: "Raleway", sans-serif;
 }
 
+#signUpButton {
+  margin-left: 8vw;
+  margin-bottom: 2vh;
+}
+/* landing page sign up form */
 #Signup {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   width: 15vw;
-  margin-top: 7.5vh;
   margin-bottom:5vh ;
   padding-left: 2.5vw;
   padding-right: 2.5vw;
   padding-top: 2.5vh;
   padding-bottom: 2.5vh;
-  background-color: rgba(147, 149, 152, 0.603);
+  background-color: rgba(147, 149, 152, 0.801);
   border-radius: 3vh;
   box-shadow: 1vh 1vh rgba(0, 0, 0, 0.336);
 }
-
+/* class style for sign in form inputs */
 .signForm {
   margin: 1vh;
   padding: .5vh;
 }
-
+/* in between both forms */
 #or {
   text-align: center;
 }
-
+/* landing page log in form */
 #Login {
   display: flex;
   flex-direction: column;
@@ -81,16 +88,16 @@
   padding-bottom: 2.5vh;
   margin-top: 5vh;
   margin-bottom: 2vh;
-  background-color: rgba(147, 149, 152, 0.603);
+  background-color: rgba(147, 149, 152, 0.801);
   border-radius: 3vh;
   box-shadow: 1vh 1vh rgba(0, 0, 0, 0.336);
 }
-
+/* class style for log in form inputs */
 .loginForm {
   margin: 1vh;
   padding: .5vh;
 }
-
+/* landing page check this out container */
 #checkItOut {
   display: flex;
   flex-direction: column;
@@ -101,7 +108,7 @@
   margin-top: 10vh;
   height: 60vh;
 }
-
+/* landing page check this out title */
 #checkTitle {
   text-align: center;
   height: 10vh;
@@ -109,19 +116,60 @@
   font-family: "Raleway", sans-serif;
 }
 
+/* map description on landing page */
+#mapDescription {
+  font-family: "Raleway", sans-serif;
+  text-align: center;
+}
+
+/* map container inside check this out container */
 #map {
   border: solid black;
   width: 40vw;
   height: 40vh;
   margin-left: 2.5vw;
   background-color: rgba(147, 149, 152, 0.603);
-  border-radius: 3vh;
   box-shadow: 1vh 1vh rgba(0, 0, 0, 0.336);
 }
-
+/* other content container inside map container */
 #other {
   float: right;
   width: 15vw;
   height: 40vh;
   border-left: solid black;
+}
+
+/* HOME PAGE STYLING */
+
+#mainHome{
+  overflow: hidden;
+  z-index: 1;
+}
+
+#home{
+  display: flex;
+  flex-direction: row;
+  justify-content:space-around;
+}
+
+#homeHeader {
+  width: 100vw;
+  height: 5vh;
+  padding: 2.5vh;
+  font-size: 5vh;
+}
+
+/* job container */
+#jobs{
+  border: solid black;
+  margin-top: 15vh;
+  height: 35em;
+  width: 40em;
+}
+
+#connect {
+  border: solid black;
+  margin-top: 15vh;
+  height: 35em;
+  width: 40em;
 }

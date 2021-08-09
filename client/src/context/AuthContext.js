@@ -20,7 +20,9 @@ export const AuthProvider = ({children}) => {
     const value = {
         currentUser,
         signup,
-        login
+        login,
+        signout,
+        googleSignIn,
     }
 
     function login(email, password) {
@@ -31,6 +33,13 @@ export const AuthProvider = ({children}) => {
         return auth.createUserWithEmailAndPassword(email, password)
     }
 
+    function signout() {
+        return auth.signOut()
+    }
+
+    function googleSignIn(){
+        return auth.googleAuthProvider()
+    }
 
     //notifies
     useEffect(() =>{

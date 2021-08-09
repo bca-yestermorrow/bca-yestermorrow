@@ -82,9 +82,9 @@ describe('processing and importing alumni data to db', () => {
     let rawObj = {
       Session: 'Designing and Building a Successful Design/Build Business',
       Age: '',
-      Address: '5325 Western Plains Ave\nAbilene, TX 79606\nUnited States',
-      Latitude: '32.3602714',
-      Longitude: '-99.7969332',
+      Address: '2342 Eastern Plains Ave\nAbilene, TX 79606\nUnited States',
+      Latitude: '32.36027',
+      Longitude: '-99.79693',
       City: 'Abilene',
       State: 'TX',
     }
@@ -92,9 +92,9 @@ describe('processing and importing alumni data to db', () => {
     let expected = {
       Session: 'Designing and Building a Successful Design/Build Business',
       Age: '',
-      latlong: ['32.3602714', '-99.7969332'],
+      latlong: ['32.36027', '-99.79693'],
       Address: {
-        streetaddress: '5325 Western Plains Ave',
+        streetaddress: '2342 Eastern Plains Ave',
         streetaddressline2: '',
         City: 'Abilene',
         State: 'TX',

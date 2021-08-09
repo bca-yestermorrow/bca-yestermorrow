@@ -4,7 +4,9 @@ import yesterLogo from "../assets/Copy of YESTER_logo_No background. Square PNG.
 import { SignOut } from "./SignOut";
 import SignUp from "./SignUp";
 
+
 const Home = () => {
+
   return (
     <div id="mainHome">
       <div id="background"></div>

@@ -17,9 +17,9 @@ const SignUp = ({ handleSignUpClose }) => {
   const [passwordError, setPasswordError] = useState("");
   const [loading, setLoading] = useState(false);
   const history = useHistory();
-
+  const { currentUser } = useAuth()
   const passwordValidation = new RegExp(/(?=.*\d)(?=.*[A-Z])(?=.*?[!@#\$&*~])/)
-
+  
   async function handleSubmit(e) {
     e.preventDefault();
 
@@ -39,8 +39,9 @@ const SignUp = ({ handleSignUpClose }) => {
     try {
       setPasswordError("");
       await signup(emailRef.current.value, passwordRef.current.value);
+      const userCollection = await db.collection("users")
       //saving user to the database
-      await db.collection("users").add({
+      userCollection.doc(currentUser.uid).set({
         firstName: firstNameRef.current.value,
         lastName: lastNameRef.current.value,
         email: emailRef.current.value,

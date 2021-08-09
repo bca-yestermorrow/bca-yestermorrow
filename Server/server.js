@@ -1,5 +1,6 @@
 require('dotenv').config()
 const path = require('path')
+const alumniStore = require('./alumni-datastore')
 const express = require('express')
 
 const app = express()
@@ -11,6 +12,16 @@ app.use(express.static('public'))
 
 const toplevelDir = path.resolve('.')
 // console.log('toplevel', toplevelDir)
+
+app.get('/alumni', async (req, res) => {
+  let data = await alumniStore.getAllAlumni()
+  res.json(data)
+})
+
+app.get('/alumni-latlong', async (req, res) => {
+  let data = await alumniStore.getAllAlumniLatlong()
+  res.json(data)
+})
 
 app.get('/', (req, res) => {
   res.sendFile(toplevelDir + '/client/public/index.html')
@@ -25,5 +36,5 @@ app.get('/lng', (req, res) => {
 })
 
 app.listen(port, () => {
-  console.log('listening on port' + port)
+  console.log('listening on port ' + port)
 })

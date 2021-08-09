@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+
 const AlumnSchema = new mongoose.Schema({
   Session: String,
   Age: Number,

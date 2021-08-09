@@ -59,7 +59,7 @@
   flex-direction: column;
   justify-content: space-between;
   width: 15vw;
-  margin-bottom:5vh ;
+  margin-bottom: 5vh;
   padding-left: 2.5vw;
   padding-right: 2.5vw;
   padding-top: 2.5vh;
@@ -71,7 +71,7 @@
 /* class style for sign in form inputs */
 .signForm {
   margin: 1vh;
-  padding: .5vh;
+  padding: 0.5vh;
 }
 /* in between both forms */
 #or {
@@ -95,7 +95,7 @@
 /* class style for log in form inputs */
 .loginForm {
   margin: 1vh;
-  padding: .5vh;
+  padding: 0.5vh;
 }
 /* landing page check this out container */
 #checkItOut {
@@ -141,15 +141,15 @@
 
 /* HOME PAGE STYLING */
 
-#mainHome{
+#mainHome {
   overflow: hidden;
   z-index: 1;
 }
 
-#home{
+#home {
   display: flex;
   flex-direction: row;
-  justify-content:space-around;
+  justify-content: space-around;
 }
 
 #homeHeader {
@@ -160,7 +160,7 @@
 }
 
 /* job container */
-#jobs{
+#jobs {
   border: solid black;
   margin-top: 15vh;
   height: 35em;
@@ -172,4 +172,30 @@
   margin-top: 15vh;
   height: 35em;
   width: 40em;
+}
+
+#connectContainer {
+  display: grid;
+  grid-template-columns: 15em 80em;
+  margin: 2em;
+}
+
+#filterFeed {
+  border: solid black;
+  margin: 2em;
+}
+
+#mainFeed {
+  border: solid black;
+  margin: 2em;
+  height: 90vh;
+}
+
+#postButton {
+  float: right;
+}
+
+#createPostModal {
+  background-color: rgba(0, 0, 0, 0.295);
+  z-index: 2;
 }

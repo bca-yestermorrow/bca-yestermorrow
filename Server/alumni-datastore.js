@@ -10,13 +10,18 @@ mongoose.connect(
 // show operations Mongoose sends to MongoDB
 mongoose.set('debug', true)
 
+// for debugging purposes only - returns all alumni data
 const getAllAlumni = async () => {
   let cursor = await Alumn.find({})
   return cursor
 }
 
+// returns alumni langlong pairs
 const getAllAlumniLatlong = async () => {
-  let cursor = await Alumn.find({})
+  let cursor = await Alumn.find(
+    {},
+    { latlong: 1, 'Address.City': 1, 'Address.State': 1 }
+  )
   return cursor
 }
 

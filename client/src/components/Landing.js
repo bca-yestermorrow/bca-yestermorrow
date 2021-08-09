@@ -6,6 +6,7 @@ import yesterLogo from "../assets/Copy of YESTER_logo_No background. Square PNG.
 import Map from "./Map";
 import SignUp from "./SignUp";
 import Login from "./Login";
+import { GoogleBtn } from "./GoogleBtn";
 //landing page function
 const Landing = () => {
   const [signUp, setSignUp] = useState(false);
@@ -45,6 +46,7 @@ const Landing = () => {
             <h1 id="or">OR</h1>
             {/* login form */}
             <Login />
+            <GoogleBtn />
           </div>
           {/* check this out container with map and other content */}
           <div id="checkItOut">

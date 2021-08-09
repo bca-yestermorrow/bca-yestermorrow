@@ -2,6 +2,8 @@
 import { useContext, useEffect, useState } from 'react'
 import React from 'react'
 import {auth} from '../firebase'
+import { provider } from '../firebase'
+
 
 
 const AuthContext = React.createContext()
@@ -16,13 +18,13 @@ export const AuthProvider = ({children}) => {
     //needs this because
     const [loading, setLoading] = useState(true)
 
-
+    
     const value = {
         currentUser,
         signup,
         login,
         signout,
-        googleSignIn,
+        googlesignin,
     }
 
     function login(email, password) {
@@ -37,8 +39,8 @@ export const AuthProvider = ({children}) => {
         return auth.signOut()
     }
 
-    function googleSignIn(){
-        return auth.googleAuthProvider()
+    function googlesignin(){
+        return auth.signInWithPopup(provider)
     }
 
     //notifies

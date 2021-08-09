@@ -2,6 +2,8 @@ import firebase from 'firebase/app'
 import "firebase/auth"
 import "firebase/firestore"
 
+
+
 console.log(process.env.REACT_APP_API)
 
 const app = firebase.initializeApp({
@@ -13,5 +15,6 @@ const app = firebase.initializeApp({
     appId: "1:296184333576:web:8cad8635fee7136c04d8bd"
 })
 
+export const provider = new firebase.auth.GoogleAuthProvider();
 export const auth = app.auth()
 export default app

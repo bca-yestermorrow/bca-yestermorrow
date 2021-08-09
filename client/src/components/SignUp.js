@@ -3,6 +3,7 @@ import "../App.css";
 import { useRef, useState } from "react";
 import { useAuth } from "../context/AuthContext";
 import { Link, useHistory } from "react-router-dom";
+//importing db "database" from firebase js file
 import { db } from "../firebase";
 
 const SignUp = ({ handleSignUpClose }) => {
@@ -30,18 +31,12 @@ const SignUp = ({ handleSignUpClose }) => {
       setPasswordError("");
 
       await signup(emailRef.current.value, passwordRef.current.value);
-      await db.collection("users")
-        .add({
-          firstName: firstNameRef.current.value,
-          lastName: lastNameRef.current.value,
-          email: emailRef.current.value,
-        })
-        // .then((docRef) => {
-        //   console.log("Document written with ID: ", docRef.id);
-        // })
-        // .catch((error) => {
-        //   console.error("Error adding document: ", error);
-        // });
+      //saving user to the database
+      await db.collection("users").add({
+        firstName: firstNameRef.current.value,
+        lastName: lastNameRef.current.value,
+        email: emailRef.current.value,
+      });
       history.push("/home");
     } catch {
       setPasswordError("error message");

@@ -7,12 +7,28 @@ const Connect = () => {
   const [posts, setPosts] = useState([]);
   const [postUpdate, setPostUpdate] = useState(0);
 
+  // add a listener  when Connect component is mounted
   // useEffect(() => {
-  //   db.collection("posts").onSnapshot(() => {
-  //     console.log("new post");
-  //     setPostUpdate(postUpdate + 1);
+  //   let postsRef = db.ref("posts");
+  //   postsRef.on("value", (snapshot) => {
+  //     if (snapshot.exists()) {
+  //       const data = snapshot.val();
+  //       console.log(data);
+
+  //       if (!data) {
+  //         setPostUpdate(postUpdate + 1);
+  //       }
+  //     }
   //   });
-  // });
+  //   db.collection("posts").where("user", "==", true).onSnapshot((snapshot) => {
+  //     snapshot.docChanges().forEach((change) => {
+  //       if (change.type === "added") {
+  //         setPostUpdate(postUpdate + 1)
+  //         console.log("post updated");
+  //       }
+  //     });
+  //   });
+  // }, []);
 
   useEffect(() => {
     if (posts.length === 0) {

@@ -41,7 +41,7 @@ const SignUp = ({ handleSignUpClose }) => {
       await signup(emailRef.current.value, passwordRef.current.value);
       const userCollection = await db.collection("users")
       //saving user to the database
-      userCollection.doc(currentUser.uid).set({
+      userCollection.add({
         firstName: firstNameRef.current.value,
         lastName: lastNameRef.current.value,
         email: emailRef.current.value,

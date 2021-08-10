@@ -180,7 +180,7 @@
   display: grid;
   grid-template-columns: 15vw 60vw 25vw;
   margin: 2em;
-  overflow: auto;
+  overflow: hidden;
 }
 
 #filterFeed {

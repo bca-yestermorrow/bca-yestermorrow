@@ -7,10 +7,6 @@ const Connect = () => {
   const [posts, setPosts] = useState(null);
   const [postModal, setPostModal] = useState(false);
 
-  function handleClosePostModal() {
-    setPostModal(false);
-  }
-
   useEffect(() => {
     if (!posts) {
       db.collection("posts")
@@ -28,8 +24,7 @@ const Connect = () => {
   });
 
   return (
-    <div>
-      {postModal && <CreatePost handleClosePostModal={handleClosePostModal} />}
+    <div id="connectPage">
       <div id="connectContainer">
         <div id="filterFeed"></div>
         <div id="mainFeed">
@@ -41,15 +36,8 @@ const Connect = () => {
               <p>{posts.Category}</p>
             </div>
           )}
-          <button
-            id="postButton"
-            onClick={() => {
-              setPostModal(true);
-            }}
-          >
-            MAKE A POST
-          </button>
         </div>
+        <CreatePost />
       </div>
     </div>
   );

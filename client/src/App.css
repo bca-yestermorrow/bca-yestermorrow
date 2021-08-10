@@ -174,9 +174,15 @@
   width: 40em;
 }
 
+/* Connect & Collab Page */
+
+#connectPage {
+  overflow-x: hidden;
+}
+
 #connectContainer {
   display: grid;
-  grid-template-columns: 15em 80em;
+  grid-template-columns: 15em 80em 20em;
   margin: 2em;
 }
 
@@ -188,14 +194,10 @@
 #mainFeed {
   border: solid black;
   margin: 2em;
-  height: 90vh;
+  height: 80vh;
 }
 
-#postButton {
-  float: right;
-}
-
-#createPostModal {
-  background-color: rgba(0, 0, 0, 0.295);
-  z-index: 2;
+#createPost {
+  background-color: rgb(153, 8, 8);
+  height: 20em;
 }

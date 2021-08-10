@@ -3,9 +3,10 @@ import { useState, useEffect } from "react";
 import { useAuth } from "../context/AuthContext";
 import { db } from "../firebase";
 
-const CreatePost = ({ handleClosePostModal }) => {
+const CreatePost = () => {
   const [firstName, setFirstName] = useState(null);
   const [lastName, setLastName] = useState(null);
+  const [error, setError] = useState("");
   const { currentUser } = useAuth();
 
   useEffect(() => {
@@ -20,10 +21,36 @@ const CreatePost = ({ handleClosePostModal }) => {
       });
   }, [currentUser.email]);
 
-  function handlePostSubmit(e) {
+  async function handlePostSubmit(e) {
     e.preventDefault();
-    console.log(e.target.body.value);
-    console.log(e.target.category.selectedOptions[0].value)
+
+    // grab body message
+    let body = e.target.body.value;
+
+    // create tags array
+    let options = e.target.category.selectedOptions;
+    let tags = [];
+    Array.from(options).forEach((option) => tags.push(option.value));
+
+    // reset error
+    setError("");
+
+    // add user to the posts collection
+    try {
+      await db.collection("posts").add({
+        body: body,
+        category: tags,
+        Image: false,
+        user: {
+          email: currentUser.email,
+          firstName: firstName,
+          lastName: lastName,
+        },
+      });
+    } catch (err) {
+      setError("Sorry, please try again.");
+      console.log(err);
+    }
   }
 
   return (
@@ -35,15 +62,16 @@ const CreatePost = ({ handleClosePostModal }) => {
           id="postBody"
           type="text"
           name="body"
-          placeholder="Type your description here..."
+          placeholder="Post message..."
         ></textarea>
-        <select id="categoryMenu" name="category">
+        <select multiple="multiple" id="categoryMenu" name="category">
           <option>Categories:</option>
           <option value="Tiny Houses">Tiny Houses</option>
           <option value="Tree Houses">Tree Houses</option>
         </select>
-        <input type="submit" id="postButton" value="Create Post"/>
+        <input type="submit" id="postButton" value="Create Post" />
       </form>
+      {error && error}
     </div>
   );
 };

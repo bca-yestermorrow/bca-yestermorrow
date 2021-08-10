@@ -5,7 +5,6 @@ import CreatePost from "./CreatePost";
 
 const Connect = () => {
   const [posts, setPosts] = useState(null);
-  const [postModal, setPostModal] = useState(false);
 
   useEffect(() => {
     if (!posts) {

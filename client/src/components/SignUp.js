@@ -33,7 +33,7 @@ const SignUp = ({ handleSignUpClose }) => {
 
     if (!passwordValidation.test(passwordRef.current.value)) {
       return setPasswordError(
-        "password must contain atleast one number, atleast one symbol, and be atleast 6 characters long "
+        "password must contain at least one number, at least one symbol, and be at least 6 characters long "
       );
     }
 

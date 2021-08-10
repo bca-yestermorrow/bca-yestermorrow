@@ -23,7 +23,7 @@ const CreatePost = ({ handleClosePostModal }) => {
   function handlePostSubmit(e) {
     e.preventDefault();
     console.log(e.target.body.value);
-    console.log(e.target.category.selectedOptions)
+    console.log(e.target.category.selectedOptions[0].value)
   }
 
   return (

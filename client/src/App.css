@@ -176,31 +176,25 @@
 
 /* Connect & Collab Page */
 
-#connectPage {
-  overflow-x: auto;
-}
-
 #connectContainer {
   display: grid;
-  grid-template-columns: 15em 80em 20em;
+  grid-template-columns: 15vw 60vw 25vw;
   margin: 2em;
+  overflow: auto;
 }
 
 #filterFeed {
   border: solid black;
   margin: 2em;
-  height: 20em;
 }
 
 #mainFeed {
   border: solid black;
   margin: 2em;
-  height: 80vh;
 }
 
 #createPost {
   background-color: rgb(153, 8, 8);
-  height: 20em;
   margin: 2em;
 }
 

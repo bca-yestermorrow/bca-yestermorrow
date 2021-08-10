@@ -1,5 +1,5 @@
 /* imported custom google font */
-@import url("https://fonts.googleapis.com/css2?family=Raleway:wght@202&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@202&display=swap');
 
 * {
   margin: 0;
@@ -16,7 +16,7 @@
 #background {
   display: block;
   position: fixed;
-  background-image: url("./assets/Yestermorrow Map Pinboard.jpg");
+  background-image: url('./assets/Yestermorrow Map Pinboard.jpg');
   background-repeat: no-repeat;
   background-size: cover;
   height: 100vh;
@@ -46,7 +46,7 @@
 #form {
   width: 20vw;
   margin-left: 5vw;
-  font-family: "Raleway", sans-serif;
+  font-family: 'Raleway', sans-serif;
 }
 
 #signUpButton {
@@ -113,12 +113,12 @@
   text-align: center;
   height: 10vh;
   width: 45vw;
-  font-family: "Raleway", sans-serif;
+  font-family: 'Raleway', sans-serif;
 }
 
 /* map description on landing page */
 #mapDescription {
-  font-family: "Raleway", sans-serif;
+  font-family: 'Raleway', sans-serif;
   text-align: center;
 }
 
@@ -182,25 +182,22 @@
 
 #connectContainer {
   display: grid;
-  grid-template-columns: 15em 80em 20em;
+  grid-template-columns: 15vw 60vw 25vw;
   margin: 2em;
 }
 
 #filterFeed {
   border: solid black;
   margin: 2em;
-  height: 20em;
 }
 
 #mainFeed {
   border: solid black;
   margin: 2em;
-  height: 80vh;
 }
 
 #createPost {
   background-color: rgb(153, 8, 8);
-  height: 20em;
   margin: 2em;
 }
 

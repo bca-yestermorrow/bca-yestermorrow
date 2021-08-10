@@ -2,6 +2,8 @@ import React from "react";
 import { useState, useEffect } from "react";
 import { useAuth } from "../context/AuthContext";
 import { db } from "../firebase";
+import {Card} from "@material-ui/core"
+
 
 const CreatePost = ({ handleClosePostModal }) => {
   const [firstName, setFirstName] = useState(null);
@@ -21,7 +23,7 @@ const CreatePost = ({ handleClosePostModal }) => {
   }, [currentUser.email]);
 
   return (
-    <div id="createPost">
+    <Card >
       {firstName && <h1>{firstName}</h1>}
       {lastName && <h1>{lastName}</h1>}
       <form id="createPostForm">
@@ -31,7 +33,7 @@ const CreatePost = ({ handleClosePostModal }) => {
           placeholder="Type your description here..."
         />
       </form>
-    </div>
+    </Card>
   );
 };
 

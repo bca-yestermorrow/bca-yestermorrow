@@ -2,44 +2,53 @@ import React from "react";
 import { useState, useEffect } from "react";
 import { db } from "../firebase";
 import CreatePost from "./CreatePost";
+import { FilterFeed } from "./FilterFeed";
 
 const Connect = () => {
-  const [posts, setPosts] = useState(null);
+  const [posts, setPosts] = useState([]);
   const [postModal, setPostModal] = useState(false);
+  const [loading, setLoading] = useState(false)
 
   useEffect(() => {
-    if (!posts) {
+    if (posts.length ===0) {
+      
+ 
       db.collection("posts")
         .get()
         .then((querySnapshot) => {
+          
+          let postArr = [];
           querySnapshot.forEach((doc) => {
-            setPosts({
-              User: doc.data().User,
-              Body: doc.data().Body,
-              Category: doc.data().Category,
-            });
+            postArr.push({
+              user: doc.data().user,
+              body: doc.data().body,
+              category: doc.data().category,
+            })
+            ;
+            console.log(posts)
           });
+          setPosts(postArr)
         });
     }
+    setLoading(false)
   });
+
 
   return (
     <div id="connectPage">
-      <div id="connectContainer">
-        <div id="filterFeed"></div>
-        <div id="mainFeed">
-          {!posts && <p>Welcome Yestomorrow Alumni!</p>}
-          {posts && (
-            <div id="posts">
-              <p>{posts.User}</p>
-              <p>{posts.Body}</p>
-              <p>{posts.Category}</p>
-            </div>
-          )}
+    <div id="connectContainer">
+      <FilterFeed ></FilterFeed>
+   <div id="mainfeed">
+      {posts.map((post)=> (
+        <div>
+        <p>{post.category}</p>
+        <p>{post.body}</p>
         </div>
-        <CreatePost />
-      </div>
+      ))}
+   </div>
+      
     </div>
+  </div>
   );
 };
 

@@ -9,27 +9,40 @@ const CreatePost = ({ handleClosePostModal }) => {
   const { currentUser } = useAuth();
 
   useEffect(() => {
-      db.collection("users")
-        .where("email", "==", `${currentUser.email}`)
-        .get()
-        .then((querySnapshot) => {
-          querySnapshot.forEach((doc) => {
-            setFirstName(doc.data().firstName);
-            setLastName(doc.data().lastName);
-          });
+    db.collection("users")
+      .where("email", "==", `${currentUser.email}`)
+      .get()
+      .then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          setFirstName(doc.data().firstName);
+          setLastName(doc.data().lastName);
         });
+      });
   }, [currentUser.email]);
+
+  function handlePostSubmit(e) {
+    e.preventDefault();
+    console.log(e.target.body.value);
+    console.log(e.target.category.selectedOptions)
+  }
 
   return (
     <div id="createPost">
-      {firstName && <h1>{firstName}</h1>}
-      {lastName && <h1>{lastName}</h1>}
-      <form id="createPostForm">
-        <input
+      {firstName && <h3>{firstName}</h3>}
+      {lastName && <h3>{lastName}</h3>}
+      <form id="createPostForm" onSubmit={handlePostSubmit}>
+        <textarea
+          id="postBody"
           type="text"
           name="body"
           placeholder="Type your description here..."
-        />
+        ></textarea>
+        <select id="categoryMenu" name="category">
+          <option>Categories:</option>
+          <option value="Tiny Houses">Tiny Houses</option>
+          <option value="Tree Houses">Tree Houses</option>
+        </select>
+        <input type="submit" id="postButton" value="Create Post"/>
       </form>
     </div>
   );

@@ -177,7 +177,7 @@
 /* Connect & Collab Page */
 
 #connectPage {
-  overflow-x: hidden;
+  overflow-x: auto;
 }
 
 #connectContainer {
@@ -189,6 +189,7 @@
 #filterFeed {
   border: solid black;
   margin: 2em;
+  height: 20em;
 }
 
 #mainFeed {
@@ -200,4 +201,11 @@
 #createPost {
   background-color: rgb(153, 8, 8);
   height: 20em;
+  margin: 2em;
+}
+
+#postBody {
+  width: 80%;
+  resize: none;
+  margin: 1em;
 }

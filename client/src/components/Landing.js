@@ -7,6 +7,8 @@ import Map from "./Map";
 import SignUp from "./SignUp";
 import Login from "./Login";
 import { GoogleBtn } from "./GoogleBtn";
+import { Container, Button, Box} from "@material-ui/core";
+import { Paper, Card } from "@material-ui/core";
 //landing page function
 const Landing = () => {
   const [signUp, setSignUp] = useState(false);
@@ -37,26 +39,25 @@ const Landing = () => {
         </header>
         {/* main body */}
         <div id="mainLanding">
-          <div id="form">
-            <button id="signUpButton" onClick={handleSignUp}>
-              SIGN UP
-            </button>
-            {signUp && <SignUp handleSignUpClose={handleSignUpClose} />}
+          <Card style={{padding: "2vw"}} >
+            
+             <SignUp handleSignUpClose={handleSignUpClose}/>
             {/* between sign up and log in containers */}
-            <h1 id="or">OR</h1>
+            <h1 id="or">Or</h1>
             {/* login form */}
             <Login />
-            <GoogleBtn />
-          </div>
+         
+          </Card>
+
           {/* check this out container with map and other content */}
-          <div id="checkItOut">
-            <h1 id="checkTitle">CHECK THIS OUT!</h1>
-            <p id="mapDescription">MAP DESCRIPTION</p>
-            <div id="map">
+          <Card >
+            
+         
+           
               <Map />
               {/* <div id="other">OTHER CONTENT</div> */}
-            </div>
-          </div>
+          
+          </Card>
         </div>
       </div>
     </div>

@@ -1,5 +1,8 @@
 import React from 'react'
 import { useAuth } from '../context/AuthContext'
+import {GoogleLoginButton} from "react-social-login-buttons"
+import { Paper } from '@material-ui/core'
+import { fontSize } from '@material-ui/system'
 
 
 export const GoogleBtn = () => {
@@ -14,7 +17,7 @@ export const GoogleBtn = () => {
     }
     return (
         <div>
-            <button onClick={()=> signInHandle()}>Google Button</button>
-        </div>
+            <GoogleLoginButton  iconSize={"1.5vw"} align={"center"} onClick={()=> signInHandle()} /> 
+         </div>
     )
 }

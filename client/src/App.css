@@ -16,8 +16,7 @@
 #background {
   display: block;
   position: fixed;
-  background-image: url("./assets/Yestermorrow Map Pinboard.jpg");
-  background-repeat: no-repeat;
+  background-color: #a9a9a9;
   background-size: cover;
   height: 100vh;
   width: 100vw;
@@ -26,7 +25,8 @@
 }
 /* landing page header */
 #header {
-  width: 100vw;
+  position: absolute;
+  width: 90vw;
   height: 5vh;
   padding: 2.5vh;
   font-size: 5vh;
@@ -39,12 +39,14 @@
 }
 /* body container for landing page */
 #mainLanding {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+  margin-top:1.5vw ;
+ display: flex;
+ justify-content: space-around;
+ 
 }
 /* form container holding both sign up and log in */
 #form {
-  width: 20vw;
+  width: 30vw;
   margin-left: 5vw;
   font-family: "Raleway", sans-serif;
 }
@@ -57,46 +59,26 @@
 #Signup {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  width: 15vw;
-  margin-bottom:5vh ;
-  padding-left: 2.5vw;
-  padding-right: 2.5vw;
-  padding-top: 2.5vh;
-  padding-bottom: 2.5vh;
-  background-color: rgba(147, 149, 152, 0.801);
-  border-radius: 3vh;
-  box-shadow: 1vh 1vh rgba(0, 0, 0, 0.336);
+  padding: 2vw;
+  
 }
 /* class style for sign in form inputs */
-.signForm {
-  margin: 1vh;
-  padding: .5vh;
+.signForm{
+  width: 25vw;
 }
 /* in between both forms */
 #or {
   text-align: center;
+  margin: 1vw;
 }
 /* landing page log in form */
 #Login {
   display: flex;
   flex-direction: column;
-  width: 15vw;
-  padding-left: 2.5vw;
-  padding-right: 2.5vw;
-  padding-top: 2.5vh;
-  padding-bottom: 2.5vh;
-  margin-top: 5vh;
-  margin-bottom: 2vh;
-  background-color: rgba(147, 149, 152, 0.801);
-  border-radius: 3vh;
-  box-shadow: 1vh 1vh rgba(0, 0, 0, 0.336);
+  padding: 2vw;
 }
 /* class style for log in form inputs */
-.loginForm {
-  margin: 1vh;
-  padding: .5vh;
-}
+
 /* landing page check this out container */
 #checkItOut {
   display: flex;
@@ -123,14 +105,7 @@
 }
 
 /* map container inside check this out container */
-#map {
-  border: solid black;
-  width: 40vw;
-  height: 40vh;
-  margin-left: 2.5vw;
-  background-color: rgba(147, 149, 152, 0.603);
-  box-shadow: 1vh 1vh rgba(0, 0, 0, 0.336);
-}
+
 /* other content container inside map container */
 #other {
   float: right;

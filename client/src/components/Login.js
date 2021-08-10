@@ -3,6 +3,8 @@ import "../App.css";
 import { useRef, useState } from "react";
 import { useAuth } from "../context/AuthContext";
 import { Link, useHistory } from "react-router-dom";
+import {Paper, Card, Button, TextField, Container } from "@material-ui/core";
+import { GoogleBtn } from "./GoogleBtn";
 
 
 const Login = ({currentUser}) => {
@@ -34,28 +36,18 @@ const Login = ({currentUser}) => {
   }
 
   return (
-    <div>
+    <Paper elevation={2} >
       <form id="Login" onSubmit={handleSubmit}>
         <h1>Log In</h1>
-        <input
-          className="loginForm"
-          type="text"
-          name="email"
-          ref={emailRef}
-          placeholder="Enter your email..."
-        />
-        <input
-          className="loginForm"
-          type="text"
-          name="password"
-          ref={passwordRef}
-          placeholder="Enter your password..."
-        />
+        <TextField id="filled-basic" label="Email" type="email" inputRef={emailRef} variant="filled" />
+        <TextField id="filled-basic" label="Password" type="password" inputRef={passwordRef} variant="filled" />
         
-        <input disabled={loading} className="loginForm" type="submit" value="Login" />
+        <Button variant="contained" color="secondary" disable={loading} type="submit" >Log in</Button >
+        <GoogleBtn />
         {passwordError && <h4>{passwordError}</h4>}
+
       </form>
-    </div>
+      </Paper>
   );
 };
 

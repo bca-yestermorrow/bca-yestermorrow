@@ -8,11 +8,8 @@ import Post from "./Post";
 
 const Connect = () => {
   const postsRef = db.collection("posts");
-  const query = postsRef.orderBy("createdAt").limit(10);
-
+  const query = postsRef.orderBy("createdAt").limitToLast(100);
   const [posts] = useCollectionData(query, { idField: "id" });
-
-  console.log(posts);
 
   return (
     <div id="connectPage">
@@ -21,7 +18,7 @@ const Connect = () => {
         <div id="mainFeed">
           {!posts && <p>Welcome Yestomorrow Alumni!</p>}
           {posts &&
-            posts.map((post, index) => <Post post={post} key={index} />)}
+            posts.reverse().map((post, index) => <Post post={post} key={index} />)}
         </div>
         <CreatePost />
       </div>

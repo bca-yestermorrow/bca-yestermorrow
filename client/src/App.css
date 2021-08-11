@@ -1,5 +1,5 @@
 /* imported custom google font */
-@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@202&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Raleway:wght@202&display=swap");
 
 * {
   margin: 0;
@@ -16,7 +16,7 @@
 #background {
   display: block;
   position: fixed;
-  background-image: url('./assets/Yestermorrow Map Pinboard.jpg');
+  background-image: url("./assets/Yestermorrow Map Pinboard.jpg");
   background-repeat: no-repeat;
   background-size: cover;
   height: 100vh;
@@ -46,7 +46,7 @@
 #form {
   width: 20vw;
   margin-left: 5vw;
-  font-family: 'Raleway', sans-serif;
+  font-family: "Raleway", sans-serif;
 }
 
 #signUpButton {
@@ -113,12 +113,12 @@
   text-align: center;
   height: 10vh;
   width: 45vw;
-  font-family: 'Raleway', sans-serif;
+  font-family: "Raleway", sans-serif;
 }
 
 /* map description on landing page */
 #mapDescription {
-  font-family: 'Raleway', sans-serif;
+  font-family: "Raleway", sans-serif;
   text-align: center;
 }
 
@@ -178,9 +178,11 @@
 
 #connectContainer {
   display: grid;
-  grid-template-columns: 15vw 60vw 25vw;
+  grid-template-columns: 15vw 60vw 20vw;
   margin: 2em;
   overflow: hidden;
+  height: 80vh;
+  background-color: rgba(0, 0, 0, 0.349);
 }
 
 #filterFeed {
@@ -189,34 +191,66 @@
 }
 
 #mainFeed {
-  justify-content: space-around;
-  border: solid black;
+  justify-content: space-between;
+  display: flex;
+  flex-direction: column;
   margin: 2em;
+  height: 75vh;
+  overflow-y: scroll;
 }
 
 #createPost {
-  background-color: rgb(153, 8, 8);
   margin: 2em;
+}
+
+.createPostName {
+  font-family: "Raleway", sans-serif;
+  font-size: 2.5em;
 }
 
 #createPostBody {
   width: 80%;
   resize: none;
-  margin: 1em;
+  height: 10vh;
 }
 
 .post {
-  background-color: rgba(0, 0, 0, 0.445);
   margin: 1em;
-  display: flex;
-  flex-direction: column;
+  padding: 1em;
+  border-bottom: solid black;
+  background-color: rgba(0, 0, 0, 0.212);
 }
 
 .postName {
-  font-size: 2.5vh;
-  font-family: 'Raleway', sans-serif;
+  font-size: 2.8vh;
+  font-family: "Raleway", sans-serif;
+  text-decoration: underline;
+  margin-bottom: 1vh;
+}
+
+.postBody {
+  font-size: 2vh;
+  margin-bottom: 2vh;
+  word-wrap: break-word;
+}
+
+.postNBC {
+  border-radius: 1vh;
+}
+
+.postType {
+  font-size: 1.5vh;
+  border-radius: 1vh;
+  margin-left: 40vw;
+}
+
+.postCategory {
+  font-size: 1.5vh;
+  border-radius: 1vh;
+  margin-left: 40vw;
 }
 
 .postDate {
-  float: right;
+  font-size: 1.3vh;
+  margin-left: 40vw;
 }

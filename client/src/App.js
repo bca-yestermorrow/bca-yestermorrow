@@ -4,7 +4,7 @@ import "./App.css";
 import { BrowserRouter, Switch, Route } from "react-router-dom"
 import {AuthProvider} from './context/AuthContext'
 import { PrivateRoute } from "./components/PrivateRoute";
-import Profile from "./components/Profile"
+import EditProfile from "./components/EditProfile"
 
 function App() {
   return (
@@ -13,7 +13,7 @@ function App() {
       <Switch>
         <Route exact path="/" component={Landing}></Route>
         <PrivateRoute path="/home" component={Home}></PrivateRoute>
-        <Route path="/profile" component={Profile}></Route>
+        <Route path="/edit-profile" component={EditProfile}></Route>
       </Switch>
     </BrowserRouter>
     </AuthProvider>

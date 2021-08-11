@@ -4,100 +4,126 @@ import { db } from "../firebase";
 import { useState, useEffect } from "react";
 import firebase from "firebase";
 
-const Profile = () => {
+const EditProfile = () => {
   const [user, setUser] = useState("");
-
+  const [categories, setCategories] = useState("");
   const { currentUser } = useAuth();
+  let categoryArray = [];
 
   const getCurrentUser = async () => {
-    let currentUserRef = await db
+    await db
       .collection("users")
-      .where("email", "==", currentUser.email)
+      .doc(currentUser.uid)
       .get()
-      .then((querySnapshot) => {
-        querySnapshot.forEach((doc) => {
+      .then((doc) => {
+        if (doc.exists) {
           // doc.data() is never undefined for query doc snapshots
-          console.log(user)
-          console.log(doc.data())
-        if (!user) {
+          console.log(user);
+          console.log(doc.data());
           setUser(doc.data());
+        } else {
+          console.log("No document");
         }
-        });
       })
-
       .catch((error) => {
         console.log("Error getting documents: ", error);
       });
   };
 
-  console.log(user);
-  useEffect(() => {
-    getCurrentUser();
-  }, []);
+  const getCategories = async () => {
+    await db
+      .collection("categories")
+      .get()
+      .then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          console.log(doc.id, " => ", doc.data());
+          categoryArray.push(doc.data());
+        });
+      });
+    setCategories(categoryArray);
+  };
 
   const handleSubmit = async (evt) => {
-    evt.preventDefault()
+    evt.preventDefault();
     let userCity = evt.target.city.value;
-    let userState = evt.target.state.value
+    let userState = evt.target.state.value;
     let userFirstName = evt.target.firstName.value;
     let userLastName = evt.target.lastName.value;
     let userBio = evt.target.bio.value;
     let userProjects = evt.target.projects.value;
     let userClasses = evt.target.classes.selectedOptions;
-    let classArray = []
+    let classArray = [];
     Array.from(userClasses).forEach((userClass) =>
       classArray.push(userClass.value)
     );
-    
+
     let userProfile = await db
       .collection("users")
-      .where("email", "==", currentUser.email)
+      .doc(currentUser.uid)
       .get()
-      .then((querySnapshot) => {
-        querySnapshot.forEach((doc) => {
-          // doc.data() is never undefined for query doc snapshots
-          //we are doing this twice, here and getCurrentUser
-          setUser(doc.data());
+      .then((doc) => {
+        // doc.data() is never undefined for query doc snapshots
+        //we are doing this twice, here and getCurrentUser
+        if (doc.exists) {
           doc.ref.update({
             firstName: !userFirstName ? user.firstName : userFirstName,
             lastName: !userLastName ? user.lastName : userLastName,
             location: {
               city: !userCity ? user.location.city : userCity,
-              state: !userState ? user.location.state : userState
+              state: !userState ? user.location.state : userState,
             },
             bio: !userBio ? user.bio : userBio,
             projects: !userProjects ? user.projects : userProjects,
             classes: !classArray ? user.classes : classArray,
           });
-          
-        });
-        
+          setUser(doc.data());
+        } else {
+          console.log("no document");
+        }
       })
+
       .catch((error) => {
         console.log("Error getting documents: ", error);
       });
-      getCurrentUser()
+    getCurrentUser();
   };
 
+  useEffect(() => {
+    getCurrentUser();
+  }, []);
+
+  useEffect(() => {
+    if (!categories) {
+      getCategories();
+    }
+  }, []);
+
+  console.log(categories);
   return (
-    <div>
+    <div className="edit-profile-container">
       {user && (
-        <div>
+        <div className="user-profile-info">
+          <div className="user-header">
           <h2>
             {user.firstName} {user.lastName}
           </h2>
-          <p>{user.email}</p>
-          <p>{user.location.city}, {user.location.state}</p>
           <p>{user.bio}</p>
-          <p>{user.projects}</p>
-          {user.classes && user.classes.map((userClass, index) => {
-            return (
-            <div>
-              <p key={index}>{userClass}</p>
-            </div>
-            )
-          })}
+          </div>
+          <div className="user-body">
+          <p>
+            {user.location.city}, {user.location.state}
+          </p>
           
+          <p>{user.projects}</p>
+          {user.classes &&
+            user.classes.map((userClass, index) => {
+              return (
+                <div>
+                  <p key={index}>{userClass}</p>
+                </div>
+              );
+            })}
+            </div>
         </div>
       )}
       <div>
@@ -107,12 +133,21 @@ const Profile = () => {
           <input type="text" name="city" placeholder="City" />
           <input type="text" name="state" placeholder="State" />
           <select id="classes" name="classes" multiple>
-            <option value="class1">class1</option>
-            <option value="class2">class2</option>
-            <option value="class3">class3</option>
+            {categories &&
+              categories.map((category, index) => {
+                return <option key={index}>{category.name}</option>;
+              })}
           </select>
-          <textarea name="bio" placeholder={user.bio ? user.bio : "Tell us about yourself"}></textarea>
-          <textarea name="projects" placeholder={user.projects ? user.projects : "What are you working on"}></textarea>
+          <textarea
+            name="bio"
+            placeholder={user.bio ? user.bio : "Tell us about yourself"}
+          ></textarea>
+          <textarea
+            name="projects"
+            placeholder={
+              user.projects ? user.projects : "What are you working on"
+            }
+          ></textarea>
           <input type="submit" />
         </form>
       </div>
@@ -120,4 +155,4 @@ const Profile = () => {
   );
 };
 
-export default Profile;
+export default EditProfile;

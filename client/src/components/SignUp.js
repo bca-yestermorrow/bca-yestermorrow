@@ -38,14 +38,8 @@ const SignUp = ({ handleSignUpClose }) => {
 
     try {
       setPasswordError("");
-      await signup(emailRef.current.value, passwordRef.current.value);
-      const userCollection = await db.collection("users")
+      await signup(emailRef.current.value, passwordRef.current.value, firstNameRef.current.value, lastNameRef.current.value);
       //saving user to the database
-      userCollection.add({
-        firstName: firstNameRef.current.value,
-        lastName: lastNameRef.current.value,
-        email: emailRef.current.value,
-      });
       history.push("/home");
     } catch {
       setPasswordError("Invalid Email");

@@ -1,69 +1,27 @@
 import React from "react";
+import "../App.css";
 import { useState, useEffect } from "react";
 import { db } from "../firebase";
 import CreatePost from "./CreatePost";
+import { useCollectionData } from "react-firebase-hooks/firestore";
+import Post from "./Post";
 
 const Connect = () => {
-  const [posts, setPosts] = useState([]);
-  const [postUpdate, setPostUpdate] = useState(0);
+  const postsRef = db.collection("posts");
+  const query = postsRef.orderBy("createdAt").limit(10);
 
-  // add a listener  when Connect component is mounted
-  // useEffect(() => {
-  //   let postsRef = db.ref("posts");
-  //   postsRef.on("value", (snapshot) => {
-  //     if (snapshot.exists()) {
-  //       const data = snapshot.val();
-  //       console.log(data);
+  const [posts] = useCollectionData(query, { idField: "id" });
 
-  //       if (!data) {
-  //         setPostUpdate(postUpdate + 1);
-  //       }
-  //     }
-  //   });
-  //   db.collection("posts").where("user", "==", true).onSnapshot((snapshot) => {
-  //     snapshot.docChanges().forEach((change) => {
-  //       if (change.type === "added") {
-  //         setPostUpdate(postUpdate + 1)
-  //         console.log("post updated");
-  //       }
-  //     });
-  //   });
-  // }, []);
-
-  useEffect(() => {
-    if (posts.length === 0) {
-      db.collection("posts")
-        .get()
-        .then((querySnapshot) => {
-          let postArr = [];
-          querySnapshot.forEach((doc) => {
-            postArr.push({
-              user: doc.data().user,
-              body: doc.data().body,
-              category: doc.data().category,
-            });
-          });
-          setPosts(postArr);
-        });
-    }
-  }, [posts.length, postUpdate]);
+  console.log(posts);
 
   return (
     <div id="connectPage">
       <div id="connectContainer">
         <div id="filterFeed"></div>
         <div id="mainFeed">
-          {posts.length === 0 && <p>Welcome Yestomorrow Alumni!</p>}
-          {posts.length > 0 &&
-            posts.map((post, index) => (
-              <div className="post" key={index}>
-                <p>
-                  {post.user.firstName} {post.user.lastName}
-                </p>
-                <p>{post.body}</p>
-                <p>{post.category}</p>
-              </div>
-            ))}
+          {!posts && <p>Welcome Yestomorrow Alumni!</p>}
+          {posts &&
+            posts.map((post, index) => <Post post={post} key={index} />)}
         </div>
         <CreatePost />
       </div>

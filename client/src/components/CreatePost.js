@@ -46,11 +46,14 @@ const CreatePost = () => {
           firstName: firstName,
           lastName: lastName,
         },
+        createdAt: Date(),
+        
       });
     } catch (err) {
       setError("Sorry, please try again.");
       console.log(err);
     }
+    //want to clear fields after create post button is clicked (control values on form)
   }
 
   return (
@@ -59,7 +62,7 @@ const CreatePost = () => {
       {lastName && <h3>{lastName}</h3>}
       <form id="createPostForm" onSubmit={handlePostSubmit}>
         <textarea
-          id="postBody"
+          id="createPostBody"
           type="text"
           name="body"
           placeholder="Post message..."

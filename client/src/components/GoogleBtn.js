@@ -1,8 +1,6 @@
 import React from 'react'
 import { useAuth } from '../context/AuthContext'
 import {GoogleLoginButton} from "react-social-login-buttons"
-import { Paper } from '@material-ui/core'
-import { fontSize } from '@material-ui/system'
 
 
 export const GoogleBtn = () => {

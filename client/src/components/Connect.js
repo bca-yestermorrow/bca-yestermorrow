@@ -39,12 +39,7 @@ const Connect = () => {
     <div id="connectContainer">
       <FilterFeed ></FilterFeed>
    <div id="mainfeed">
-      {posts.map((post)=> (
-        <div>
-        <p>{post.category}</p>
-        <p>{post.body}</p>
-        </div>
-      ))}
+     
    </div>
       
     </div>

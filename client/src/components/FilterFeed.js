@@ -44,7 +44,7 @@ export const FilterFeed = () => {
 
     console.log(e.currentTarget.checked);
     if (e.currentTarget.checked === true) {
-      setChecked(true);
+      setChecked(!checked);
 
       // add a filter tag
       newArr = [...category, e.currentTarget.value];
@@ -52,7 +52,7 @@ export const FilterFeed = () => {
 
       console.log(newArr);
     } else {
-      setChecked(false);
+      setChecked(!checked);
 
       // remove a filter tag
       let tmpCategories = category;

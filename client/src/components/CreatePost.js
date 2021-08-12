@@ -23,7 +23,7 @@ const CreatePost = () => {
   const [image, setImage] = useState(null);
   const [imageUrl, setImageUrl] = useState("");
   const [typePost, setTypePost] = useState("");
-  const [catPost, setCatPost] = useState([])
+  const [catPost, setCatPost] = useState([]);
 
   useEffect(() => {
     db.collection("users")
@@ -111,8 +111,8 @@ const CreatePost = () => {
       console.log(err);
     }
     e.target.body.value = "";
-    setTypePost("")
-    setCatPost([])
+    setTypePost("");
+    setCatPost([]);
   }
 
   function handleTypeSelect(e) {
@@ -120,7 +120,7 @@ const CreatePost = () => {
   }
 
   function handleCatSelect(e) {
-    setCatPost(e.target.value)
+    setCatPost(e.target.value);
   }
 
   return (
@@ -171,14 +171,20 @@ const CreatePost = () => {
         </h4>
         <FormControl>
           <InputLabel>Category:</InputLabel>
-        <Select className="postSelect" name="category" multiple value={catPost} onChange={handleCatSelect}>
-          {categories &&
-            categories.map((cat) => (
-              <MenuItem key={cat} value={cat}>
-                {cat}
-              </MenuItem>
-            ))}
-        </Select>
+          <Select
+            className="postSelect"
+            name="category"
+            multiple
+            value={catPost}
+            onChange={handleCatSelect}
+          >
+            {categories &&
+              categories.map((cat) => (
+                <MenuItem key={cat} value={cat}>
+                  {cat}
+                </MenuItem>
+              ))}
+          </Select>
         </FormControl>
         <input
           type="submit"

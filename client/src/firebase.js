@@ -1,6 +1,7 @@
 import firebase from 'firebase/app'
 import "firebase/auth"
 import "firebase/firestore"
+import "firebase/storage"
 
 
 
@@ -21,3 +22,5 @@ export const provider = new firebase.auth.GoogleAuthProvider();
 export const db = firebase.firestore()
 export const auth = firebaseApp.auth()
 export default firebaseApp
+export const storage = firebase.storage()
+export const storageRef = storage.ref()

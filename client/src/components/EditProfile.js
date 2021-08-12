@@ -2,13 +2,20 @@ import React from "react";
 import { useAuth } from "../context/AuthContext";
 import { db } from "../firebase";
 import { useState, useEffect } from "react";
-import firebase from "firebase";
+import TextField from "@material-ui/core/TextField";
+import Button from "@material-ui/core/Button";
+import Select from "@material-ui/core/Select";
+import MenuItem from "@material-ui/core/MenuItem";
+import Input from "@material-ui/core/Input";
+import ProfilePicture from "./ProfilePicture";
 
 const EditProfile = () => {
   const [user, setUser] = useState("");
   const [categories, setCategories] = useState("");
+  const [categoryName, setCategoryName] = useState([]);
   const { currentUser } = useAuth();
   let categoryArray = [];
+  let classArray;
 
   const getCurrentUser = async () => {
     await db
@@ -45,18 +52,18 @@ const EditProfile = () => {
 
   const handleSubmit = async (evt) => {
     evt.preventDefault();
-    let userCity = evt.target.city.value;
-    let userState = evt.target.state.value;
+    // let userCity = evt.target.city.value;
+    // let userState = evt.target.state.value;
     let userFirstName = evt.target.firstName.value;
     let userLastName = evt.target.lastName.value;
     let userBio = evt.target.bio.value;
     let userProjects = evt.target.projects.value;
-    let userClasses = evt.target.classes.selectedOptions;
-    let classArray = [];
+    let userClasses = categoryName
+    classArray = [];
     Array.from(userClasses).forEach((userClass) =>
       classArray.push(userClass.value)
     );
-
+    console.log(classArray)
     let userProfile = await db
       .collection("users")
       .doc(currentUser.uid)
@@ -68,13 +75,13 @@ const EditProfile = () => {
           doc.ref.update({
             firstName: !userFirstName ? user.firstName : userFirstName,
             lastName: !userLastName ? user.lastName : userLastName,
-            location: {
-              city: !userCity ? user.location.city : userCity,
-              state: !userState ? user.location.state : userState,
-            },
+            // location: {
+            //   city: !userCity ? user.location.city : userCity,
+            //   state: !userState ? user.location.state : userState,
+            // },
             bio: !userBio ? user.bio : userBio,
             projects: !userProjects ? user.projects : userProjects,
-            classes: !classArray ? user.classes : classArray,
+            classes: !categoryName ? user.classes : categoryName,
           });
           setUser(doc.data());
         } else {
@@ -86,6 +93,11 @@ const EditProfile = () => {
         console.log("Error getting documents: ", error);
       });
     getCurrentUser();
+    setCategoryName([])
+  };
+
+  const handleChange = (evt) => {
+    setCategoryName(evt.target.value);
   };
 
   useEffect(() => {
@@ -97,58 +109,96 @@ const EditProfile = () => {
       getCategories();
     }
   }, []);
-
+  console.log(categoryName)
   console.log(categories);
   return (
     <div className="edit-profile-container">
       {user && (
         <div className="user-profile-info">
           <div className="user-header">
-          <h2>
-            {user.firstName} {user.lastName}
-          </h2>
-          <p>{user.bio}</p>
+            <h2>
+              {user.firstName} {user.lastName}
+            </h2>
+            <p>{user.bio}</p>
           </div>
           <div className="user-body">
-          <p>
-            {user.location.city}, {user.location.state}
-          </p>
-          
-          <p>{user.projects}</p>
-          {user.classes &&
-            user.classes.map((userClass, index) => {
-              return (
-                <div>
-                  <p key={index}>{userClass}</p>
-                </div>
-              );
-            })}
-            </div>
+            <p>
+              {user.location.city}, {user.location.state}
+            </p>
+
+            <p>{user.projects}</p>
+            {user.classes &&
+              user.classes.map((userClass, index) => {
+                return (
+                  <div>
+                    <p key={index}>{userClass}</p>
+                  </div>
+                );
+              })}
+          </div>
         </div>
       )}
       <div>
-        <form id="profile-form" onSubmit={handleSubmit}>
-          <input type="text" name="firstName" placeholder="First Name" />
-          <input type="text" name="lastName" placeholder="Last Name" />
-          <input type="text" name="city" placeholder="City" />
-          <input type="text" name="state" placeholder="State" />
-          <select id="classes" name="classes" multiple>
+        <form className="edit-profile-form" onSubmit={handleSubmit} autoComplete="off">
+          <TextField
+            id="profile-firstName"
+            label={user.firstName}
+            name="firstName"
+            variant="outlined"
+          />
+          <TextField
+            id="profile-lastName"
+            label={user.lastName}
+            name="lastName"
+            variant="outlined"
+          />
+          {/* <TextField
+            id="profile=city"
+            label={user.location.city}
+            name="city"
+            variant="outlined"
+          />
+          <TextField
+            id="profile-state"
+            label={user.location.state}
+            name="state"
+            variant="outlined"
+          /> */}
+          <Select
+            id="profile-interests"
+            onChange={handleChange}
+            value={categoryName}
+            input={<Input />}
+            name="classes"
+            multiple
+          >
             {categories &&
-              categories.map((category, index) => {
-                return <option key={index}>{category.name}</option>;
+              categories.map((category) => {
+                return <MenuItem key={category.name} value={category.name}>{category.name}</MenuItem>;
               })}
-          </select>
-          <textarea
+          </Select>
+          <TextField
+            id="profile-bio"
+            label={user.bio}
             name="bio"
-            placeholder={user.bio ? user.bio : "Tell us about yourself"}
-          ></textarea>
-          <textarea
+            variant="outlined"
+          />
+          <TextField
+            id="profile-projects"
+            label={user.projects}
             name="projects"
-            placeholder={
-              user.projects ? user.projects : "What are you working on"
-            }
-          ></textarea>
-          <input type="submit" />
+            variant="outlined"
+          />
+          {/* <ProfilePicture imageURL={setImageURL}/> */}
+          <Button
+            id="profile-submit"
+            className="buttons"
+            color="green"
+            variant="contained"
+            type="submit"
+          >
+            Submit
+          </Button>
         </form>
       </div>
     </div>

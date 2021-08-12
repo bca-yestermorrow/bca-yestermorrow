@@ -187,10 +187,26 @@
 }
 
 .user-profile-info {
+  margin: 10px;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   grid-template-rows: 1fr 1fr;
   grid-template-areas: 
   "header main main"
   ". main main";
+}
+
+.user-header {
+  grid-area: "header"
+}
+
+.user-body {
+  grid-area: "main"
+}
+
+.edit-profile-form {
+  margin: 10px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto;
 }

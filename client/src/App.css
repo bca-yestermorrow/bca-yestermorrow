@@ -217,6 +217,7 @@
 .post {
   margin: 1em;
   padding: 1em;
+  max-height: 10vw;
   border-bottom: solid black;
   background-color: rgba(0, 0, 0, 0.212);
 }

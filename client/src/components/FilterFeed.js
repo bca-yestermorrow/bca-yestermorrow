@@ -6,43 +6,63 @@ import { useState, useEffect } from "react";
 import { db } from "../firebase";
 import firebaseApp from "../firebase";
 
+
 import CheckBoxOutlineBlankIcon from "@material-ui/icons/CheckBoxOutlineBlank";
 import CheckBoxIcon from "@material-ui/icons/CheckBox";
 
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
 
-export const FilterFeed = () => {
-  const [category, setCategory] = useState(["General"]);
-  const [posts, setPosts] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [categoryList, setCategoryList] = useState({});
-  const [checked, setChecked] = useState(false);
+export const FilterFeed = ({setChecked, setCategory, checked, category}) => {
+  // const [category, setCategory] = useState(["General"]);
+  // const [posts, setPosts] = useState([]);
+  const [categoryList, setCategoryList] = useState([])
+  useEffect(()=>{
+    let updatedCatagoreys = []
+    db
+    .collection("categories")
+    .get()
+    .then((querySnap) =>{
+      querySnap.forEach((doc) =>{
+        updatedCatagoreys.push(doc.data())
+      })
+      setCategoryList(updatedCatagoreys)
+    })
+   console.log(categoryList)
+  }, [])
 
-  useEffect(() => {
-    setLoading(true);
-    console.log("Category changed...");
-    const unsub = db
-      .collection("posts")
-      .where("category", "array-contains-any", category)
-      .onSnapshot((querysnap) => {
-        const updatedPosts = querysnap.docs.map((doc) => ({
-          id: doc.id,
+  
+  // const [checked, setChecked] = useState(false);
 
-          ...doc.data(),
-        }));
-        setPosts(updatedPosts);
-      });
-    setLoading(false);
-    return () => unsub();
-  }, [category, checked]);
+  // useEffect(() => {
+  //   setLoading(true);
+  //   console.log("Category changed...");
+  //   const unsub = db
+  //     .collection("posts")
+  //     .where("category", "array-contains-any", category)
+  //     .onSnapshot((querysnap) => {
+  //       const updatedPosts = querysnap.docs.map((doc) => ({
+  //         id: doc.id,
+
+  //         ...doc.data(),
+  //       }));
+  //       setPosts(updatedPosts);
+  //     });
+  //   setLoading(false);
+  //   return () => unsub();
+  // }, [category, checked]);
 
   function onChangeHandler(e) {
     // console.log('onChangeHandler', e)
+    if(category.length > 9){
+      e.currentTarget.checked = false
+      return console.log("cant be more than 10")
+    }
 
     let newArr = [];
+    console.log("in")
 
-    console.log(e.currentTarget.checked);
+    console.log(e.currentTarget.value);
     if (e.currentTarget.checked === true) {
       setChecked(!checked);
 
@@ -67,26 +87,24 @@ export const FilterFeed = () => {
   }
 
   return (
-    <Card>
+    <Card id="filterFeed">
       <h2>Filter By Tags</h2>
-      <Checkbox
+   
+
+      {categoryList.map((cat, index) => (
+        <div index={index}>
+        <Checkbox 
         onChange={(e) => onChangeHandler(e)}
-        value="Tiny Houses"
-        label="Tiny Houses"
-      ></Checkbox>
-      Tiny House
-      <Checkbox
-        onChange={(e) => onChangeHandler(e)}
-        value="Tree Houses"
-        label="Tree Houses"
-      ></Checkbox>
-      Tree House
-      <ul>
-        {posts.map((post) => (
-          <li key={post.id}>{post.category}</li>
+        value={cat.name}
+         /> {cat.name}
+         </div>
+      ))}
+      {/* <ul>
+        {categoryList.map((catagorey) => (
+          <li key={catagorey.id}>{catagorey.name}</li>
         ))}
-      </ul>
-      {categoryList.length > 0 && (
+      </ul> */}
+      {/* {categoryList.length > 0 && (
         <Autocomplete
           multiple
           id="checkboxes-tags-demo"
@@ -95,13 +113,18 @@ export const FilterFeed = () => {
           getOptionLabel={(option) => option.name}
           renderOption={(option, { selected }) => (
             <React.Fragment>
+              
               <Checkbox
                 icon={icon}
+               
                 checkedIcon={checkedIcon}
                 style={{ marginRight: 8 }}
                 checked={selected}
+                value={option.name}
+                onChange={(e) => onChangeHandler(e)}
               />
-              {option.title}
+              {console.log(option.value)}
+              {option.name}
             </React.Fragment>
           )}
           style={{ width: 500 }}
@@ -114,7 +137,7 @@ export const FilterFeed = () => {
             />
           )}
         />
-      )}
+      )} */}
     </Card>
   );
 };

@@ -1,70 +1,58 @@
+import { useContext, useEffect, useState } from "react";
+import React from "react";
+import { auth } from "../firebase";
+import { provider } from "../firebase";
 
-import { useContext, useEffect, useState } from 'react'
-import React from 'react'
-import {auth} from '../firebase'
-import { provider } from '../firebase'
-
-
-
-const AuthContext = React.createContext()
-
+const AuthContext = React.createContext();
 
 export function useAuth() {
-    return useContext(AuthContext)
+  return useContext(AuthContext);
 }
 
-export const AuthProvider = ({children}) => {
-    const [currentUser, setCurrentUser] = useState(null)
-    //needs this because
-    const [loading, setLoading] = useState(true)
+export const AuthProvider = ({ children }) => {
+  const [currentUser, setCurrentUser] = useState(null);
+  //needs this because
+  const [loading, setLoading] = useState(true);
 
-    
-    const value = {
-        currentUser,
-        signup,
-        login,
-        signout,
-        googlesignin,
-    }
+  const value = {
+    currentUser,
+    signup,
+    login,
+    signout,
+    googlesignin,
+  };
 
-    function login(email, password) {
-        return auth.signInWithEmailAndPassword(email, password)
-    }
+  function login(email, password) {
+    return auth.signInWithEmailAndPassword(email, password);
+  }
 
-    function signup(email, password) {
-        return auth.createUserWithEmailAndPassword(email, password)
-    }
+  function signup(email, password) {
+    return auth.createUserWithEmailAndPassword(email, password);
+  }
 
-    function signout() {
-        return auth.signOut()
-    }
+  function signout() {
+    return auth.signOut();
+  }
 
-    function googlesignin(){
-        return auth.signInWithPopup(provider)
-    }
+  function googlesignin() {
+    return auth.signInWithPopup(provider);
+  }
 
-    //notifies
-    useEffect(() =>{
-        const unsubscribe = auth.onAuthStateChanged(user => {
-            setCurrentUser(user)
-            setLoading(false)
-            console.log(user)
-            
-        })
+  //notifies
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      setCurrentUser(user);
+      setLoading(false);
+      // console.log(user);
+    });
 
-        return unsubscribe
-    }, [])
+    return unsubscribe;
+  }, []);
 
- 
-    
-
-    //only want this running when mounting component 
-    return (
-        <AuthContext.Provider value={value}>
-            {!loading && children}
-        </AuthContext.Provider>
-         
-    )
-}
-
-
+  //only want this running when mounting component
+  return (
+    <AuthContext.Provider value={value}>
+      {!loading && children}
+    </AuthContext.Provider>
+  );
+};

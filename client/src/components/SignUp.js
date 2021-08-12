@@ -18,7 +18,7 @@ const SignUp = ({ handleSignUpClose }) => {
   const [loading, setLoading] = useState(false);
   const history = useHistory();
 
-  const passwordValidation = new RegExp(/(?=.*\d)(?=.*[A-Z])(?=.*?[!@#\$&*~])/)
+  const passwordValidation = new RegExp(/(?=.*\d)(?=.*[A-Z])(?=.*?[!@#\$&*~])/);
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -27,14 +27,15 @@ const SignUp = ({ handleSignUpClose }) => {
       return setPasswordError("Passwords do not match");
     }
 
-    if(firstNameRef.current.value === '' || lastNameRef.current.value === ''){
-      return setPasswordError("Please enter your first and last name")
+    if (firstNameRef.current.value === "" || lastNameRef.current.value === "") {
+      return setPasswordError("Please enter your first and last name");
     }
 
-    if(!passwordValidation.test(passwordRef.current.value)){
-      return setPasswordError("password must contain atleast one number, atleast one symbol, and be atleast 6 characters long ")
+    if (!passwordValidation.test(passwordRef.current.value)) {
+      return setPasswordError(
+        "password must contain at least one number, at least one symbol, and be at least 6 characters long "
+      );
     }
-
 
     try {
       setPasswordError("");

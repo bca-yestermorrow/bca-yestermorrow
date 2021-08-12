@@ -1,49 +1,29 @@
 import React from "react";
-import { useState, useEffect } from "react";
+import "../App.css";
 import { db } from "../firebase";
 import CreatePost from "./CreatePost";
-import { FilterFeed } from "./FilterFeed";
+import { useCollectionData } from "react-firebase-hooks/firestore";
+import Post from "./Post";
 
 const Connect = () => {
-  const [posts, setPosts] = useState([]);
-  const [postModal, setPostModal] = useState(false);
-  const [loading, setLoading] = useState(false)
-
-  useEffect(() => {
-    if (posts.length ===0) {
-      
- 
-      db.collection("posts")
-        .get()
-        .then((querySnapshot) => {
-          
-          let postArr = [];
-          querySnapshot.forEach((doc) => {
-            postArr.push({
-              user: doc.data().user,
-              body: doc.data().body,
-              category: doc.data().category,
-            })
-            ;
-            console.log(posts)
-          });
-          setPosts(postArr)
-        });
-    }
-    setLoading(false)
-  });
-
+  const postsRef = db.collection("posts");
+  const query = postsRef.orderBy("createdAt").limitToLast(100);
+  const [posts] = useCollectionData(query, { idField: "id" });
 
   return (
     <div id="connectPage">
-    <div id="connectContainer">
-      <FilterFeed ></FilterFeed>
-   <div id="mainfeed">
-     
-   </div>
-      
+      <div id="connectContainer">
+        <div id="filterFeed"></div>
+        <div id="mainFeed">
+          {!posts && <p>Welcome Yestomorrow Alumni!</p>}
+          {posts &&
+            posts
+              .reverse()
+              .map((post, index) => <Post post={post} key={index} />)}
+        </div>
+        <CreatePost />
+      </div>
     </div>
-  </div>
   );
 };
 

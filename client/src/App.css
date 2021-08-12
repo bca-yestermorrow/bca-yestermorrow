@@ -176,14 +176,13 @@
 
 /* Connect & Collab Page */
 
-#connectPage {
-  overflow-x: hidden;
-}
-
 #connectContainer {
   display: grid;
-  grid-template-columns: 15em 80em 20em;
+  grid-template-columns: 15vw 60vw 20vw;
   margin: 2em;
+  overflow: hidden;
+  height: 80vh;
+  background-color: rgba(0, 0, 0, 0.349);
 }
 
 #filterFeed {
@@ -192,12 +191,66 @@
 }
 
 #mainFeed {
-  border: solid black;
+  justify-content: space-between;
+  display: flex;
+  flex-direction: column;
   margin: 2em;
-  height: 80vh;
+  height: 75vh;
+  overflow-y: scroll;
 }
 
 #createPost {
-  background-color: rgb(153, 8, 8);
-  height: 20em;
+  margin: 2em;
+}
+
+.createPostName {
+  font-family: "Raleway", sans-serif;
+  font-size: 2.5em;
+}
+
+#createPostBody {
+  width: 80%;
+  resize: none;
+  height: 10vh;
+}
+
+.post {
+  margin: 1em;
+  padding: 1em;
+  border-bottom: solid black;
+  background-color: rgba(0, 0, 0, 0.212);
+}
+
+.postName {
+  font-size: 2.8vh;
+  font-family: "Raleway", sans-serif;
+  text-decoration: underline;
+  margin-bottom: 1vh;
+}
+
+.postBody {
+  font-size: 2vh;
+  margin-bottom: 2vh;
+  word-wrap: break-word;
+}
+
+.postNBC {
+  border-radius: 1vh;
+}
+
+.postType {
+  font-size: 1.5vh;
+  border-radius: 1vh;
+  margin-left: 40vw;
+}
+
+.postCategory {
+  font-size: 1.5vh;
+  border-radius: 1vh;
+  margin-left: 40vw;
+}
+
+.postDate {
+  font-size: 1.3vh;
+  margin-left: 40vw;
 }

@@ -122,9 +122,9 @@ const EditProfile = () => {
             <p>{user.bio}</p>
           </div>
           <div className="user-body">
-            <p>
+            {/* <p>
               {user.location.city}, {user.location.state}
-            </p>
+            </p> */}
 
             <p>{user.projects}</p>
             {user.classes &&

@@ -52,7 +52,7 @@ const Landing = () => {
           {/* check this out container with map and other content */}
           <Card >
             
-         
+          
            
               <Map />
               {/* <div id="other">OTHER CONTENT</div> */}

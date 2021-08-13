@@ -5,6 +5,7 @@ import { MapContainer, TileLayer, Marker } from 'react-leaflet'
 import L, { map } from 'leaflet'
 import icon from 'leaflet/dist/images/marker-icon.png'
 import shadow from 'leaflet/dist/images/marker-shadow.png'
+import { CircularProgress } from '@material-ui/core'
 
 const leafIcon = L.icon({
   iconUrl: icon,
@@ -38,20 +39,34 @@ const Map = () => {
   }
 
   return (
-   
+    
+    
     <MapContainer
       style={{ height: '100%', width: '50vw' }}
-      zoom={13}
+      zoom={5}
       scrollWheelZoom={false}
       center={[44.149398498395676, -72.83771521960242]}
     >
       {/* Insert map markers: */}
-      {lnglats.length > 0 ? lnglats : 'Loading...'}
-
+      {lnglats.length ? (
+        <>
+        
+         
       <TileLayer
         attribution=''
         url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
       />
+      {lnglats}
+        </>
+      ) : (
+       <CircularProgress style={{zIndex: "5000"}}color="secondary" />
+      )}
+      
+      {/* <TileLayer
+        attribution=''
+        url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
+      /> */}
+     
     </MapContainer>
   )
 }

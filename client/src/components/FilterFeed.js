@@ -1,6 +1,5 @@
 import React from "react";
 import { Chip, Card, Avatar, Checkbox, TextField } from "@material-ui/core";
-import Autocomplete from "@material-ui/lab/Autocomplete";
 import AcUnitIcon from "@material-ui/icons/AcUnit";
 import { useState, useEffect } from "react";
 import { db } from "../firebase";

@@ -39,10 +39,9 @@
 }
 /* body container for landing page */
 #mainLanding {
-  margin-top:1.5vw ;
- display: flex;
- justify-content: space-around;
- 
+  margin-top: 1.5vw;
+  display: flex;
+  justify-content: space-around;
 }
 /* form container holding both sign up and log in */
 #form {
@@ -60,10 +59,9 @@
   display: flex;
   flex-direction: column;
   padding: 2vw;
-  
 }
 /* class style for sign in form inputs */
-.signForm{
+.signForm {
   width: 25vw;
 }
 /* in between both forms */
@@ -187,8 +185,8 @@
 }
 
 #mainFeed {
-  justify-content: space-between;
   display: flex;
+  justify-content: flex-start;
   flex-direction: column;
   margin: 2em;
   height: 70vh;
@@ -277,11 +275,11 @@
 }
 
 #postInfo {
-  display:flex;
+  display: flex;
   flex-direction: row;
   justify-content: space-around;
 }
- 
+
 .postType {
   font-size: 1.5vh;
   border-radius: 1vh;

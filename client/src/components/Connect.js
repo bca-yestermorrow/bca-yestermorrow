@@ -9,7 +9,7 @@ import { useState, useEffect } from "react";
 
 const Connect = () => {
 
-  //NEED TO ORDER POSTS!!!
+  // NEED TO ORDER POSTS!!!
   // const postsRef = db.collection("posts");
   // const query = postsRef.orderBy("createdAt").limitToLast(100);
   // const [posts] = useCollectionData(query, { idField: "id" });

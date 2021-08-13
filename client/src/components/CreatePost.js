@@ -20,7 +20,7 @@ const CreatePost = () => {
   const [error, setError] = useState("");
   const { currentUser } = useAuth();
   const [categories, setCategories] = useState([]);
-  const [image, setImage] = useState(null);
+  const [image, setImage] = useState("");
   const [imageUrl, setImageUrl] = useState("");
   const [typePost, setTypePost] = useState("");
   const [catPost, setCatPost] = useState([]);
@@ -141,16 +141,12 @@ const CreatePost = () => {
           name="body"
           placeholder="Post message..."
         ></TextField>
-        <h4 className="createPostSections" style={{ color: "red" }}>
-          Add Then Set Image:
-        </h4>
+        <h4 className="createPostSections">Add Then Set Image:</h4>
         <input type="file" onChange={handleInsertImage} />
         <Button id="setImageButton" onClick={handleSetImage}>
           Set Image
         </Button>
-        <h4 className="createPostSections" style={{ color: "red" }}>
-          Required:
-        </h4>
+        <h4 className="createPostSections">Required:</h4>
         <FormControl>
           <InputLabel>Type Of Post:</InputLabel>
           <Select
@@ -166,9 +162,7 @@ const CreatePost = () => {
             <MenuItem value="Project Update">Project Update</MenuItem>
           </Select>
         </FormControl>
-        <h4 className="createPostSections" style={{ color: "red" }}>
-          Select Category tags:
-        </h4>
+        <h4 className="createPostSections">Select Category tags:</h4>
         <FormControl>
           <InputLabel>Category:</InputLabel>
           <Select
@@ -186,12 +180,14 @@ const CreatePost = () => {
               ))}
           </Select>
         </FormControl>
-        <input
+        <Button
           type="submit"
           className="buttons"
           id="postButton"
           value="Create Post"
-        />
+        >
+          Create Post
+        </Button>
       </form>
       {error && error}
     </div>

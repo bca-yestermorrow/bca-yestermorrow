@@ -30,27 +30,6 @@ export const FilterFeed = ({setChecked, setCategory, checked, category}) => {
    console.log(categoryList)
   }, [])
 
-  
-  // const [checked, setChecked] = useState(false);
-
-  // useEffect(() => {
-  //   setLoading(true);
-  //   console.log("Category changed...");
-  //   const unsub = db
-  //     .collection("posts")
-  //     .where("category", "array-contains-any", category)
-  //     .onSnapshot((querysnap) => {
-  //       const updatedPosts = querysnap.docs.map((doc) => ({
-  //         id: doc.id,
-
-  //         ...doc.data(),
-  //       }));
-  //       setPosts(updatedPosts);
-  //     });
-  //   setLoading(false);
-  //   return () => unsub();
-  // }, [category, checked]);
-
   function onChangeHandler(e) {
     // console.log('onChangeHandler', e)
     if(category.length > 9){

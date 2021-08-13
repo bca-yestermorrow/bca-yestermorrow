@@ -6,12 +6,14 @@ import TextField from "@material-ui/core/TextField";
 
 const Post = ({ post }) => {
   const [comment, setComment] = useState("");
-
+  //KEEP COMMENTS AFTER POSTING
   function handleComment(e) {
     e.preventDefault();
     setComment(e.target.comment.value);
     e.target.comment.value = "";
   }
+
+  console.log(post.imageUrl);
 
   return (
     <div className="post">
@@ -21,6 +23,8 @@ const Post = ({ post }) => {
         </p>
         <p className="postBody">{post.body}</p>
         <img src={post.imageUrl} alt={post.imageUrl} />
+      </div>
+      <div id="postInfo">
         <p className="postType">Type of post: {post.type}</p>
         <p className="postCategory">
           Category Tags:{" "}

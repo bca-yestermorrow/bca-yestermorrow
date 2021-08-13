@@ -1,38 +1,322 @@
-.App {
+/* imported custom google font */
+@import url("https://fonts.googleapis.com/css2?family=Raleway:wght@202&display=swap");
+
+* {
+  margin: 0;
+}
+
+/* LANDING PAGE */
+
+/* entire landing page */
+#landing {
+  overflow: hidden;
+  z-index: 1;
+}
+/* background for landing page and home page */
+#background {
+  display: block;
+  position: fixed;
+  background-color: #a9a9a9;
+  background-size: cover;
+  height: 100vh;
+  width: 100vw;
+  filter: blur(5px);
+  z-index: -1;
+}
+/* landing page header */
+#header {
+  position: absolute;
+  width: 90vw;
+  height: 5vh;
+  padding: 2.5vh;
+  font-size: 5vh;
+}
+/* yestermorrow logo for header on landing page */
+#yesterLogo {
+  float: left;
+  height: 12vh;
+  width: 8vw;
+}
+/* body container for landing page */
+#mainLanding {
+  margin-top:1.5vw ;
+ display: flex;
+ justify-content: space-around;
+ 
+}
+/* form container holding both sign up and log in */
+#form {
+  width: 30vw;
+  margin-left: 5vw;
+  font-family: "Raleway", sans-serif;
+}
+
+#signUpButton {
+  margin-left: 8vw;
+  margin-bottom: 2vh;
+}
+/* landing page sign up form */
+#Signup {
+  display: flex;
+  flex-direction: column;
+  padding: 2vw;
+  
+}
+/* class style for sign in form inputs */
+.signForm{
+  width: 25vw;
+}
+/* in between both forms */
+#or {
+  text-align: center;
+  margin: 1vw;
+}
+/* landing page log in form */
+#Login {
+  display: flex;
+  flex-direction: column;
+  padding: 2vw;
+}
+/* class style for log in form inputs */
+/* landing page check this out container */
+#checkItOut {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  width: 45vw;
+  float: right;
+  margin-right: 10vw;
+  margin-top: 10vh;
+  height: 60vh;
+}
+/* landing page check this out title */
+#checkTitle {
+  text-align: center;
+  height: 10vh;
+  width: 45vw;
+  font-family: "Raleway", sans-serif;
+}
+
+/* map description on landing page */
+#mapDescription {
+  font-family: "Raleway", sans-serif;
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+/* map container inside check this out container */
+
+/* other content container inside map container */
+#other {
+  float: right;
+  width: 15vw;
+  height: 40vh;
+  border-left: solid black;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+/* HOME PAGE STYLING */
+
+#mainHome {
+  overflow: hidden;
+  z-index: 1;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+#home {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+#homeHeader {
+  width: 100vw;
+  height: 5vh;
+  padding: 2.5vh;
+  font-size: 5vh;
+}
+
+/* job container */
+#jobs {
+  border: solid black;
+  margin-top: 15vh;
+  height: 35em;
+  width: 40em;
+}
+
+#connect {
+  border: solid black;
+  margin-top: 15vh;
+  height: 35em;
+  width: 40em;
+}
+
+/* Connect & Collab Page */
+
+#connectPage {
+  background-color: #e9eaeb;
+  height: 100vh;
+}
+
+#connectHeader {
+  background-color: #384c5c;
+  height: 7em;
+  color: white;
+  text-align: center;
+}
+
+#connectTitle {
+  padding-top: 1em;
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
+#connectContainer {
+  display: grid;
+  grid-template-columns: 20vw 55vw 20vw;
+  margin: 2em;
+  overflow: hidden;
+  height: 80vh;
+  background-color: white;
+  box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.596);
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+#filterFeed {
+  margin: 2em;
+  background-color: #ffffff;
+  border-radius: 1.5em;
+  box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.596);
+  padding-left: 1em;
+  overflow-y: scroll;
+}
+
+#mainFeed {
+  justify-content: space-between;
+  display: flex;
+  flex-direction: column;
+  margin: 2em;
+  height: 70vh;
+  overflow-y: scroll;
+  background-color: #ffffff;
+}
+
+#createPost {
+  margin: 2em;
+  background-color: #ffffff;
+  border-radius: 2em;
+  box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.596);
+  overflow-x: hidden;
+}
+
+#createPostTitle {
+  text-align: center;
+  text-decoration: underline;
+}
+
+#createPostForm {
+  display: flex;
+  flex-direction: column;
+  margin-top: 1em;
+  margin-left: 1em;
+  margin-right: 1em;
+}
+
+.createPostSections {
+  margin-top: 3em;
+  color: #f50057;
+}
+
+.createPostName {
+  font-family: "Raleway", sans-serif;
+  font-size: 1.5em;
+  margin-left: 1em;
+  margin-top: 1em;
+}
+
+#createPostBody {
+  width: 10vw;
+  height: 5vh;
+  margin-bottom: 1em;
+}
+
+#setImageButton {
+  margin-right: 2em;
+  margin-top: 1em;
+  box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.596);
+}
+
+.postSelect {
+  width: 10em;
+  box-shadow: 1px 1px rgba(0, 0, 0, 0.596);
+}
+
+#postButton {
+  border-radius: 0.5vh;
+  margin-top: 2em;
+  box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.596);
+}
+
+.post {
+  margin: 1em;
+  padding: 1em;
+  background-color: #e9eaeb;
+  border-radius: 2vh;
+}
+
+.postName {
+  font-size: 2.8vh;
+  font-family: "Raleway", sans-serif;
+  text-decoration: underline;
+  margin-bottom: 1vh;
+}
+
+.postBody {
+  font-size: 2vh;
+  margin-bottom: 2vh;
+  word-wrap: break-word;
+}
+
+.postNBC {
+  border-bottom: solid black;
+}
+
+#postInfo {
+  display:flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+ 
+.postType {
+  font-size: 1.5vh;
+  border-radius: 1vh;
+}
+
+.postCategory {
+  font-size: 1.5vh;
+  border-radius: 1vh;
+}
+
+.postDate {
+  font-size: 1.3vh;
+}
+
+#commentForm {
+  padding-top: 1em;
+}
+
+#commentBox {
+  resize: none;
+  height: 4vh;
+  width: 40vw;
+  border-radius: 1vh;
+}
+
+#commentButton {
+  border-radius: 1vh;
+  margin-top: 1vh;
+}
+
+.buttons {
+  box-shadow: 2px 2px rgba(0, 0, 0, 0.596);
+}
+
+.buttons:hover {
+  box-shadow: 2px 2px rgba(0, 0, 0, 0.596);
+  background-color: #67a641;
 }

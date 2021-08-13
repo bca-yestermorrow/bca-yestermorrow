@@ -1,9 +1,9 @@
 import { storage } from "../firebase";
 import { useState } from "react";
 
-const ProfilePicture = () => {
+const ProfilePicture = ({ getImageURL }) => {
   const [image, setImage] = useState("");
-  const [imageURL, setImageURL] = useState("")
+  // const [imageURL, setImageURL] = useState("")
   const handleImage = (evt) => {
     if (evt.target.files[0]) {
       setImage(evt.target.files[0]);
@@ -25,7 +25,7 @@ const ProfilePicture = () => {
           .getDownloadURL()
           .then((url) => {
             console.log(url);
-            setImageURL(url);
+            getImageURL(url);
           });
       }
     );

@@ -13,10 +13,15 @@ const EditProfile = () => {
   const [user, setUser] = useState("");
   const [categories, setCategories] = useState("");
   const [categoryName, setCategoryName] = useState([]);
+  const [imageURL, setImageURL] = useState("")
   const { currentUser } = useAuth();
   let categoryArray = [];
   let classArray;
 
+  const getImageURL = (url) => {
+    setImageURL(url)
+  }
+  console.log(imageURL)
   const getCurrentUser = async () => {
     await db
       .collection("users")
@@ -82,6 +87,7 @@ const EditProfile = () => {
             bio: !userBio ? user.bio : userBio,
             projects: !userProjects ? user.projects : userProjects,
             classes: !categoryName ? user.classes : categoryName,
+            profilePic: !imageURL ? user.profilePic : imageURL
           });
           setUser(doc.data());
         } else {
@@ -94,6 +100,7 @@ const EditProfile = () => {
       });
     getCurrentUser();
     setCategoryName([])
+    evt.target.bio.value = ""
   };
 
   const handleChange = (evt) => {
@@ -116,6 +123,7 @@ const EditProfile = () => {
       {user && (
         <div className="user-profile-info">
           <div className="user-header">
+            <img src={user.profilePic} alt={user.profilePic} style={{width: "200px"}} />
             <h2>
               {user.firstName} {user.lastName}
             </h2>
@@ -131,7 +139,7 @@ const EditProfile = () => {
               user.classes.map((userClass, index) => {
                 return (
                   <div>
-                    <p key={index}>{userClass}</p>
+                    <p key={userClass}>{userClass}</p>
                   </div>
                 );
               })}
@@ -189,7 +197,8 @@ const EditProfile = () => {
             name="projects"
             variant="outlined"
           />
-          {/* <ProfilePicture imageURL={setImageURL}/> */}
+        
+          <ProfilePicture getImageURL={getImageURL}/>
           <Button
             id="profile-submit"
             className="buttons"

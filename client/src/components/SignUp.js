@@ -5,6 +5,7 @@ import { useAuth } from "../context/AuthContext";
 import { Link, useHistory } from "react-router-dom";
 //importing db "database" from firebase js file
 import { db } from "../firebase";
+import { TextField, Button, Paper } from "@material-ui/core";
 
 const SignUp = ({ handleSignUpClose }) => {
   //Gives us a reference to the value of input
@@ -27,76 +28,43 @@ const SignUp = ({ handleSignUpClose }) => {
       return setPasswordError("Passwords do not match");
     }
 
-    if(firstNameRef.current.value === '' || lastNameRef.current.value === ''){
-      return setPasswordError("Please enter your first and last name")
+    if (firstNameRef.current.value === "" || lastNameRef.current.value === "") {
+      return setPasswordError("Please enter your first and last name");
     }
 
-    if(!passwordValidation.test(passwordRef.current.value)){
-      return setPasswordError("password must contain atleast one number, atleast one symbol, and be atleast 6 characters long ")
+    if (!passwordValidation.test(passwordRef.current.value)) {
+      return setPasswordError(
+        "password must contain at least one number, at least one symbol, and be at least 6 characters long "
+      );
     }
-
 
     try {
       setPasswordError("");
       await signup(emailRef.current.value, passwordRef.current.value, firstNameRef.current.value, lastNameRef.current.value);
       //saving user to the database
-      history.push("/home");
+      history.push("/connect");
     } catch {
       setPasswordError("Invalid Email");
     }
     setLoading(false);
   }
   return (
-    <div id="Signup">
-      <form action="/signUp" method="POST" onSubmit={handleSubmit}>
-        <h1>CREATE YOUR ACCOUNT</h1>
-        <input
-          className="signForm"
-          type="text"
-          name="firstName"
-          ref={firstNameRef}
-          placeholder="Enter your first name..."
-        />
-        <input
-          className="signForm"
-          type="test"
-          name="lastName"
-          ref={lastNameRef}
-          placeholder="Enter your last name..."
-        />
-        <input
-          className="signForm"
-          type="text"
-          name="email"
-          ref={emailRef}
-          placeholder="Enter your email..."
-        />
-        <input
-          className="signForm"
-          type="password"
-          name="password"
-          ref={passwordRef}
-          placeholder="Enter a password..."
-        />
-        <input
-          className="signForm"
-          type="password"
-          name="confirmPassword"
-          ref={confirmPasswordRef}
-          placeholder="Enter your password again..."
-        />
-        <input
-          className="signForm"
-          disabled={loading}
-          type="submit"
-          value="Create"
-        />
+    <Paper elevation={2}>
+      <form action="/signUp" id="Login" method="POST" onSubmit={handleSubmit}>
+        <h1>Create Your Account</h1>
+       
+        <TextField id="filled-basic" label="First Name" type="text" inputRef={firstNameRef} variant="filled" />
+        <TextField id="filled-basic" label="Last Name" type="text" inputRef={lastNameRef} variant="filled" />
+        <TextField id="filled-basic" label="Email" type="Email" inputRef={emailRef} variant="filled" />
+        <TextField id="filled-basic" label="Password" type="password" inputRef={passwordRef} variant="filled" />
+        <TextField id="filled-basic" label="Confirm Password" type="password" inputRef={confirmPasswordRef} variant="filled" />
+     
+        <Button  variant="contained" color="secondary" disable={loading} type="submit">Create Account</Button >
       </form>
+
       {passwordError && <h4>{passwordError}</h4>}
-      <button className="signForm" onClick={handleSignUpClose}>
-        Close
-      </button>
-    </div>
+      
+      </Paper>
   );
 };
 

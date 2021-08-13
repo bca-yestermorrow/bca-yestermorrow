@@ -1,9 +1,7 @@
-
-import { useContext, useEffect, useState } from 'react'
-import React from 'react'
-import {auth, db} from '../firebase'
-import { provider } from '../firebase'
-
+import { useContext, useEffect, useState } from "react";
+import React from "react";
+import { auth, db } from "../firebase";
+import { provider } from "../firebase";
 
 
 const AuthContext = React.createContext()
@@ -53,7 +51,7 @@ export const AuthProvider = ({children}) => {
         const unsubscribe = auth.onAuthStateChanged(user => {
             setCurrentUser(user)
             setLoading(false)
-            console.log(user)
+            // console.log(user)
             
         })
 
@@ -71,5 +69,3 @@ export const AuthProvider = ({children}) => {
          
     )
 }
-
-

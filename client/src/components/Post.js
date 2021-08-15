@@ -22,7 +22,11 @@ const Post = ({ post }) => {
           {post.user.firstName} {post.user.lastName}
         </p>
         <p className="postBody">{post.body}</p>
-        <img src={post.imageUrl} alt={post.imageUrl} />
+        <img
+          src={post.imageUrl}
+          alt={post.imageUrl}
+          style={{ width: "100%", objectFit: "contain" }}
+        />
       </div>
       <div id="postInfo">
         <p className="postType">Type of post: {post.type}</p>

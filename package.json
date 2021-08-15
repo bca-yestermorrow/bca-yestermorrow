@@ -4,6 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "heroku-postbuild": "cd client && npm install --only=dev && npm install && npm run build",
+    "dev": "cd client && npm start",
     "start": "node Server/server.js",
     "test": "mocha",
     "data": "node Server/alumnidata.js"

@@ -16,8 +16,7 @@
 #background {
   display: block;
   position: fixed;
-  background-image: url("./assets/Yestermorrow Map Pinboard.jpg");
-  background-repeat: no-repeat;
+  background-color: #a9a9a9;
   background-size: cover;
   height: 100vh;
   width: 100vw;
@@ -26,7 +25,8 @@
 }
 /* landing page header */
 #header {
-  width: 100vw;
+  position: absolute;
+  width: 90vw;
   height: 5vh;
   padding: 2.5vh;
   font-size: 5vh;
@@ -39,12 +39,14 @@
 }
 /* body container for landing page */
 #mainLanding {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+  margin-top:1.5vw ;
+ display: flex;
+ justify-content: space-around;
+ 
 }
 /* form container holding both sign up and log in */
 #form {
-  width: 20vw;
+  width: 30vw;
   margin-left: 5vw;
   font-family: "Raleway", sans-serif;
 }
@@ -57,46 +59,25 @@
 #Signup {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  width: 15vw;
-  margin-bottom:5vh ;
-  padding-left: 2.5vw;
-  padding-right: 2.5vw;
-  padding-top: 2.5vh;
-  padding-bottom: 2.5vh;
-  background-color: rgba(147, 149, 152, 0.801);
-  border-radius: 3vh;
-  box-shadow: 1vh 1vh rgba(0, 0, 0, 0.336);
+  padding: 2vw;
+  
 }
 /* class style for sign in form inputs */
-.signForm {
-  margin: 1vh;
-  padding: .5vh;
+.signForm{
+  width: 25vw;
 }
 /* in between both forms */
 #or {
   text-align: center;
+  margin: 1vw;
 }
 /* landing page log in form */
 #Login {
   display: flex;
   flex-direction: column;
-  width: 15vw;
-  padding-left: 2.5vw;
-  padding-right: 2.5vw;
-  padding-top: 2.5vh;
-  padding-bottom: 2.5vh;
-  margin-top: 5vh;
-  margin-bottom: 2vh;
-  background-color: rgba(147, 149, 152, 0.801);
-  border-radius: 3vh;
-  box-shadow: 1vh 1vh rgba(0, 0, 0, 0.336);
+  padding: 2vw;
 }
 /* class style for log in form inputs */
-.loginForm {
-  margin: 1vh;
-  padding: .5vh;
-}
 /* landing page check this out container */
 #checkItOut {
   display: flex;
@@ -123,14 +104,7 @@
 }
 
 /* map container inside check this out container */
-#map {
-  border: solid black;
-  width: 40vw;
-  height: 40vh;
-  margin-left: 2.5vw;
-  background-color: rgba(147, 149, 152, 0.603);
-  box-shadow: 1vh 1vh rgba(0, 0, 0, 0.336);
-}
+
 /* other content container inside map container */
 #other {
   float: right;
@@ -141,15 +115,15 @@
 
 /* HOME PAGE STYLING */
 
-#mainHome{
+#mainHome {
   overflow: hidden;
   z-index: 1;
 }
 
-#home{
+#home {
   display: flex;
   flex-direction: row;
-  justify-content:space-around;
+  justify-content: space-around;
 }
 
 #homeHeader {
@@ -160,7 +134,7 @@
 }
 
 /* job container */
-#jobs{
+#jobs {
   border: solid black;
   margin-top: 15vh;
   height: 35em;
@@ -172,4 +146,177 @@
   margin-top: 15vh;
   height: 35em;
   width: 40em;
+}
+
+/* Connect & Collab Page */
+
+#connectPage {
+  background-color: #e9eaeb;
+  height: 100vh;
+}
+
+#connectHeader {
+  background-color: #384c5c;
+  height: 7em;
+  color: white;
+  text-align: center;
+}
+
+#connectTitle {
+  padding-top: 1em;
+  color: white;
+}
+
+#connectContainer {
+  display: grid;
+  grid-template-columns: 20vw 55vw 20vw;
+  margin: 2em;
+  overflow: hidden;
+  height: 80vh;
+  background-color: white;
+  box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.596);
+}
+
+#filterFeed {
+  margin: 2em;
+  background-color: #ffffff;
+  border-radius: 1.5em;
+  box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.596);
+  padding-left: 1em;
+  overflow-y: scroll;
+}
+
+#mainFeed {
+  justify-content: space-between;
+  display: flex;
+  flex-direction: column;
+  margin: 2em;
+  height: 70vh;
+  overflow-y: scroll;
+  background-color: #ffffff;
+}
+
+#createPost {
+  margin: 2em;
+  background-color: #ffffff;
+  border-radius: 2em;
+  box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.596);
+  overflow-x: hidden;
+}
+
+#createPostTitle {
+  text-align: center;
+  text-decoration: underline;
+}
+
+#createPostForm {
+  display: flex;
+  flex-direction: column;
+  margin-top: 1em;
+  margin-left: 1em;
+  margin-right: 1em;
+}
+
+.createPostSections {
+  margin-top: 3em;
+  color: #f50057;
+}
+
+.createPostName {
+  font-family: "Raleway", sans-serif;
+  font-size: 1.5em;
+  margin-left: 1em;
+  margin-top: 1em;
+}
+
+#createPostBody {
+  width: 10vw;
+  height: 5vh;
+  margin-bottom: 1em;
+}
+
+#setImageButton {
+  margin-right: 2em;
+  margin-top: 1em;
+  box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.596);
+}
+
+.postSelect {
+  width: 10em;
+  box-shadow: 1px 1px rgba(0, 0, 0, 0.596);
+}
+
+#postButton {
+  border-radius: 0.5vh;
+  margin-top: 2em;
+  box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.596);
+}
+
+.post {
+  margin: 1em;
+  padding: 1em;
+  background-color: #e9eaeb;
+  border-radius: 2vh;
+}
+
+.postName {
+  font-size: 2.8vh;
+  font-family: "Raleway", sans-serif;
+  text-decoration: underline;
+  margin-bottom: 1vh;
+}
+
+.postBody {
+  font-size: 2vh;
+  margin-bottom: 2vh;
+  word-wrap: break-word;
+}
+
+.postNBC {
+  border-bottom: solid black;
+}
+
+#postInfo {
+  display:flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+ 
+.postType {
+  font-size: 1.5vh;
+  border-radius: 1vh;
+}
+
+.postCategory {
+  font-size: 1.5vh;
+  border-radius: 1vh;
+}
+
+.postDate {
+  font-size: 1.3vh;
+}
+
+#commentForm {
+  padding-top: 1em;
+}
+
+#commentBox {
+  resize: none;
+  height: 4vh;
+  width: 40vw;
+  border-radius: 1vh;
+}
+
+#commentButton {
+  border-radius: 1vh;
+  margin-top: 1vh;
+}
+
+.buttons {
+  box-shadow: 2px 2px rgba(0, 0, 0, 0.596);
+}
+
+.buttons:hover {
+  box-shadow: 2px 2px rgba(0, 0, 0, 0.596);
+  background-color: #67a641;
 }

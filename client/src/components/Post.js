@@ -25,7 +25,7 @@ const Post = ({ post }) => {
         <img
           src={post.imageUrl}
           alt={post.imageUrl}
-          style={{ objectFit: "contain" }}
+          style={{ width: "100%", objectFit: "contain" }}
         />
       </div>
       <div id="postInfo">

@@ -47,7 +47,7 @@ const SignUp = ({ handleSignUpClose }) => {
         lastName: lastNameRef.current.value,
         email: emailRef.current.value,
       });
-      history.push("/home");
+      history.push("/connect");
     } catch {
       setPasswordError("Invalid Email");
     }

@@ -8,7 +8,6 @@ import { FilterFeed } from "./FilterFeed";
 import { useState, useEffect } from "react";
 
 const Connect = () => {
-
   //NEED TO ORDER POSTS!!!
   // const postsRef = db.collection("posts");
   // const query = postsRef.orderBy("createdAt").limitToLast(100);
@@ -25,6 +24,7 @@ const Connect = () => {
     if (category.length > 0) {
       query = query.where("category", "array-contains-any", category);
     }
+
     const unsub = query.onSnapshot((querysnap) => {
       const updatedPosts = querysnap.docs.map((doc) => ({
         id: doc.id,
@@ -33,7 +33,7 @@ const Connect = () => {
       }));
       setPosts(updatedPosts);
     });
-
+    query = query.orderBy("createdAt").limitToLast(25);
     return () => unsub();
   }, [category, checked]);
 

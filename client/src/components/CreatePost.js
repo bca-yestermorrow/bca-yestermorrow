@@ -96,6 +96,7 @@ const CreatePost = () => {
     try {
       await db.collection("posts").add({
         body: body,
+        comments: [],
         category: options,
         type: type,
         imageUrl: imageUrl,

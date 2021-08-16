@@ -27,7 +27,7 @@ const Login = ({currentUser}) => {
 
       await login(emailRef.current.value, passwordRef.current.value);
      
-      history.push('/home')
+      history.push('/connect')
     } catch {
       setPasswordError("Your email or password is wrong");
     }

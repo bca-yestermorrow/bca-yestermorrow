@@ -1,150 +1,22 @@
-/* imported custom google font */
-@import url("https://fonts.googleapis.com/css2?family=Raleway:wght@202&display=swap");
-
 * {
   margin: 0;
+  padding: 0;
 }
 
-/* LANDING PAGE */
 
-/* entire landing page */
+
 #landing {
-  overflow: hidden;
-  z-index: 1;
+  display: flex;
+  flex-direction: column;
 }
-/* background for landing page and home page */
-#background {
-  display: block;
-  position: fixed;
-  background-color: #a9a9a9;
-  background-size: cover;
-  height: 100vh;
-  width: 100vw;
-  filter: blur(5px);
-  z-index: -1;
-}
-/* landing page header */
+
 #header {
-  position: absolute;
-  width: 90vw;
-  height: 5vh;
-  padding: 2.5vh;
-  font-size: 5vh;
-}
-/* yestermorrow logo for header on landing page */
-#yesterLogo {
-  float: left;
-  height: 12vh;
-  width: 8vw;
-}
-/* body container for landing page */
-#mainLanding {
-  margin-top:1.5vw ;
- display: flex;
- justify-content: space-around;
- 
-}
-/* form container holding both sign up and log in */
-#form {
-  width: 30vw;
-  margin-left: 5vw;
-  font-family: "Raleway", sans-serif;
-}
-
-#signUpButton {
-  margin-left: 8vw;
-  margin-bottom: 2vh;
-}
-/* landing page sign up form */
-#Signup {
-  display: flex;
-  flex-direction: column;
-  padding: 2vw;
-  
-}
-/* class style for sign in form inputs */
-.signForm{
-  width: 25vw;
-}
-/* in between both forms */
-#or {
-  text-align: center;
-  margin: 1vw;
-}
-/* landing page log in form */
-#Login {
-  display: flex;
-  flex-direction: column;
-  padding: 2vw;
-}
-/* class style for log in form inputs */
-
-/* landing page check this out container */
-#checkItOut {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-evenly;
-  width: 45vw;
-  float: right;
-  margin-right: 10vw;
-  margin-top: 10vh;
-  height: 60vh;
-}
-/* landing page check this out title */
-#checkTitle {
-  text-align: center;
-  height: 10vh;
-  width: 45vw;
-  font-family: "Raleway", sans-serif;
-}
-
-/* map description on landing page */
-#mapDescription {
-  font-family: "Raleway", sans-serif;
-  text-align: center;
-}
-
-/* map container inside check this out container */
-
-/* other content container inside map container */
-#other {
-  float: right;
-  width: 15vw;
-  height: 40vh;
-  border-left: solid black;
-}
-
-/* HOME PAGE STYLING */
-
-#mainHome{
+  background-color: black;
+  height: 30vw;
   overflow: hidden;
-  z-index: 1;
 }
 
-#home{
-  display: flex;
-  flex-direction: row;
-  justify-content:space-around;
-}
+.yester-logo{
 
-#homeHeader {
-  width: 100vw;
-  height: 5vh;
-  padding: 2.5vh;
-  font-size: 5vh;
-}
-
-/* job container */
-#jobs{
-  border: solid black;
-  margin-top: 15vh;
-  height: 35em;
-  width: 40em;
-}
-
-#connect {
-  border: solid black;
-  margin-top: 15vh;
-  height: 35em;
-  width: 40em;
+  width: 90vw;
 }

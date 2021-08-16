@@ -2,21 +2,44 @@ import React from "react";
 import { useAuth } from "../context/AuthContext";
 import { db } from "../firebase";
 import { useState, useEffect } from "react";
-import TextField from "@material-ui/core/TextField";
-import Button from "@material-ui/core/Button";
-import Select from "@material-ui/core/Select";
-import MenuItem from "@material-ui/core/MenuItem";
-import Input from "@material-ui/core/Input";
 import ProfilePicture from "./ProfilePicture";
+import {
+  Card,
+  Container,
+  TextField,
+  Button,
+  Select,
+  MenuItem,
+  Input,
+  Avatar
+} from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
 
-const EditProfile = () => {
+
+const EditProfile = ({ handleModalClosed }) => {
   const [user, setUser] = useState("");
   const [categories, setCategories] = useState("");
   const [categoryName, setCategoryName] = useState([]);
   const [imageURL, setImageURL] = useState("");
   const { currentUser } = useAuth();
   let categoryArray = [];
-  let classArray;
+  const useStyles = makeStyles({
+    large: {
+      width: "200px",
+      height: "200px",
+      fontSize: "100px"
+    },
+    small: {
+      width: "50px",
+      height: "50px",
+      fontSize: "25px"
+    },
+    green: {
+      backgroundColor: "#59833b"
+    }
+  })
+
+  const classes = useStyles()
 
   const getImageURL = (url) => {
     setImageURL(url);
@@ -63,12 +86,12 @@ const EditProfile = () => {
     let userLastName = evt.target.lastName.value;
     let userBio = evt.target.bio.value;
     let userProjects = evt.target.projects.value;
+    let userPortfolio = evt.target.portfolio.value;
+    let userCity = evt.target.city.value;
+    let userState = evt.target.state.value;
+    let userCountry = evt.target.country.value
     let userClasses = categoryName;
-    classArray = [];
-    Array.from(userClasses).forEach((userClass) =>
-      classArray.push(userClass.value)
-    );
-    console.log(classArray);
+
     let userProfile = await db
       .collection("users")
       .doc(currentUser.uid)
@@ -77,18 +100,64 @@ const EditProfile = () => {
         // doc.data() is never undefined for query doc snapshots
         //we are doing this twice, here and getCurrentUser
         if (doc.exists) {
-          doc.ref.update({
-            firstName: !userFirstName ? user.firstName : userFirstName,
-            lastName: !userLastName ? user.lastName : userLastName,
+          if (userFirstName){
+            doc.ref.update({firstName: userFirstName})
+          }
+          if (userLastName) {
+            doc.ref.update({
+              lastName: userLastName
+            })
+          }
+          if (userBio) {
+            doc.ref.update({
+              bio: userBio
+            })
+          }
+          if (userProjects) {
+            doc.ref.update({projects: userProjects})
+          }
+          if (userPortfolio) {
+            doc.ref.update({portfolio: userPortfolio})
+          }
+          if (categoryName !== []) {
+            doc.ref.update({classes: categoryName})
+          }
+          if (imageURL) {
+            doc.ref.update({profilePic: imageURL})
+          }
+          if (userCity) {
+            doc.ref.update({
+              location: {
+                city: userCity
+              }
+            })
+          }
+          if (userState) {
+            doc.ref.update({
+              location: {
+                state: userState
+              }
+            })
+          }
+          if (userState) {
+            doc.ref.update({
+              location: {
+                country: userCountry
+              }
+            })
+          }
+            // doc.ref.update({
+            // firstName: !userFirstName ? user.firstName : userFirstName,
+            // lastName: !userLastName ? user.lastName : userLastName,
             // location: {
-            //   city: !userCity ? user.location.city : userCity,
-            //   state: !userState ? user.location.state : userState,
+            // city: !userCity ? user.location.city : userCity,
+            // state: !userState ? user.location.state : userState,
             // },
-            bio: !userBio ? user.bio : userBio,
-            projects: !userProjects ? user.projects : userProjects,
-            classes: !categoryName ? user.classes : categoryName,
-            profilePic: !imageURL ? user.profilePic : imageURL,
-          });
+            // bio: !userBio ? user.bio : userBio,
+            // projects: !userProjects ? user.projects : userProjects,
+            // classes: !categoryName ? user.classes : categoryName,
+            // profilePic: !imageURL ? user.profilePic : imageURL,
+          // });
           setUser(doc.data());
         } else {
           console.log("no document");
@@ -100,7 +169,9 @@ const EditProfile = () => {
       });
     getCurrentUser();
     setCategoryName([]);
-    evt.target.bio.value = "";
+    evt.target.bio.value = ""
+
+    handleModalClosed()
   };
 
   const handleChange = (evt) => {
@@ -120,75 +191,52 @@ const EditProfile = () => {
   console.log(categories);
   return (
     <div className="edit-profile-container">
-      {user && (
-        <div className="user-profile-info">
-          <div className="user-header">
-            <img
-              src={user.profilePic}
-              alt={user.profilePic}
-              style={{ width: "150px", height: "150px", borderRadius: "50%", float: "left" }}
-            />
-            <h2>
-              {user.firstName} {user.lastName}
-            </h2>
-            <p>{user.bio}</p>
-          </div>
-          <div className="user-body">
-            {/* <p>
-              {user.location.city}, {user.location.state}
-            </p> */}
-
-            <p>{user.projects}</p>
-            {user.classes &&
-              user.classes.map((userClass, index) => {
-                return (
-                  <div>
-                    <p key={userClass}>{userClass}</p>
-                  </div>
-                );
-              })}
-          </div>
-        </div>
-      )}
+      
       <div className="form-container">
-        <form
-          className="edit-profile-form"
-          onSubmit={handleSubmit}
-          autoComplete="off"
-        >
-
+          <form
+            className="edit-profile-form"
+            onSubmit={handleSubmit}
+            autoComplete="off"
+          >
+            <button onClick={handleModalClosed} className="x-button">X</button>
             <label for="profile-firstName">First Name: </label>
             <TextField
-            className="input-field"
+              className="input-field"
               id="profile-firstName"
               label={user.firstName}
               name="firstName"
-              variant="outlined"
+              variant="filled"
             />
 
             <label for="profile-lastName">Last Name: </label>
             <TextField
-            className="input-field"
+              className="input-field"
               id="profile-lastName"
               label={user.lastName}
               name="lastName"
-              variant="outlined"
+              variant="filled"
             />
-          {/* <TextField
+            <TextField
             id="profile=city"
-            label={user.location.city}
+            // label={user.location.city}
             name="city"
-            variant="outlined"
+            variant="filled"
           />
           <TextField
             id="profile-state"
-            label={user.location.state}
+            // label={user.location.state}
             name="state"
-            variant="outlined"
-          /> */}
+            variant="filled"
+          />
+          <TextField
+            id="profile-country"
+            // label={user.location.state}
+            name="country"
+            variant="filled"
+          />
             <label for="profile-interests">Interests: </label>
             <Select
-            className="input-field"
+              className="input-field"
               id="profile-interests"
               onChange={handleChange}
               value={categoryName}
@@ -208,11 +256,11 @@ const EditProfile = () => {
 
             <label for="profile-bio">Bio: </label>
             <TextField
-            className="input-field"
+              className="input-field"
               id="profile-bio"
               label={user.bio}
               name="bio"
-              variant="outlined"
+              variant="filled"
             />
 
             <label for="profile-projects">Projects: </label>
@@ -221,21 +269,29 @@ const EditProfile = () => {
               id="profile-projects"
               label={user.projects}
               name="projects"
-              variant="outlined"
+              variant="filled"
+            />
+            <label for="profile-portfolio">Portfolio/Social links: </label>
+            <TextField
+              className="input-field"
+              id="profile-portfolio"
+              label={user.portfolio}
+              name="portfolio"
+              variant="filled"
             />
             <label for="profile-picture">Upload a profile picture</label>
-          <ProfilePicture getImageURL={getImageURL} id="profile-picture" />
+            <ProfilePicture getImageURL={getImageURL} id="profile-picture" />
 
-          <Button
-            id="profile-submit"
-            className="buttons"
-            color="green"
-            variant="contained"
-            type="submit"
-          >
-            Submit
-          </Button>
-        </form>
+            <Button
+              id="profile-submit"
+              className={classes.green}
+              color="green"
+              variant="contained"
+              type="submit"
+            >
+              Submit
+            </Button>
+          </form>
       </div>
     </div>
   );

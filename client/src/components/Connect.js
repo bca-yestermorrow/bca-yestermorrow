@@ -2,17 +2,11 @@ import React from "react";
 import "../App.css";
 import { db } from "../firebase";
 import CreatePost from "./CreatePost";
-import { useCollectionData } from "react-firebase-hooks/firestore";
 import Post from "./Post";
 import { FilterFeed } from "./FilterFeed";
 import { useState, useEffect } from "react";
 
 const Connect = () => {
-
-  // NEED TO ORDER POSTS!!!
-  // const postsRef = db.collection("posts");
-  // const query = postsRef.orderBy("createdAt").limitToLast(100);
-  // const [posts] = useCollectionData(query, { idField: "id" });
 
   const [category, setCategory] = useState([]);
   const [posts, setPosts] = useState([]);
@@ -34,7 +28,7 @@ const Connect = () => {
       }));
       setPosts(updatedPosts);
     });
-    query = query.orderBy("createdAt").limitToLast(25);
+    query = query.orderBy("createdAt").limitToLast(100);
     return () => unsub();
   }, [category, checked]);
 

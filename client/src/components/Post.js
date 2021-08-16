@@ -4,37 +4,47 @@ import { useState, useEffect } from "react";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import { db } from "../firebase";
+import { useAuth } from "../context/AuthContext";
 
 const Post = ({ post }) => {
+  const { currentUser } = useAuth();
   const [comment, setComment] = useState("");
+  const [firstName, setFirstName] = useState(null);
+  const [lastName, setLastName] = useState(null);
+  const [usersPost, setUsersPost] = useState(null);
+  //gets current user by email and sets first and last name states to current user first and last
+  useEffect(() => {
+    db.collection("users")
+      .where("email", "==", `${currentUser.email}`)
+      .get()
+      .then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          setFirstName(doc.data().firstName);
+          setLastName(doc.data().lastName);
+        });
+      });
+  }, [currentUser.email]);
+
+  //gets the info of the user who posted the post
+  function handleCommentPull() {
+    if (!comment) {
+      db.collection("users")
+        .where("firstName", "==", `${post.user.firstName}`)
+        .get()
+        .then((querySnapshot) => {
+          querySnapshot.forEach((doc) => {
+            setUsersPost(doc.data());
+          });
+        });
+    }
+  }
+
   //KEEP COMMENTS AFTER POSTING
   function handleComment(e) {
     e.preventDefault();
     setComment(e.target.comment.value);
     e.target.comment.value = "";
   }
-
-//   function handleCommentPull() {
-//     if (!comment) {
-//       db.collection("posts")
-//         .where("firstName", "==", `${post.user.firstName}`)
-//         .get()
-//         .then((querySnapshot) => {
-//           querySnapshot.forEach((doc) => {
-//             console.log(doc.data());
-//           });
-//         });
-//     }
-//   }
-
-  //   comment.map((comment, index) => {
-  //     return (
-  //       <span key={index}>
-  //         {post.user.firstName} {post.user.lastName}
-  //         {comment}
-  //       </span>
-  //     );
-  //   })
 
   return (
     <div className="post">
@@ -46,7 +56,7 @@ const Post = ({ post }) => {
         <img
           src={post.imageUrl}
           alt={post.imageUrl}
-          style={{ width: "100%", objectFit: "contain" }}
+          style={{ width: "100%" }}
         />
       </div>
       <div id="postInfo">
@@ -60,7 +70,9 @@ const Post = ({ post }) => {
         </p>
         <p className="postDate">{post.createdAt.slice(0, 21)}</p>
       </div>
-      <div id="commentSection">{comment && comment}</div>
+      <div id="commentSection">
+        {comment && firstName + lastName + ": " + comment}
+      </div>
       <form id="commentForm" onSubmit={handleComment}>
         <TextField
           label="Want to leave a comment?"
@@ -75,6 +87,7 @@ const Post = ({ post }) => {
           id="commentButton"
           className="buttons"
           type="submit"
+          onClick={handleCommentPull}
         >
           Post Comment
         </Button>

@@ -185,15 +185,9 @@
 }
 
 #mainFeed {
-<<<<<<< HEAD
   justify-content: space-around;
   display: flex;
   flex-direction: column-reverse;
-=======
-  display: flex;
-  justify-content: flex-start;
-  flex-direction: column;
->>>>>>> df48182e7ab298be30c395c7dd53d3a0e804bacc
   margin: 2em;
   height: 70vh;
   overflow-y: scroll;
@@ -298,6 +292,10 @@
 
 .postDate {
   font-size: 1.3vh;
+}
+
+#commentSection {
+  margin-top: 1em;
 }
 
 #commentForm {

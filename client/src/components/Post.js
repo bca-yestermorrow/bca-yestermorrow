@@ -44,9 +44,9 @@ const Post = ({ post }) => {
         </p>
         <p className="postBody">{post.body}</p>
         <img
-          style={{ width: "45vw" }}
           src={post.imageUrl}
           alt={post.imageUrl}
+          style={{ width: "100%", objectFit: "contain" }}
         />
       </div>
       <div id="postInfo">

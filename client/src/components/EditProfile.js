@@ -13,15 +13,15 @@ const EditProfile = () => {
   const [user, setUser] = useState("");
   const [categories, setCategories] = useState("");
   const [categoryName, setCategoryName] = useState([]);
-  const [imageURL, setImageURL] = useState("")
+  const [imageURL, setImageURL] = useState("");
   const { currentUser } = useAuth();
   let categoryArray = [];
   let classArray;
 
   const getImageURL = (url) => {
-    setImageURL(url)
-  }
-  console.log(imageURL)
+    setImageURL(url);
+  };
+  console.log(imageURL);
   const getCurrentUser = async () => {
     await db
       .collection("users")
@@ -63,12 +63,12 @@ const EditProfile = () => {
     let userLastName = evt.target.lastName.value;
     let userBio = evt.target.bio.value;
     let userProjects = evt.target.projects.value;
-    let userClasses = categoryName
+    let userClasses = categoryName;
     classArray = [];
     Array.from(userClasses).forEach((userClass) =>
       classArray.push(userClass.value)
     );
-    console.log(classArray)
+    console.log(classArray);
     let userProfile = await db
       .collection("users")
       .doc(currentUser.uid)
@@ -87,7 +87,7 @@ const EditProfile = () => {
             bio: !userBio ? user.bio : userBio,
             projects: !userProjects ? user.projects : userProjects,
             classes: !categoryName ? user.classes : categoryName,
-            profilePic: !imageURL ? user.profilePic : imageURL
+            profilePic: !imageURL ? user.profilePic : imageURL,
           });
           setUser(doc.data());
         } else {
@@ -99,8 +99,8 @@ const EditProfile = () => {
         console.log("Error getting documents: ", error);
       });
     getCurrentUser();
-    setCategoryName([])
-    evt.target.bio.value = ""
+    setCategoryName([]);
+    evt.target.bio.value = "";
   };
 
   const handleChange = (evt) => {
@@ -116,14 +116,18 @@ const EditProfile = () => {
       getCategories();
     }
   }, []);
-  console.log(categoryName)
+  console.log(categoryName);
   console.log(categories);
   return (
     <div className="edit-profile-container">
       {user && (
         <div className="user-profile-info">
           <div className="user-header">
-            <img src={user.profilePic} alt={user.profilePic} style={{width: "200px"}} />
+            <img
+              src={user.profilePic}
+              alt={user.profilePic}
+              style={{ width: "150px", height: "150px", borderRadius: "50%", float: "left" }}
+            />
             <h2>
               {user.firstName} {user.lastName}
             </h2>
@@ -146,20 +150,30 @@ const EditProfile = () => {
           </div>
         </div>
       )}
-      <div>
-        <form className="edit-profile-form" onSubmit={handleSubmit} autoComplete="off">
-          <TextField
-            id="profile-firstName"
-            label={user.firstName}
-            name="firstName"
-            variant="outlined"
-          />
-          <TextField
-            id="profile-lastName"
-            label={user.lastName}
-            name="lastName"
-            variant="outlined"
-          />
+      <div className="form-container">
+        <form
+          className="edit-profile-form"
+          onSubmit={handleSubmit}
+          autoComplete="off"
+        >
+
+            <label for="profile-firstName">First Name: </label>
+            <TextField
+            className="input-field"
+              id="profile-firstName"
+              label={user.firstName}
+              name="firstName"
+              variant="outlined"
+            />
+
+            <label for="profile-lastName">Last Name: </label>
+            <TextField
+            className="input-field"
+              id="profile-lastName"
+              label={user.lastName}
+              name="lastName"
+              variant="outlined"
+            />
           {/* <TextField
             id="profile=city"
             label={user.location.city}
@@ -172,33 +186,46 @@ const EditProfile = () => {
             name="state"
             variant="outlined"
           /> */}
-          <Select
-            id="profile-interests"
-            onChange={handleChange}
-            value={categoryName}
-            input={<Input />}
-            name="classes"
-            multiple
-          >
-            {categories &&
-              categories.map((category) => {
-                return <MenuItem key={category.name} value={category.name}>{category.name}</MenuItem>;
-              })}
-          </Select>
-          <TextField
-            id="profile-bio"
-            label={user.bio}
-            name="bio"
-            variant="outlined"
-          />
-          <TextField
-            id="profile-projects"
-            label={user.projects}
-            name="projects"
-            variant="outlined"
-          />
-        
-          <ProfilePicture getImageURL={getImageURL}/>
+            <label for="profile-interests">Interests: </label>
+            <Select
+            className="input-field"
+              id="profile-interests"
+              onChange={handleChange}
+              value={categoryName}
+              input={<Input />}
+              name="classes"
+              multiple
+            >
+              {categories &&
+                categories.map((category) => {
+                  return (
+                    <MenuItem key={category.name} value={category.name}>
+                      {category.name}
+                    </MenuItem>
+                  );
+                })}
+            </Select>
+
+            <label for="profile-bio">Bio: </label>
+            <TextField
+            className="input-field"
+              id="profile-bio"
+              label={user.bio}
+              name="bio"
+              variant="outlined"
+            />
+
+            <label for="profile-projects">Projects: </label>
+            <TextField
+              className="input-field"
+              id="profile-projects"
+              label={user.projects}
+              name="projects"
+              variant="outlined"
+            />
+            <label for="profile-picture">Upload a profile picture</label>
+          <ProfilePicture getImageURL={getImageURL} id="profile-picture" />
+
           <Button
             id="profile-submit"
             className="buttons"

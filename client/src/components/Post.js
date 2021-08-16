@@ -11,7 +11,7 @@ const Post = ({ post }) => {
   const [comment, setComment] = useState("");
   const [firstName, setFirstName] = useState(null);
   const [lastName, setLastName] = useState(null);
-  const [usersPost, setUsersPost] = useState(null);
+  const [poster, setPoster] = useState(null);
   //gets current user by email and sets first and last name states to current user first and last
   useEffect(() => {
     db.collection("users")
@@ -25,7 +25,7 @@ const Post = ({ post }) => {
       });
   }, [currentUser.email]);
 
-  //gets the info of the user who posted the post
+  //gets the info of the user who created the post
   function handleCommentPull() {
     if (!comment) {
       db.collection("users")
@@ -33,7 +33,7 @@ const Post = ({ post }) => {
         .get()
         .then((querySnapshot) => {
           querySnapshot.forEach((doc) => {
-            setUsersPost(doc.data());
+            console.log(doc.data());
           });
         });
     }

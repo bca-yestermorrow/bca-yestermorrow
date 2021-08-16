@@ -5,6 +5,9 @@ import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import { db } from "../firebase";
 import { useAuth } from "../context/AuthContext";
+import emailjs from "emailjs-com";
+import { init } from "emailjs-com";
+init("user_9X8kPJFZA4CtJoKGtOw8Y");
 
 const Post = ({ post }) => {
   const { currentUser } = useAuth();
@@ -39,10 +42,39 @@ const Post = ({ post }) => {
     }
   }
 
+  // Send email notification
+  function sendEmail(e) {
+    
+  
+   let comment = e.target.comment.value
+    emailjs
+      .send(
+        "service_ao3ljro",
+        "template_1g42coj",
+        {
+          posterName: post.user.firstName,
+          commenterName:  `${firstName} ${lastName}`,
+          comment: comment,
+          posterEmail: post.user.email,
+        },
+        "user_9X8kPJFZA4CtJoKGtOw8Y"
+      )
+      .then(
+        (result) => {
+          console.log("this is result " + result.text);
+        },
+        (error) => {
+          console.log(error.text);
+        }
+      );
+  }
+
   //KEEP COMMENTS AFTER POSTING
   function handleComment(e) {
     e.preventDefault();
+
     setComment(e.target.comment.value);
+    sendEmail(e);
     e.target.comment.value = "";
   }
 

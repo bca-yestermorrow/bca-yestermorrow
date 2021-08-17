@@ -332,7 +332,8 @@
 }
 
 .form-container {
-  margin: 20vh auto
+  margin: 10vh auto;
+  
 }
 
 .x-button {
@@ -364,7 +365,13 @@
 }
 
 .edit-profile-form {
-  width: 50vw;
+  width: 51vw;
+  height: 60vh;
+  overflow: auto;
+  overflow-x: hidden;
+  margin: auto;
+  position: absolute;
+  top: 0; left: 0; bottom: 0; right: 0;
   font-family: "Raleway", sans-serif;
   background-color: white;
   border-radius: 1em;

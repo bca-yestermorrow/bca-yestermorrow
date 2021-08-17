@@ -35,7 +35,6 @@ const Connect = () => {
   return (
     <div id="connectPage">
       <header id="connectHeader">
-        <h1 id="connectTitle">WELCOME YESTEMORROW ALUMNI</h1>
       </header>
       <div id="connectContainer">
         <FilterFeed

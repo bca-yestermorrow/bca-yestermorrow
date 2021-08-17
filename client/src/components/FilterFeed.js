@@ -5,40 +5,38 @@ import { useState, useEffect } from "react";
 import { db } from "../firebase";
 import firebaseApp from "../firebase";
 
-
 import CheckBoxOutlineBlankIcon from "@material-ui/icons/CheckBoxOutlineBlank";
 import CheckBoxIcon from "@material-ui/icons/CheckBox";
 
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
 
-export const FilterFeed = ({setChecked, setCategory, checked, category}) => {
+export const FilterFeed = ({ setChecked, setCategory, checked, category }) => {
   // const [category, setCategory] = useState(["General"]);
   // const [posts, setPosts] = useState([]);
-  const [categoryList, setCategoryList] = useState([])
-  useEffect(()=>{
-    let updatedCatagoreys = []
-    db
-    .collection("categories")
-    .get()
-    .then((querySnap) =>{
-      querySnap.forEach((doc) =>{
-        updatedCatagoreys.push(doc.data())
-      })
-      setCategoryList(updatedCatagoreys)
-    })
-   console.log(categoryList)
-  }, [])
+  const [categoryList, setCategoryList] = useState([]);
+  useEffect(() => {
+    let updatedCatagoreys = [];
+    db.collection("categories")
+      .get()
+      .then((querySnap) => {
+        querySnap.forEach((doc) => {
+          updatedCatagoreys.push(doc.data());
+        });
+        setCategoryList(updatedCatagoreys);
+      });
+    console.log(categoryList);
+  }, []);
 
   function onChangeHandler(e) {
     // console.log('onChangeHandler', e)
-    if(category.length > 9){
-      e.currentTarget.checked = false
-      return console.log("cant be more than 10")
+    if (category.length > 9) {
+      e.currentTarget.checked = false;
+      return console.log("cant be more than 10");
     }
 
     let newArr = [];
-    console.log("in")
+    console.log("in");
 
     console.log(e.currentTarget.value);
     if (e.currentTarget.checked === true) {
@@ -66,16 +64,15 @@ export const FilterFeed = ({setChecked, setCategory, checked, category}) => {
 
   return (
     <Card id="filterFeed">
-      <h2>Filter By Tags</h2>
-   
-
+      <h1 id="filterTitle">FILTER</h1>
       {categoryList.map((cat, index) => (
         <div index={index}>
-        <Checkbox 
-        onChange={(e) => onChangeHandler(e)}
-        value={cat.name}
-         /> {cat.name}
-         </div>
+          <Checkbox
+            onChange={(e) => onChangeHandler(e)}
+            value={cat.name}
+          />{" "}
+          {cat.name}
+        </div>
       ))}
       {/* <ul>
         {categoryList.map((catagorey) => (

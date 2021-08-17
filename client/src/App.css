@@ -1,5 +1,7 @@
 /* imported custom google font */
-@import url("https://fonts.googleapis.com/css2?family=Raleway:wght@202&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Raleway&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@500&display=swap');
 
 * {
   margin: 0;
@@ -154,15 +156,11 @@
 }
 
 #connectHeader {
-  background-color: #384c5c;
-  height: 7em;
-  color: white;
-  text-align: center;
-}
-
-#connectTitle {
-  padding-top: 1em;
-  color: white;
+  background-image: url(".//assets/MAIN FORUM BANNER.jpg");
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-size: 100vw 35em;
+  height: 35em;
 }
 
 #connectContainer {
@@ -180,8 +178,12 @@
   background-color: #ffffff;
   border-radius: 1.5em;
   box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.596);
-  padding-left: 1em;
   overflow-y: scroll;
+}
+
+#filterTitle {
+  text-align: center;
+  font-family: 'Raleway', sans-serif;
 }
 
 #mainFeed {
@@ -204,7 +206,7 @@
 
 #createPostTitle {
   text-align: center;
-  text-decoration: underline;
+  font-family: 'Raleway', sans-serif;
 }
 
 #createPostForm {
@@ -216,12 +218,13 @@
 }
 
 .createPostSections {
-  margin-top: 3em;
+  margin-top: 1.5em;
   color: #f50057;
+  font-family: 'Raleway', sans-serif;
 }
 
 .createPostName {
-  font-family: "Raleway", sans-serif;
+  font-family: 'Raleway', sans-serif;
   font-size: 1.5em;
   margin-left: 1em;
   margin-top: 1em;
@@ -234,9 +237,13 @@
 }
 
 #setImageButton {
-  margin-right: 2em;
   margin-top: 1em;
   box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.596);
+}
+
+#typeSelectTitle {
+  color: #f50057;
+  font-family: 'Raleway', sans-serif;
 }
 
 .postSelect {
@@ -259,7 +266,7 @@
 
 .postName {
   font-size: 2.8vh;
-  font-family: "Raleway", sans-serif;
+  font-family: 'Raleway', sans-serif;
   text-decoration: underline;
   margin-bottom: 1vh;
 }
@@ -320,5 +327,5 @@
 
 .buttons:hover {
   box-shadow: 2px 2px rgba(0, 0, 0, 0.596);
-  background-color: #67a641;
+  background-color: #f50057;
 }

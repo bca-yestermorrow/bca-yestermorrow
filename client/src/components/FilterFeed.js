@@ -17,7 +17,7 @@ export const FilterFeed = ({setChecked, setCategory, checked, category}) => {
   // const [posts, setPosts] = useState([]);
   const [categoryList, setCategoryList] = useState([])
   useEffect(()=>{
-    let updatedCatagoreys = []
+    let updatedCatagoreys = [] 
     db
     .collection("categories")
     .get()

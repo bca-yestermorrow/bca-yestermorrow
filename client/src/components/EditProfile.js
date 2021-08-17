@@ -4,6 +4,7 @@ import { useAuth } from "../context/AuthContext";
 import { db } from "../firebase";
 import { useState, useEffect } from "react";
 import ProfilePicture from "./ProfilePicture";
+import firebase from "firebase/app";
 // imports for material ui
 import {
   Card,
@@ -42,8 +43,11 @@ const EditProfile = ({ handleModalClosed }) => {
     // button color
     green: {
       backgroundColor: "#59833b",
+      "&:hover": {
+        backgroundColor: '#f68c3c',
+        color: '#fff',
     },
-  });
+  }});
   // allows use of classes.whatever on mui components
   const classes = useStyles();
 
@@ -79,7 +83,6 @@ const EditProfile = ({ handleModalClosed }) => {
       .get()
       .then((querySnapshot) => {
         querySnapshot.forEach((doc) => {
-          console.log(doc.id, " => ", doc.data());
           // push each category/doc to an array
           categoryArray.push(doc.data());
         });
@@ -101,6 +104,7 @@ const EditProfile = ({ handleModalClosed }) => {
     let userState = evt.target.state.value;
     let userCountry = evt.target.country.value;
     let userClasses = categoryName;
+    let categoryLength = categoryName.length;
 
     let userProfile = await db
       .collection("users")
@@ -131,26 +135,33 @@ const EditProfile = ({ handleModalClosed }) => {
           if (userPortfolio) {
             doc.ref.update({ portfolio: userPortfolio });
           }
-          // categoryName is initialized as an empty array, so only update if it isnt empty
-          if (categoryName !== []) {
-            doc.ref.update({ classes: categoryName });
+
+          if (categoryLength > 0) {
+            console.log(categoryLength);
+            categoryLength = categoryLength - 1;
+            while (categoryLength >= 0) {
+              doc.ref.update({
+                classes: firebase.firestore.FieldValue.arrayUnion(categoryName[categoryLength]),
+              });
+              categoryLength =- 1;
+            }
           }
           if (imageURL) {
             doc.ref.update({ profilePic: imageURL });
           }
           if (userCity) {
             doc.ref.update({
-              "location.city": userCity
+              "location.city": userCity,
             });
           }
           if (userState) {
             doc.ref.update({
-              "location.state": userState
+              "location.state": userState,
             });
           }
           if (userState) {
             doc.ref.update({
-              "location.country": userCountry
+              "location.country": userCountry,
             });
           }
 
@@ -183,8 +194,6 @@ const EditProfile = ({ handleModalClosed }) => {
     }
   }, []);
   console.log(categoryName);
-  console.log(categories);
-  console.log(user.location)
   return (
     <div className="edit-profile-container">
       <div className="form-container">
@@ -215,7 +224,7 @@ const EditProfile = ({ handleModalClosed }) => {
           />
           <label for="profile-city">City: </label>
           <TextField
-          className="input-field"
+            className="input-field"
             id="profile-city"
             label={user.location ? user.location.city : "city"}
             name="city"
@@ -223,7 +232,7 @@ const EditProfile = ({ handleModalClosed }) => {
           />
           <label for="profile-state">State: </label>
           <TextField
-          className="input-field"
+            className="input-field"
             id="profile-state"
             label={user.location ? user.location.state : "state"}
             name="state"
@@ -231,7 +240,7 @@ const EditProfile = ({ handleModalClosed }) => {
           />
           <label for="profile-country">Country: </label>
           <TextField
-          className="input-field"
+            className="input-field"
             id="profile-country"
             label={user.location ? user.location.country : "country"}
             name="country"

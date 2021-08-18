@@ -37,12 +37,12 @@ const Login = ({currentUser}) => {
 
   return (
     <Paper elevation={2} >
-      <form id="Login" onSubmit={handleSubmit}>
-        <h1>Log In</h1>
-        <TextField id="filled-basic" label="Email" type="email" inputRef={emailRef} variant="filled" />
-        <TextField id="filled-basic" label="Password" type="password" inputRef={passwordRef} variant="filled" />
+      <form id="Login" className="login-flex" onSubmit={handleSubmit}>
+        <h1 className="login-header">Log In</h1>
+        <TextField size="small" id="filled-basic" label="Email" type="email" inputRef={emailRef} variant="filled" />
+        <TextField size="small" id="filled-basic" label="Password" type="password" inputRef={passwordRef} variant="filled" />
         
-        <Button variant="contained" color="secondary" disable={loading} type="submit" >Log in</Button >
+        <Button size="small" variant="contained" color="secondary" disable={loading} type="submit" >Log in</Button >
         <GoogleBtn />
         {passwordError && <h4>{passwordError}</h4>}
 

@@ -3,20 +3,56 @@
   padding: 0;
 }
 
+body{
+  background-color: #FFFDD0;
+}
+
 
 
 #landing {
   display: flex;
   flex-direction: column;
+  position: absolute;
+
+  gap: 1vw;
+  top: 50%;
+  left: 50%;  
+  transform: translate(-50%,-50%);
 }
 
 #header {
   background-color: black;
-  height: 30vw;
+  height: 13vw;
   overflow: hidden;
+  width: 70vw;
 }
 
 .yester-logo{
-
-  width: 90vw;
+  width: 100%;
 }
+
+#mainLanding {
+  display: flex;
+  justify-content: space-between;
+  font-size: .7vw;
+ 
+  
+}
+
+.login {
+  display: flex;
+  flex-direction: column-reverse;
+ 
+}
+
+.login-flex {
+  display: flex;
+  flex-direction: column;
+  width: 17vw;
+}
+
+.login-header {
+  padding: 20px;
+  padding-left: 10px;
+}
+

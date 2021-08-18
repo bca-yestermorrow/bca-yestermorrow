@@ -53,15 +53,15 @@ const SignUp = ({ handleSignUpClose }) => {
     setLoading(false);
   }
   return (
-    <Paper elevation={2}>
-      <form action="/signUp" id="Login" method="POST" onSubmit={handleSubmit}>
-        <h1>Create Your Account</h1>
+    <Paper  elevation={2}>
+      <form action="/signUp" id="Login" className="login-flex" method="POST" onSubmit={handleSubmit}>
+        <h1 className="login-header">Create Your Account</h1>
        
-        <TextField id="filled-basic" label="First Name" type="text" inputRef={firstNameRef} variant="filled" />
-        <TextField id="filled-basic" label="Last Name" type="text" inputRef={lastNameRef} variant="filled" />
-        <TextField id="filled-basic" label="Email" type="Email" inputRef={emailRef} variant="filled" />
-        <TextField id="filled-basic" label="Password" type="password" inputRef={passwordRef} variant="filled" />
-        <TextField id="filled-basic" label="Confirm Password" type="password" inputRef={confirmPasswordRef} variant="filled" />
+        <TextField size="small" id="filled-basic" label="First Name" type="text" inputRef={firstNameRef} variant="filled" />
+        <TextField size="small" id="filled-basic" label="Last Name" type="text" inputRef={lastNameRef} variant="filled" />
+        <TextField size="small" id="filled-basic" label="Email" type="Email" inputRef={emailRef} variant="filled" />
+        <TextField size="small" id="filled-basic" label="Password" type="password" inputRef={passwordRef} variant="filled" />
+        <TextField size="small" id="filled-basic" label="Confirm Password" type="password" inputRef={confirmPasswordRef} variant="filled" />
      
         <Button  variant="contained" color="secondary" disable={loading} type="submit">Create Account</Button >
       </form>

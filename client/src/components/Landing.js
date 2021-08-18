@@ -33,11 +33,11 @@ const Landing = () => {
         </header>
         {/* main body */}
         <div id="mainLanding">
-          <Card >
+          <Card className="login" >
             
              <SignUp handleSignUpClose={handleSignUpClose}/>
             {/* between sign up and log in containers */}
-            <h1 id="or">Or</h1>
+            <h1 style={{textAlign: "center", fontSize: "1vw"}}>Or</h1>
             {/* login form */}
             <Login />
          

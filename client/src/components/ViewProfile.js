@@ -3,14 +3,16 @@ import { useAuth } from "../context/AuthContext";
 import { db } from "../firebase";
 import { useState, useEffect } from "react";
 import firebase from "firebase";
-import { Avatar, useRadioGroup } from "@material-ui/core";
+import { Avatar, Button, FormControl, Checkbox, FormGroup, FormControlLabel } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import EditProfile from "./EditProfile";
 
 const ViewProfile = () => {
   const [profile, setProfile] = useState("");
   const [modal, setModal] = useState("");
+
   const { currentUser } = useAuth();
+
   const useStyles = makeStyles({
     large: {
       width: "200px",
@@ -23,12 +25,13 @@ const ViewProfile = () => {
       fontSize: "25px",
     },
     green: {
-      backgroundColor: "#59833b",
+      backgroundColor: "#E0E0E0",
       "&:hover": {
-        backgroundColor: '#3c52b2',
-        color: '#fff',
+        backgroundColor: "#59833b",
+        color: "#fff",
+      },
     },
-  }});
+  });
 
   const classes = useStyles();
 
@@ -38,8 +41,10 @@ const ViewProfile = () => {
 
   const handleModalClosed = () => {
     setModal("");
-    getProfile();
+    setTimeout(getProfile, 500);
+    console.log("in modal close")
   };
+
 
   const getProfile = async () => {
     let profileRef = await db
@@ -50,6 +55,7 @@ const ViewProfile = () => {
         if (doc.exists) {
           setProfile(doc.data());
           console.log(profile);
+          
         } else {
           console.log("No doc found");
         }
@@ -61,73 +67,62 @@ const ViewProfile = () => {
   useEffect(() => {
     getProfile();
   }, []);
+  console.log(profile.interests);
   return (
     <div>
-  {/* <img id="banner" src="../main_forum_banner.jpg" alt="alt" /> */}
-    <div id="banner"></div>
-    <div className="view-profile-page">
-      <div>
-        {modal && <EditProfile handleModalClosed={handleModalClosed} />}
-      </div>
-      
-      {profile ? (
-        <div className="view-profile-container">
-          <Avatar
-            src={profile.profilePic}
-            alt={profile.firstName}
-            className={classes.large}
-            
-          >
-            {profile.firstName[0]}
-          </Avatar>
-          <p className="user-full-name">
-            {profile.firstName} {profile.lastName}
-          </p>
-          <p className="user-location">
-            {profile.location.city} {profile.location.state}
-            {profile.location.country}
-          </p>
-          <p className="user-links">{profile.portfolio}</p>
-          <div className="user-work">
-          <p className="user-bio">{profile.bio}</p>
-          <p className="user-projects">{profile.projects}</p>
-          </div>
-          <p className="user-interests">{profile.categories}</p>
+      <img id="banner" src="../main_forum_banner.jpg" alt="alt" />
+      {/* <div id="banner"></div> */}
+      <div className="view-profile-page">
+        <div>
+          {modal && <EditProfile handleModalClosed={handleModalClosed} />}
         </div>
-      ) : (
-        <div className="view-profile-container">
-          <Avatar
-            className={classes.large}
-            
-          ></Avatar>
-          <p className="user-full-name">Firstname Lastname</p>
-          <p className="user-location">City, State, Country</p>
-          <p className="user-links">www.myportfolio.com</p>
-          <br />
-          <div className="user-work">
-          <p className="user-bio">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus
-            maximus ipsum et velit rutrum sollicitudin ac fringilla est. Aenean
-            porttitor lectus sit amet metus fringilla, a iaculis turpis
-            venenatis. Vivamus eget enim eu erat sagittis ullamcorper ac nec
-            velit. Nunc vitae diam finibus, cursus ligula ac, scelerisque ex.
-            Phasellus et.
-          </p>
-          <p className="user-projects">
-            These are some projects I'm working on: Lorem ipsum dolor sit amet,
-            consectetur adipiscing elit. Phasellus maximus ipsum et velit rutrum
-            sollicitudin ac fringilla est. Aenean porttitor lectus sit amet
-            metus fringilla, a iaculis turpis venenatis.
-          </p>
+
+        {profile ? (
+          <div className="view-profile-container">
+            <Avatar
+              src={profile.profilePic}
+              alt={profile.firstName}
+              className={classes.large}
+            >
+              {profile.firstName[0]}
+            </Avatar>
+            <p className="user-full-name">
+              {profile.firstName} {profile.lastName}
+            </p>
+            <p className="user-location">
+              {profile.location.city}, {profile.location.state},{" "}
+              {profile.location.country}
+            </p>
+            <p className="user-links">{profile.portfolio}</p>
+            <div className="user-work">
+              <div>
+                <h4>About Me</h4>
+                <p className="user-bio">{profile.bio}</p>
+              </div>
+              <div>
+                <h4>Projects</h4>
+                <p className="user-projects">{profile.projects}</p>
+              </div>
             </div>
-          <ul className="user-interests">
-            <li>interest1</li>
-            <li>interest2</li>
-          </ul>
-        </div>
-      )}
-      <button onClick={handleModalOpen}>Edit</button>
-    </div>
+            <div>
+              <h4>Interests</h4>
+              <FormControl component="fieldset">
+                <FormGroup component="legend"></FormGroup>
+              {profile.interests ? ( profile.interests.map((interest, index) => {
+                return (
+                  <FormControlLabel control={<Checkbox name={interest} />} className="user-interests" key={index} label={interest} />
+                );
+              }) ) : (
+                <p></p>
+              )}
+              </FormControl>
+            </div>
+            <Button className={classes.green} onClick={handleModalOpen}>Edit</Button>
+          </div>
+        ) : (
+          <p>loading...</p>
+        )}
+      </div>
     </div>
   );
 };

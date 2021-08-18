@@ -1,16 +1,18 @@
 import { storage } from "../firebase";
 import { useState } from "react";
 
-const ProfilePicture = ({ getImageURL }) => {
+const ProfilePicture = ({ getImageURL, setBool }) => {
   const [image, setImage] = useState("");
-  // const [imageURL, setImageURL] = useState("")
+  const [isTrue, setIsTrue] = useState(true)
   const handleImage = (evt) => {
     if (evt.target.files[0]) {
       setImage(evt.target.files[0]);
+      setIsTrue(false)
     }
   };
 
   const handleUpload = () => {
+    setBool(true)
     const upload = storage.ref(`images/${image.name}`).put(image);
     upload.on(
       "state_changed",
@@ -26,6 +28,7 @@ const ProfilePicture = ({ getImageURL }) => {
           .then((url) => {
             console.log(url);
             getImageURL(url);
+            setBool(false)
           });
       }
     );
@@ -34,7 +37,7 @@ const ProfilePicture = ({ getImageURL }) => {
   return (
     <div>
       <input type="file" onChange={handleImage} />
-      <button onClick={handleUpload}>Upload</button>
+      <button className="upload-button" type="button" disabled={isTrue} onClick={handleUpload}>Upload</button>
     </div>
   );
 };

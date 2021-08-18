@@ -1,7 +1,7 @@
 import React from "react";
 // import useAuth to get current user id
 import { useAuth } from "../context/AuthContext";
-import { db } from "../firebase";
+import { db, storage } from "../firebase";
 import { useState, useEffect } from "react";
 import ProfilePicture from "./ProfilePicture";
 import firebase from "firebase/app";
@@ -24,6 +24,9 @@ const EditProfile = ({ handleModalClosed }) => {
   const [categories, setCategories] = useState("");
   const [categoryName, setCategoryName] = useState([]);
   const [imageURL, setImageURL] = useState("");
+  const [bool, setBool] = useState(false)
+  // const [image, setImage] = useState("");
+
   const { currentUser } = useAuth();
   let categoryArray = [];
   // allows use of various customized styles on material ui components
@@ -42,14 +45,26 @@ const EditProfile = ({ handleModalClosed }) => {
     },
     // button color
     green: {
-      backgroundColor: "#59833b",
       "&:hover": {
-        backgroundColor: '#f68c3c',
-        color: '#fff',
+        backgroundColor: "#59833b",
+        color: "#fff",
+      },
     },
-  }});
+    selectedGreen: {
+      "&:select": {
+        backgroundColor: "#59833b",
+        color: "#fff"
+      }
+    }
+  });
   // allows use of classes.whatever on mui components
   const classes = useStyles();
+
+  // const handleImage = (evt) => {
+  //   if (evt.target.files[0]) {
+  //     setImage(evt.target.files[0]);
+  //   }
+  // };
 
   const getImageURL = (url) => {
     setImageURL(url);
@@ -137,13 +152,15 @@ const EditProfile = ({ handleModalClosed }) => {
           }
 
           if (categoryLength > 0) {
-            console.log(categoryLength);
             categoryLength = categoryLength - 1;
             while (categoryLength >= 0) {
               doc.ref.update({
-                classes: firebase.firestore.FieldValue.arrayUnion(categoryName[categoryLength]),
+                interests: firebase.firestore.FieldValue.arrayUnion(
+                  categoryName[categoryLength]
+                ),
               });
-              categoryLength =- 1;
+              console.log(categoryLength);
+              categoryLength -= 1;
             }
           }
           if (imageURL) {
@@ -159,7 +176,7 @@ const EditProfile = ({ handleModalClosed }) => {
               "location.state": userState,
             });
           }
-          if (userState) {
+          if (userCountry) {
             doc.ref.update({
               "location.country": userCountry,
             });
@@ -180,6 +197,33 @@ const EditProfile = ({ handleModalClosed }) => {
     handleModalClosed();
   };
 
+  // const handleUpload = () => {
+  //   const upload = storage.ref(`images/${image.name}`).put(image);
+  //   upload.on(
+  //     "state_changed",
+  //     (snapshot) => {},
+  //     (error) => {
+  //       console.log(error);
+  //     },
+  //     () => {
+  //       storage
+  //         .ref("images")
+  //         .child(image.name)
+  //         .getDownloadURL()
+  //         .then((url) => {
+  //           console.log(url);
+  //           getImageURL(url);
+  //         });
+  //     }
+  //   );
+  // };
+
+  const handleClose = (evt) => {
+    if (evt.target.className === "edit-profile-container") {
+      handleModalClosed();
+    }
+  };
+
   const handleChange = (evt) => {
     setCategoryName(evt.target.value);
   };
@@ -195,7 +239,7 @@ const EditProfile = ({ handleModalClosed }) => {
   }, []);
   console.log(categoryName);
   return (
-    <div className="edit-profile-container">
+    <div className="edit-profile-container" onClick={handleClose}>
       <div className="form-container">
         <form
           className="edit-profile-form"
@@ -205,7 +249,9 @@ const EditProfile = ({ handleModalClosed }) => {
           <button onClick={handleModalClosed} className="x-button">
             X
           </button>
-          <label for="profile-firstName">First Name: </label>
+          <label className="label" for="profile-firstName">
+            First Name:{" "}
+          </label>
           <TextField
             className="input-field"
             id="profile-firstName"
@@ -214,7 +260,9 @@ const EditProfile = ({ handleModalClosed }) => {
             variant="filled"
           />
 
-          <label for="profile-lastName">Last Name: </label>
+          <label className="label" for="profile-lastName">
+            Last Name:{" "}
+          </label>
           <TextField
             className="input-field"
             id="profile-lastName"
@@ -230,7 +278,9 @@ const EditProfile = ({ handleModalClosed }) => {
             name="city"
             variant="filled"
           />
-          <label for="profile-state">State: </label>
+          <label className="label" for="profile-state">
+            State:{" "}
+          </label>
           <TextField
             className="input-field"
             id="profile-state"
@@ -238,7 +288,9 @@ const EditProfile = ({ handleModalClosed }) => {
             name="state"
             variant="filled"
           />
-          <label for="profile-country">Country: </label>
+          <label className="label" for="profile-country">
+            Country:{" "}
+          </label>
           <TextField
             className="input-field"
             id="profile-country"
@@ -246,7 +298,9 @@ const EditProfile = ({ handleModalClosed }) => {
             name="country"
             variant="filled"
           />
-          <label for="profile-interests">Interests: </label>
+          <label className="label" for="profile-interests">
+            Interests:{" "}
+          </label>
           <Select
             className="input-field"
             id="profile-interests"
@@ -259,14 +313,20 @@ const EditProfile = ({ handleModalClosed }) => {
             {categories &&
               categories.map((category) => {
                 return (
-                  <MenuItem key={category.name} value={category.name}>
+                  <MenuItem
+                    className={classes.selectedGreen}
+                    key={category.name}
+                    value={category.name}
+                  >
                     {category.name}
                   </MenuItem>
                 );
               })}
           </Select>
 
-          <label for="profile-bio">Bio: </label>
+          <label className="label" for="profile-bio">
+            Bio:{" "}
+          </label>
           <TextField
             className="input-field"
             id="profile-bio"
@@ -275,7 +335,9 @@ const EditProfile = ({ handleModalClosed }) => {
             variant="filled"
           />
 
-          <label for="profile-projects">Projects: </label>
+          <label className="label" for="profile-projects">
+            Projects:{" "}
+          </label>
           <TextField
             className="input-field"
             id="profile-projects"
@@ -283,7 +345,9 @@ const EditProfile = ({ handleModalClosed }) => {
             name="projects"
             variant="filled"
           />
-          <label for="profile-portfolio">Portfolio/Social links: </label>
+          <label className="label" for="profile-portfolio">
+            Portfolio/Social links:{" "}
+          </label>
           <TextField
             className="input-field"
             id="profile-portfolio"
@@ -291,10 +355,12 @@ const EditProfile = ({ handleModalClosed }) => {
             name="portfolio"
             variant="filled"
           />
-          <label for="profile-picture">Upload a profile picture</label>
-          <ProfilePicture getImageURL={getImageURL} id="profile-picture" />
-
+          <label className="label" for="profile-picture">
+            Upload a profile picture
+          </label>
+          <ProfilePicture getImageURL={getImageURL} setBool={setBool} id="profile-picture" />
           <Button
+            disabled={bool}
             id="profile-submit"
             className={classes.green}
             color="green"

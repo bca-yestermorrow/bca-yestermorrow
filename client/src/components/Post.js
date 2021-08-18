@@ -5,15 +5,17 @@ import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import { db } from "../firebase";
 import { useAuth } from "../context/AuthContext";
-import firebase from "firebase/app"
+import firebase from "firebase/app";
 
 const Post = ({ post }) => {
   const { currentUser } = useAuth();
-  const [comment, setComment] = useState("");
+  const [comment, setComment] = useState([]);
   const [firstName, setFirstName] = useState(null);
   const [lastName, setLastName] = useState(null);
   const [docId, setDocId] = useState(null);
-  // const [docUpdated, setDocUpdated] = useState(false);
+  const [docUpdated, setDocUpdated] = useState(false);
+  const [allComments, setAllComments] = useState();
+  // const [allComments, setAllComments] = useState([]);
   //gets current user by email and sets first and last name states to current user first and last
   useEffect(() => {
     db.collection("users")
@@ -28,15 +30,15 @@ const Post = ({ post }) => {
   }, [currentUser.email]);
 
   //onsubmit the callback function gets the value of the comment and sets it to state
-  async function handleComment(e) {
+  function handleComment(e) {
+    setDocId(null);
     e.preventDefault();
     setComment(e.target.comment.value);
     //resets displayed comment field
     e.target.comment.value = "";
     //awaits the db to get the post that has been commented on
-    await db
-      .collection("posts")
-      .where("userId", "==", `${currentUser.uid}`)
+    db.collection("posts")
+      .where("body", "==", `${post.body}`)
       .get()
       .then((querySnapshot) => {
         querySnapshot.forEach((doc) => {
@@ -44,29 +46,32 @@ const Post = ({ post }) => {
           setDocId(doc.id);
         });
       });
-    console.log("before update");
-    if (docId) {
-      console.log("inside update")
-      let docRef = await db.collection("posts").doc(docId);
-      return docRef
-        .update({
-          comments: firebase.firestore.FieldValue.arrayUnion(comment) //should update comment field array and keep what is in there
-        })
-        .then(() => {
-          console.log("update successful");
-        })
-        .catch(() => {
-          console.log("update failed");
-        });
-    }
-    console.log("after update");
   }
-  
+  //docId state wont pro actively change or update when commenting on a new post
+  useEffect(() => {
+    if (docId) {
+      let docRef = db.collection("posts").doc(docId);
+      try {
+        docRef.update({
+          comments: firebase.firestore.FieldValue.arrayUnion(comment),
+        });
+        console.log("update successful");
+      } catch (e) {
+        console.log("update failed");
+      }
+    }
+    setDocUpdated(true);
+    setDocId(null);
+  }, [comment, docId, docUpdated]);
+
+  // need to gather all comments from data base
+  // display comments on their appropriate post
+
   return (
     <div className="post">
       <div className="postNBC">
         <p className="postName">
-          {post.user.firstName} {post.user.lastName}
+          {post.title} by: {post.user.firstName} {post.user.lastName}
         </p>
         <p className="postBody">{post.body}</p>
         <img
@@ -87,19 +92,13 @@ const Post = ({ post }) => {
         <p className="postDate">{post.createdAt.slice(0, 21)}</p>
       </div>
       <div id="commentSection">
-        {/* {comment &&
-          comment.map((comment, index) => {
-            return (
-              <span key={index}>
-                {firstName} {lastName} : {comment}
-              </span>
-            );
-          })} */}
-        {comment && (
-          <span>
-            {firstName} {lastName} : {comment}
-          </span>
-        )}
+        {post.comments.map((comment, index) => {
+          return (
+            <p id="comment" key={index}>
+              {firstName} {lastName} : {comment}
+            </p>
+          );
+        })}
       </div>
       <form id="commentForm" onSubmit={handleComment}>
         <TextField
@@ -113,63 +112,13 @@ const Post = ({ post }) => {
         <Button id="commentButton" className="buttons" type="submit">
           Post Comment
         </Button>
+        {/* email button needs to be linked to posters email */}
+        <Button id="emailButton" className="buttons">
+          Email Me
+        </Button>
       </form>
     </div>
   );
 };
 
 export default Post;
-
-// let commentArr = [];
-//sets the comment to an array of comments
-// async function handleComment(e) {
-//   e.preventDefault();
-//   commentArr.push(e.target.comment.value);
-//   e.target.comment.value = "";
-//   console.log("after comment is pushed to an array");
-//   await db.collection("posts")
-//       .where("userId", "==", `${currentUser.uid}`)
-//       .get()
-//       .then((querySnapshot) => {
-//         querySnapshot.forEach((doc) => {
-//           setDocId(doc.id);
-//         });
-//       });
-//     console.log(
-//       "after docId  has been received and set to state through user Id"
-//     );
-//     console.log(docId);
-// }
-
-// useEffect(() => {
-//   if (docId.length > 0) {
-//     let docRef = db.collection("posts").doc(docId);
-//     return docRef
-//       .update({
-//         comments: commentArr,
-//       })
-//       .then(() => {
-//         console.log("update successful");
-//         setDocUpdated(true);
-//         console.log(docUpdated);
-//       })
-//       .catch(() => {
-//         console.log("update failed");
-//       });
-//   }
-//   console.log("after specified post comment field has been updated");
-// });
-
-// useEffect(() => {
-//   if (docUpdated === true) {
-//     db.collection("posts")
-//       .where("id", "==", docId)
-//       .get()
-//       .then((querySnapshot) => {
-//         querySnapshot.forEach((doc) => {
-//           console.log(doc.data());
-//         });
-//       });
-//   }
-//   console.log("after comments have been retrieved from DB");
-// });

@@ -67,10 +67,7 @@ export const FilterFeed = ({ setChecked, setCategory, checked, category }) => {
       <h1 id="filterTitle">FILTER</h1>
       {categoryList.map((cat, index) => (
         <div index={index}>
-          <Checkbox
-            onChange={(e) => onChangeHandler(e)}
-            value={cat.name}
-          />{" "}
+          <Checkbox onChange={(e) => onChangeHandler(e)} value={cat.name} />{" "}
           {cat.name}
         </div>
       ))}

@@ -1,7 +1,7 @@
 /* imported custom google font */
-@import url('https://fonts.googleapis.com/css2?family=Raleway&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@600&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@500&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Raleway&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Raleway:wght@600&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Raleway:wght@500&display=swap");
 
 * {
   margin: 0;
@@ -183,11 +183,11 @@
 
 #filterTitle {
   text-align: center;
-  font-family: 'Raleway', sans-serif;
+  font-family: "Raleway", sans-serif;
 }
 
 #mainFeed {
-  justify-content: space-around;
+  justify-content: space-between;
   display: flex;
   flex-direction: column-reverse;
   margin: 2em;
@@ -206,7 +206,7 @@
 
 #createPostTitle {
   text-align: center;
-  font-family: 'Raleway', sans-serif;
+  font-family: "Raleway", sans-serif;
 }
 
 #createPostForm {
@@ -220,11 +220,11 @@
 .createPostSections {
   margin-top: 1.5em;
   color: #f50057;
-  font-family: 'Raleway', sans-serif;
+  font-family: "Raleway", sans-serif;
 }
 
 .createPostName {
-  font-family: 'Raleway', sans-serif;
+  font-family: "Raleway", sans-serif;
   font-size: 1.5em;
   margin-left: 1em;
   margin-top: 1em;
@@ -243,7 +243,7 @@
 
 #typeSelectTitle {
   color: #f50057;
-  font-family: 'Raleway', sans-serif;
+  font-family: "Raleway", sans-serif;
 }
 
 .postSelect {
@@ -266,8 +266,7 @@
 
 .postName {
   font-size: 2.8vh;
-  font-family: 'Raleway', sans-serif;
-  text-decoration: underline;
+  font-family: "Raleway", sans-serif;
   margin-bottom: 1vh;
 }
 
@@ -285,6 +284,7 @@
   display: flex;
   flex-direction: row;
   justify-content: space-around;
+  background-color: rgba(0, 0, 0, 0.11);
 }
 
 .postType {
@@ -302,7 +302,14 @@
 }
 
 #commentSection {
+  display: flex;
+  flex-direction: column-reverse;
+  border-top: solid rgb(0, 0, 0);
+}
+
+#comment {
   margin-top: 1em;
+  background-color: rgba(0, 0, 0, 0.089);
 }
 
 #commentForm {
@@ -321,8 +328,12 @@
   margin-top: 1vh;
 }
 
+#emailButton {
+  margin-top: 1em;
+}
+
 .buttons {
-  box-shadow: 2px 2px rgba(0, 0, 0, 0.596);
+  box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.596);
 }
 
 .buttons:hover {

@@ -7,7 +7,6 @@ import { FilterFeed } from "./FilterFeed";
 import { useState, useEffect } from "react";
 
 const Connect = () => {
-
   const [category, setCategory] = useState([]);
   const [posts, setPosts] = useState([]);
   const [checked, setChecked] = useState(false);
@@ -34,8 +33,7 @@ const Connect = () => {
 
   return (
     <div id="connectPage">
-      <header id="connectHeader">
-      </header>
+      <header id="connectHeader"></header>
       <div id="connectContainer">
         <FilterFeed
           setChecked={setChecked}

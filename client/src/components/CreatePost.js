@@ -81,6 +81,8 @@ const CreatePost = () => {
   async function handlePostSubmit(e) {
     e.preventDefault();
 
+    let title = e.target.title.value;
+
     // grab body message
     let body = e.target.body.value;
 
@@ -96,6 +98,7 @@ const CreatePost = () => {
     try {
       await db.collection("posts").add({
         userId: currentUser.uid,
+        title: title,
         body: body,
         comments: [],
         category: options,
@@ -113,6 +116,7 @@ const CreatePost = () => {
       console.log(err);
     }
     e.target.body.value = "";
+    e.target.title.value = "";
     setTypePost("");
     setCatPost([]);
   }

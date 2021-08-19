@@ -42,14 +42,11 @@ const SignUp = ({ handleSignUpClose }) => {
       setPasswordError("");
       await signup(emailRef.current.value, passwordRef.current.value, firstNameRef.current.value, lastNameRef.current.value);
       //saving user to the database
-<<<<<<< HEAD
       await db.collection("users").add({
         firstName: firstNameRef.current.value,
         lastName: lastNameRef.current.value,
         email: emailRef.current.value,
       });
-=======
->>>>>>> profile-page
       history.push("/connect");
     } catch {
       setPasswordError("Invalid Email");

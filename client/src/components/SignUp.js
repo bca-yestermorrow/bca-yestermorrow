@@ -18,9 +18,9 @@ const SignUp = ({ handleSignUpClose }) => {
   const [passwordError, setPasswordError] = useState("");
   const [loading, setLoading] = useState(false);
   const history = useHistory();
-
-  const passwordValidation = new RegExp(/(?=.*\d)(?=.*[A-Z])(?=.*?[!@#\$&*~])/);
-
+  const { currentUser } = useAuth()
+  const passwordValidation = new RegExp(/(?=.*\d)(?=.*[A-Z])(?=.*?[!@#\$&*~])/)
+  
   async function handleSubmit(e) {
     e.preventDefault();
 
@@ -40,13 +40,16 @@ const SignUp = ({ handleSignUpClose }) => {
 
     try {
       setPasswordError("");
-      await signup(emailRef.current.value, passwordRef.current.value);
+      await signup(emailRef.current.value, passwordRef.current.value, firstNameRef.current.value, lastNameRef.current.value);
       //saving user to the database
+<<<<<<< HEAD
       await db.collection("users").add({
         firstName: firstNameRef.current.value,
         lastName: lastNameRef.current.value,
         email: emailRef.current.value,
       });
+=======
+>>>>>>> profile-page
       history.push("/connect");
     } catch {
       setPasswordError("Invalid Email");

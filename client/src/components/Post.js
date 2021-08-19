@@ -72,11 +72,7 @@ const Post = ({ post }) => {
           {post.title} by: {post.user.firstName} {post.user.lastName}
         </p>
         <p className="postBody">{post.body}</p>
-        <img
-          src={post.imageUrl}
-          alt={post.imageUrl}
-          style={{ width: "100%" }}
-        />
+        <img style={{width: "45vw"}}src={post.imageUrl} alt="404 Not Found" />
       </div>
       <div id="postInfo">
         <p className="postType">Type of post: {post.type}</p>

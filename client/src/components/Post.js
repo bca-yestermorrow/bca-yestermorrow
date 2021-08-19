@@ -5,7 +5,7 @@ import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import { db } from "../firebase";
 import { useAuth } from "../context/AuthContext";
-import firebase from "../firebase";
+import firebase from "firebase";
 import emailjs from "emailjs-com";
 import { init } from "emailjs-com";
 import { makeStyles } from "@material-ui/core/styles";
@@ -105,12 +105,14 @@ const Post = ({ post, profile }) => {
   //Updates post doc and adds the new comment to the comments field
   useEffect(() => {
     if (docId) {
+      console.log(commArr)
+      console.log(comment)
       let newCommArr = commArr.concat(comment)
+      console.log(newCommArr)
       let docRef = db.collection("posts").doc(docId);
       try {
         docRef.update({
           comments: newCommArr
-          ,
         });
         console.log("update successful");
       } catch (e) {
@@ -158,11 +160,11 @@ const Post = ({ post, profile }) => {
         <p className="postDate">{post.createdAt.slice(0, 21)}</p>
       </div>
       <div id="commentSection">
-        {/* {post.comments.map((comment, index) => {
-          return ( */}
-        <p id="comment">{comment}</p>
-        {/* );
-        })} */}
+        {post.comments.map((comment, index) => {
+          return (
+        <p id="comment" key={index}>{comment}</p>
+        );
+        })}
       </div>
       <form id="commentForm" onSubmit={handleComment}>
         <TextField
@@ -178,7 +180,7 @@ const Post = ({ post, profile }) => {
         </Button>
         {/* email button needs to be linked to posters email */}
         <Button id="emailButton" className="buttons">
-          Email Me
+         <a href={`mailto:${post.user.email}`}> Email Me </a>
         </Button>
       </form>
     </div>

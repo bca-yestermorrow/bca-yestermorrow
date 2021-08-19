@@ -25,7 +25,6 @@ export const FilterFeed = ({ setChecked, setCategory, checked, category }) => {
         });
         setCategoryList(updatedCatagoreys);
       });
-    console.log(categoryList);
   }, []);
 
   function onChangeHandler(e) {
@@ -66,7 +65,7 @@ export const FilterFeed = ({ setChecked, setCategory, checked, category }) => {
     <Card id="filterFeed">
       <h1 id="filterTitle">FILTER</h1>
       {categoryList.map((cat, index) => (
-        <div index={index}>
+        <div key={index}>
           <Checkbox onChange={(e) => onChangeHandler(e)} value={cat.name} />{" "}
           {cat.name}
         </div>

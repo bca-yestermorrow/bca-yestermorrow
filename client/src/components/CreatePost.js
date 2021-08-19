@@ -81,6 +81,8 @@ const CreatePost = () => {
   async function handlePostSubmit(e) {
     e.preventDefault();
 
+    let title = e.target.title.value;
+
     // grab body message
     let body = e.target.body.value;
 
@@ -95,6 +97,8 @@ const CreatePost = () => {
     // add user to the posts collection
     try {
       await db.collection("posts").add({
+        userId: currentUser.uid,
+        title: title,
         body: body,
         comments: [],
         category: options,
@@ -112,6 +116,7 @@ const CreatePost = () => {
       console.log(err);
     }
     e.target.body.value = "";
+    e.target.title.value = "";
     setTypePost("");
     setCatPost([]);
   }
@@ -133,8 +138,16 @@ const CreatePost = () => {
         </h3>
       )}
       <form id="createPostForm" onSubmit={handlePostSubmit}>
+        <h4 className="createPostSections">Type Here:</h4>
         <TextField
-          label="What do you want to say?"
+          label="TITLE"
+          variant="outlined"
+          multiline
+          type="text"
+          name="title"
+        ></TextField>
+        <TextField
+          label="BODY"
           variant="outlined"
           multiline
           id="createPostBody"
@@ -142,12 +155,16 @@ const CreatePost = () => {
           name="body"
           placeholder="Post message..."
         ></TextField>
-        <h4 className="createPostSections">Add Then Set Image:</h4>
+        <h4 className="createPostSections">Upload Image:</h4>
         <input type="file" onChange={handleInsertImage} />
-        <Button id="setImageButton" onClick={handleSetImage}>
-          Set Image
+        <Button
+          id="setImageButton"
+          className="buttons"
+          onClick={handleSetImage}
+        >
+          Add Image
         </Button>
-        <h4 className="createPostSections">Required:</h4>
+        <h4 className="createPostSections">Type Of Post:</h4>
         <FormControl>
           <InputLabel>Type Of Post:</InputLabel>
           <Select
@@ -163,7 +180,8 @@ const CreatePost = () => {
             <MenuItem value="Project Update">Project Update</MenuItem>
           </Select>
         </FormControl>
-        <h4 className="createPostSections">Select Category tags:</h4>
+        <h4 className="createPostSections">Add Tags:</h4>
+        <h5 id="typeSelectTitle">Select All That Apply</h5>
         <FormControl>
           <InputLabel>Category:</InputLabel>
           <Select
@@ -187,7 +205,7 @@ const CreatePost = () => {
           id="postButton"
           value="Create Post"
         >
-          Create Post
+          POST
         </Button>
       </form>
       {error && error}

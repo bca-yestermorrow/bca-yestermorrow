@@ -6,30 +6,32 @@ import { db } from "../firebase";
 import firebaseApp from "../firebase";
 import {Autocomplete} from '@material-ui/lab'
 
-
 import CheckBoxOutlineBlankIcon from "@material-ui/icons/CheckBoxOutlineBlank";
 import CheckBoxIcon from "@material-ui/icons/CheckBox";
 
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
 
+<<<<<<< HEAD
 export const FilterFeed = ({setChecked, setCategory, setCurrentState, currentState, checked, category}) => {
+=======
+export const FilterFeed = ({ setChecked, setCategory, checked, category }) => {
+>>>>>>> 8941476a84f29b0125c604d4fb9f60896532c435
   // const [category, setCategory] = useState(["General"]);
   // const [posts, setPosts] = useState([]);
-  const [categoryList, setCategoryList] = useState([])
-  useEffect(()=>{
-    let updatedCatagoreys = []
-    db
-    .collection("categories")
-    .get()
-    .then((querySnap) =>{
-      querySnap.forEach((doc) =>{
-        updatedCatagoreys.push(doc.data())
-      })
-      setCategoryList(updatedCatagoreys)
-    })
-   console.log(categoryList)
-  }, [])
+  const [categoryList, setCategoryList] = useState([]);
+  useEffect(() => {
+    let updatedCatagoreys = [];
+    db.collection("categories")
+      .get()
+      .then((querySnap) => {
+        querySnap.forEach((doc) => {
+          updatedCatagoreys.push(doc.data());
+        });
+        setCategoryList(updatedCatagoreys);
+      });
+    console.log(categoryList);
+  }, []);
 
   const [states, setStates] = useState([])
   useEffect(() =>{
@@ -46,14 +48,14 @@ export const FilterFeed = ({setChecked, setCategory, setCurrentState, currentSta
  
   function onChangeHandler(e) {
     // console.log('onChangeHandler', e)
-    if(category.length > 9){
-      e.currentTarget.checked = false
-      return console.log("cant be more than 10")
+    if (category.length > 9) {
+      e.currentTarget.checked = false;
+      return console.log("cant be more than 10");
     }
 
     console.log(e.currentTarget.textContent)
     let newArr = [];
-    console.log("in")
+    console.log("in");
 
     
     if (!category.contains(e.currentTarget.textContent)) {

@@ -64,7 +64,6 @@ export const FilterFeed = ({setChecked, setCategory, setCurrentState, currentSta
         });
         setCategoryList(updatedCatagoreys);
       });
-    console.log(categoryList);
   }, []);
 
   const [states, setStates] = useState([])

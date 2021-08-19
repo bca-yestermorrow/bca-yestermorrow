@@ -66,7 +66,7 @@ const ViewProfile = () => {
   };
   useEffect(() => {
     getProfile();
-  }, []);
+  },[]);
   console.log(profile.interests);
   return (
     <div>

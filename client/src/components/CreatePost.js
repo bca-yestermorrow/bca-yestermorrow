@@ -14,7 +14,7 @@ import Select from "@material-ui/core/Select";
 // import Checkbox from "@material-ui/core/Checkbox";
 // import Chip from "@material-ui/core/Chip";
 
-const CreatePost = () => {
+const CreatePost = ({ profile }) => {
   const [firstName, setFirstName] = useState(null);
   const [lastName, setLastName] = useState(null);
   const [error, setError] = useState("");
@@ -93,6 +93,8 @@ const CreatePost = () => {
 
     let type = e.target.type.value;
 
+    let profilePic = profile.profilePic;
+
     // reset error
     setError("");
 
@@ -110,6 +112,7 @@ const CreatePost = () => {
           email: currentUser.email,
           firstName: firstName,
           lastName: lastName,
+          profilePic: profilePic,
         },
         createdAt: Date(),
       });

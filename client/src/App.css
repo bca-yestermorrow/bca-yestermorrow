@@ -259,9 +259,15 @@
 }
 
 .postName {
+  display: flex;
   font-size: 2.8vh;
   font-family: "Raleway", sans-serif;
   margin-bottom: 1vh;
+}
+
+#postAvatar {
+  margin-left: .5em;
+  margin-right: .5em;
 }
 
 .postBody {

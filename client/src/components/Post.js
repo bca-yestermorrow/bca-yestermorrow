@@ -9,40 +9,65 @@ import { useAuth } from "../context/AuthContext";
 import firebase from "firebase";
 import emailjs from "emailjs-com";
 import { init } from "emailjs-com";
+import { makeStyles } from "@material-ui/core/styles";
+import { Avatar } from "@material-ui/core";
 init("user_9X8kPJFZA4CtJoKGtOw8Y");
 
-const Post = ({ post }) => {
+const Post = ({ post, profile }) => {
   const { currentUser } = useAuth();
   const [comment, setComment] = useState([]);
   const [firstName, setFirstName] = useState(null);
   const [lastName, setLastName] = useState(null);
   const [docId, setDocId] = useState(null);
-  const [docUpdated, setDocUpdated] = useState(false);
-  //gets current user by email and sets first and last name states to current user first and last
+  const [commArr, setCommArr] = useState([]);
+
+  const useStyles = makeStyles({
+    large: {
+      width: "200px",
+      height: "200px",
+      fontSize: "100px",
+    },
+    small: {
+      width: "35px",
+      height: "35px",
+      fontSize: "20px",
+    },
+    green: {
+      backgroundColor: "#E0E0E0",
+      "&:hover": {
+        backgroundColor: "#59833b",
+        color: "#fff",
+      },
+    },
+  });
+
+  const classes = useStyles();
+
+  // gets current user by email and sets first and last name states to current user first and last
   useEffect(() => {
     db.collection("users")
-      .where("email", "==", `${currentUser.email}`)
+      .doc(currentUser.uid)
       .get()
-      .then((querySnapshot) => {
-        querySnapshot.forEach((doc) => {
+      .then((doc) => {
+        if (doc.exists) {
           setFirstName(doc.data().firstName);
           setLastName(doc.data().lastName);
-        });
+        } else {
+          console.log("Doc not found...");
+        }
       });
-  }, [currentUser.email]);
+  });
 
   // Send email notification
   function sendEmail(e) {
-    
-  
-   let comment = e.target.comment.value
+    let comment = e.target.comment.value;
     emailjs
       .send(
         "service_ao3ljro",
         "template_1g42coj",
         {
           posterName: post.user.firstName,
-          commenterName:  `${firstName} ${lastName}`,
+          commenterName: `${firstName} ${lastName}`,
           comment: comment,
           posterEmail: post.user.email,
         },
@@ -62,8 +87,7 @@ const Post = ({ post }) => {
   function handleComment(e) {
     setDocId(null);
     e.preventDefault();
-
-    setComment(e.target.comment.value);
+    setComment([firstName, lastName, e.target.comment.value]);
     sendEmail(e);
     e.target.comment.value = "";
     //awaits the db to get the post that has been commented on
@@ -74,37 +98,57 @@ const Post = ({ post }) => {
         querySnapshot.forEach((doc) => {
           //sets the post doc id to state
           setDocId(doc.id);
+          setCommArr(doc.data().comments);
+          // setCommArr(doc.comments)
         });
       });
   }
   //Updates post doc and adds the new comment to the comments field
   useEffect(() => {
     if (docId) {
+      console.log(commArr)
+      console.log(comment)
+      let newCommArr = commArr.concat(comment)
+      console.log(newCommArr)
       let docRef = db.collection("posts").doc(docId);
       try {
         docRef.update({
-          comments: firebase.firestore.FieldValue.arrayUnion(comment),
+          comments: newCommArr
         });
         console.log("update successful");
       } catch (e) {
         console.log("update failed");
       }
     }
-    setDocUpdated(true);
     setDocId(null);
-  }, [comment, docId, docUpdated]);
+  }, [comment, docId, commArr]);
 
   return (
     <div className="post">
       <div className="postNBC">
-        <Link to={"/other-profile/" + post.userId} className="postName">
+        <h4 className="postName">
+          {post.title} by:
+          {post ? (
+            <Avatar
+              id="postAvatar"
+              src={post.user.profilePic}
+              alt={post.user.firstName}
+              className={classes.small}
+            >
+              {post.user.firstName[0]}
+            </Avatar>
+          ) : (
+            "Loading..."
+          )}
+         <Link to={"/other-profile/" + post.userId} className="postName">
         {post.title} by: {post.user.firstName} {post.user.lastName}
         </Link>
+        </h4>
         <p className="postBody">{post.body}</p>
         <img
           style={{ width: "45vw" }}
           src={post.imageUrl}
-          alt="404 Not Found"
+          alt={post.imageUrl}
         />
       </div>
       <div id="postInfo">
@@ -121,10 +165,8 @@ const Post = ({ post }) => {
       <div id="commentSection">
         {post.comments.map((comment, index) => {
           return (
-            <p id="comment" key={index}>
-              {firstName} {lastName} : {comment}
-            </p>
-          );
+        <p id="comment" key={index}>{comment}</p>
+        );
         })}
       </div>
       <form id="commentForm" onSubmit={handleComment}>

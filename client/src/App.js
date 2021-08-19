@@ -7,6 +7,7 @@ import { PrivateRoute } from "./components/PrivateRoute";
 import Connect from "./components/Connect";
 import EditProfile from "./components/EditProfile"
 import ViewProfile from "./components/ViewProfile"
+import ViewOtherProfile from "./components/ViewOtherProfile";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
           <PrivateRoute path="/connect" component={Connect}></PrivateRoute>
           <Route path="/edit-profile" component={EditProfile}></Route>
           <Route path="/profile" component={ViewProfile}></Route>
+          <Route path="/other-profile/:userUid" render={({ match }) => ( <ViewOtherProfile userUid={match.params.userUid} />)} />
         </Switch>
       </BrowserRouter>
     </AuthProvider>

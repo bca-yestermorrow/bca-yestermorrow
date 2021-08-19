@@ -27,15 +27,17 @@ const CreatePost = () => {
 
   useEffect(() => {
     db.collection("users")
-      .where("email", "==", `${currentUser.email}`)
+      .doc(currentUser.uid)
       .get()
-      .then((querySnapshot) => {
-        querySnapshot.forEach((doc) => {
+      .then((doc) => {
+        if (doc.exists) {
           setFirstName(doc.data().firstName);
           setLastName(doc.data().lastName);
-        });
+        } else {
+          console.log("Doc not found...");
+        }
       });
-  }, [currentUser.email]);
+  });
 
   useEffect(() => {
     if (categories.length === 0) {
@@ -95,6 +97,7 @@ const CreatePost = () => {
     // add user to the posts collection
     try {
       await db.collection("posts").add({
+        userId: currentUser.uid,
         body: body,
         category: options,
         type: type,

@@ -7,7 +7,7 @@ import { Link, useHistory } from "react-router-dom";
 import { db } from "../firebase";
 import { TextField, Button, Paper } from "@material-ui/core";
 
-const SignUp = ({ handleSignUpClose }) => {
+const SignUp = ({ handleSignUpClose, handleModalOpen }) => {
   //Gives us a reference to the value of input
   const emailRef = useRef();
   const passwordRef = useRef();
@@ -42,7 +42,8 @@ const SignUp = ({ handleSignUpClose }) => {
       setPasswordError("");
       await signup(emailRef.current.value, passwordRef.current.value, firstNameRef.current.value, lastNameRef.current.value);
       //saving user to the database
-      history.push("/connect");
+      handleModalOpen()
+      // history.push("/connect");
     } catch {
       setPasswordError("Invalid Email");
     }

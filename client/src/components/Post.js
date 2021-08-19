@@ -3,6 +3,7 @@ import "../App.css";
 import { useState } from "react";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
+import { Link } from "react-router-dom";
 
 const Post = ({ post }) => {
   const [comment, setComment] = useState("");
@@ -18,11 +19,15 @@ const Post = ({ post }) => {
   return (
     <div className="post">
       <div className="postNBC">
-        <p className="postName">
+        <Link to={"/other-profile/" + post.userId} className="postName">
           {post.user.firstName} {post.user.lastName}
-        </p>
+        </Link>
         <p className="postBody">{post.body}</p>
-        <img style={{width: "45vw"}}src={post.imageUrl} alt="404 Not Found" />
+        <img
+          style={{ width: "45vw" }}
+          src={post.imageUrl}
+          alt="404 Not Found"
+        />
       </div>
       <div id="postInfo">
         <p className="postType">Type of post: {post.type}</p>

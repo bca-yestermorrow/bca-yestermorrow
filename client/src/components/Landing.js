@@ -9,9 +9,14 @@ import Login from "./Login";
 import { GoogleBtn } from "./GoogleBtn";
 import { Container, Button, Box} from "@material-ui/core";
 import { Paper, Card } from "@material-ui/core";
+import { Link, useHistory } from "react-router-dom";
+import CreateProfile from "./CreateProfile";
+
 //landing page function
 const Landing = () => {
   const [signUp, setSignUp] = useState(false);
+  const [modal, setModal] = useState("")
+  const history = useHistory();
 
   function handleSignUpClose() {
     setSignUp(false);
@@ -21,9 +26,19 @@ const Landing = () => {
     setSignUp(true);
   }
 
+  const handleModalOpen = () => {
+    setModal(true)
+  }
+
+  const handleModalClosed = () => {
+    setModal("")
+    history.push("/connect")
+  }
+
   //return holds sign up / log in containers and check this out container
   return (
     <div>
+      {modal && <CreateProfile handleModalClosed={handleModalClosed} />}
       {/* background image div */}
       <div id="background"></div>
       <div id="landing">
@@ -41,7 +56,7 @@ const Landing = () => {
         <div id="mainLanding">
           <Card style={{padding: "2vw"}} >
             
-             <SignUp handleSignUpClose={handleSignUpClose}/>
+             <SignUp handleSignUpClose={handleSignUpClose} handleModalOpen={handleModalOpen} />
             {/* between sign up and log in containers */}
             <h1 id="or">Or</h1>
             {/* login form */}

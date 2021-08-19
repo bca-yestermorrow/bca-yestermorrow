@@ -1,5 +1,7 @@
 /* imported custom google font */
-@import url("https://fonts.googleapis.com/css2?family=Raleway:wght@202&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Raleway&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Raleway:wght@600&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Raleway:wght@500&display=swap");
 
 * {
   margin: 0;
@@ -39,10 +41,9 @@
 }
 /* body container for landing page */
 #mainLanding {
-  margin-top:1.5vw ;
- display: flex;
- justify-content: space-around;
- 
+  margin-top: 1.5vw;
+  display: flex;
+  justify-content: space-around;
 }
 /* form container holding both sign up and log in */
 #form {
@@ -60,10 +61,9 @@
   display: flex;
   flex-direction: column;
   padding: 2vw;
-  
 }
 /* class style for sign in form inputs */
-.signForm{
+.signForm {
   width: 25vw;
 }
 /* in between both forms */
@@ -156,15 +156,11 @@
 }
 
 #connectHeader {
-  background-color: #384c5c;
-  height: 7em;
-  color: white;
-  text-align: center;
-}
-
-#connectTitle {
-  padding-top: 1em;
-  color: white;
+  background-image: url(".//assets/MAIN FORUM BANNER.jpg");
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-size: 100vw 35em;
+  height: 35em;
 }
 
 #connectContainer {
@@ -182,14 +178,18 @@
   background-color: #ffffff;
   border-radius: 1.5em;
   box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.596);
-  padding-left: 1em;
   overflow-y: scroll;
+}
+
+#filterTitle {
+  text-align: center;
+  font-family: "Raleway", sans-serif;
 }
 
 #mainFeed {
   justify-content: space-between;
   display: flex;
-  flex-direction: column;
+  flex-direction: column-reverse;
   margin: 2em;
   height: 70vh;
   overflow-y: scroll;
@@ -206,7 +206,7 @@
 
 #createPostTitle {
   text-align: center;
-  text-decoration: underline;
+  font-family: "Raleway", sans-serif;
 }
 
 #createPostForm {
@@ -218,8 +218,9 @@
 }
 
 .createPostSections {
-  margin-top: 3em;
+  margin-top: 1.5em;
   color: #f50057;
+  font-family: "Raleway", sans-serif;
 }
 
 .createPostName {
@@ -236,9 +237,13 @@
 }
 
 #setImageButton {
-  margin-right: 2em;
   margin-top: 1em;
   box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.596);
+}
+
+#typeSelectTitle {
+  color: #f50057;
+  font-family: "Raleway", sans-serif;
 }
 
 .postSelect {
@@ -262,7 +267,6 @@
 .postName {
   font-size: 2.8vh;
   font-family: "Raleway", sans-serif;
-  text-decoration: underline;
   margin-bottom: 1vh;
 }
 
@@ -277,11 +281,12 @@
 }
 
 #postInfo {
-  display:flex;
+  display: flex;
   flex-direction: row;
   justify-content: space-around;
+  background-color: rgba(0, 0, 0, 0.11);
 }
- 
+
 .postType {
   font-size: 1.5vh;
   border-radius: 1vh;
@@ -294,6 +299,17 @@
 
 .postDate {
   font-size: 1.3vh;
+}
+
+#commentSection {
+  display: flex;
+  flex-direction: column-reverse;
+  border-top: solid rgb(0, 0, 0);
+}
+
+#comment {
+  margin-top: 1em;
+  background-color: rgba(0, 0, 0, 0.089);
 }
 
 #commentForm {
@@ -312,11 +328,134 @@
   margin-top: 1vh;
 }
 
+#emailButton {
+  margin-top: 1em;
+}
+
 .buttons {
-  box-shadow: 2px 2px rgba(0, 0, 0, 0.596);
+  box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.596);
 }
 
 .buttons:hover {
   box-shadow: 2px 2px rgba(0, 0, 0, 0.596);
-  background-color: #67a641;
+  background-color: #f50057;
 }
+/* -------------------------- Edit Profile Page --------------------------- */
+
+.edit-profile-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height:100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1000
+}
+
+.form-container {
+  margin: 10vh auto;
+  display: flex;
+  justify-content: center;
+  
+}
+
+.x-button {
+  float: right;
+  position: relative;
+}
+
+.user-profile-info {
+  margin: 10px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  grid-template-areas: 
+  "header main main"
+  ". main main";
+}
+
+.user-header {
+  grid-area: "header"
+}
+
+.user-body {
+  grid-area: "main"
+}
+
+.edit-profile-form {
+  width: 51vw;
+  height: 60vh;
+  overflow: auto;
+  overflow-x: hidden;
+  margin: auto;
+  position: absolute;
+  top: 0; left: 0; bottom: 0; right: 0;
+  font-family: "Raleway", sans-serif;
+  background-color: white;
+  border-radius: 1em;
+  box-shadow: 2px 2px 2px 0px rgba(0, 0, 0, 0.596);
+  padding: 10px;
+
+}
+
+.form-section {
+  margin: 20px;
+}
+
+.input-field {
+  width: 50vw;
+  overflow: hidden;
+}
+
+.menu-item {
+  z-index: 10000
+}
+
+/* ------------------- View Profile ------------------- */
+
+.view-profile-page {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.view-profile-container {
+  width: 60vw;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  margin-top: -100px;
+
+}
+
+#banner {
+  width: 100%;
+  height: 0;
+  padding-top: 18%;
+  overflow: hidden;
+  background-color: black;
+}
+
+.user-work {
+  display: flex;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  justify-content: space-between;
+
+  height: 200px; 
+  width: 100%;
+}
+
+.user-work > div {
+  width: 40%;
+  /* overflow: hidden; */
+}
+
+.user-work > div > h4 {
+  text-align: center;
+}
+
+
+

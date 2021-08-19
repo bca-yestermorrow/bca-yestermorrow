@@ -30,20 +30,6 @@ const Post = ({ post }) => {
       });
   }, [currentUser.email]);
 
-  //gets the info of the user who created the post
-  function handleCommentPull() {
-    if (!comment) {
-      db.collection("users")
-        .where("firstName", "==", `${post.user.firstName}`)
-        .get()
-        .then((querySnapshot) => {
-          querySnapshot.forEach((doc) => {
-            console.log(doc.data());
-          });
-        });
-    }
-  }
-
   // Send email notification
   function sendEmail(e) {
     
@@ -90,7 +76,7 @@ const Post = ({ post }) => {
         });
       });
   }
-  //docId state wont pro actively change or update when commenting on a new post
+  //Updates post doc and adds the new comment to the comments field
   useEffect(() => {
     if (docId) {
       let docRef = db.collection("posts").doc(docId);
@@ -106,9 +92,6 @@ const Post = ({ post }) => {
     setDocUpdated(true);
     setDocId(null);
   }, [comment, docId, docUpdated]);
-
-  // need to gather all comments from data base
-  // display comments on their appropriate post
 
   return (
     <div className="post">

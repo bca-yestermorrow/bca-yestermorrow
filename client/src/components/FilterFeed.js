@@ -1,9 +1,13 @@
 import React from "react";
-import { Chip, Card, Avatar, Checkbox, TextField } from "@material-ui/core";
+import { Chip, Card, Avatar, Checkbox, TextField, Button, Box } from "@material-ui/core";
 import AcUnitIcon from "@material-ui/icons/AcUnit";
 import { useState, useEffect } from "react";
 import { db } from "../firebase";
 import firebaseApp from "../firebase";
+import {Autocomplete} from '@material-ui/lab'
+import { makeStyles } from '@material-ui/core/styles';
+
+
 
 import CheckBoxOutlineBlankIcon from "@material-ui/icons/CheckBoxOutlineBlank";
 import CheckBoxIcon from "@material-ui/icons/CheckBox";
@@ -11,7 +15,42 @@ import CheckBoxIcon from "@material-ui/icons/CheckBox";
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
 
-export const FilterFeed = ({ setChecked, setCategory, checked, category }) => {
+const useStyles = makeStyles({
+  button: {
+    color: "white",
+    backgroundColor: "green",
+    height: "10vw",
+    width: "15vw",
+    fontSize: "3rem",
+    '&:hover' : {
+      backgroundColor:"black"
+    }
+  },
+  filterFlex: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    fontSize: "2rem",
+    flexDirection: "column",
+    
+   
+
+  },
+  jobFlex: {
+    display: "flex",
+    height: "50%",
+    alignItems: "center",
+    justifyContent: "center"
+  },
+  filterField : {
+   
+    
+    width: "15vw"
+  }
+  
+})
+
+export const FilterFeed = ({setChecked, setCategory, setCurrentState, currentState, checked, category}) => {
   // const [category, setCategory] = useState(["General"]);
   // const [posts, setPosts] = useState([]);
   const [categoryList, setCategoryList] = useState([]);
@@ -28,88 +67,86 @@ export const FilterFeed = ({ setChecked, setCategory, checked, category }) => {
     console.log(categoryList);
   }, []);
 
-  function onChangeHandler(e) {
-    // console.log('onChangeHandler', e)
-    if (category.length > 9) {
-      e.currentTarget.checked = false;
-      return console.log("cant be more than 10");
-    }
+  const [states, setStates] = useState([])
+  useEffect(() =>{
+  let statesArr = []
+    db
+    .collection("states")
+    .doc("states")
+    .get()
+    .then((doc) => {
+      setStates(doc.data().states)
+    })
+  }, [])
 
+ 
+  function onChangeHandler(e, value) {
+ 
+    
+
+    
     let newArr = [];
+    value.forEach((cat) => newArr.push(cat.name))
+    setCategory(newArr) 
     console.log("in");
-
-    console.log(e.currentTarget.value);
-    if (e.currentTarget.checked === true) {
-      setChecked(!checked);
-
-      // add a filter tag
-      newArr = [...category, e.currentTarget.value];
-      setCategory(newArr);
-
-      console.log(newArr);
-    } else {
-      setChecked(!checked);
-
-      // remove a filter tag
-      let tmpCategories = category;
-      let index = tmpCategories.indexOf(e.currentTarget.value);
-      if (index > -1) {
-        tmpCategories.splice(index, 1);
-      }
-      setCategory(tmpCategories);
-      // print out category
-      console.log(category);
-    }
+   
+    console.log(value)
+    
+    
   }
 
+  //it will automatically update the value array
+
+  const classes = useStyles() 
+
   return (
-    <Card id="filterFeed">
-      <h1 id="filterTitle">FILTER</h1>
-      {categoryList.map((cat, index) => (
-        <div index={index}>
-          <Checkbox onChange={(e) => onChangeHandler(e)} value={cat.name} />{" "}
-          {cat.name}
-        </div>
-      ))}
-      {/* <ul>
-        {categoryList.map((catagorey) => (
-          <li key={catagorey.id}>{catagorey.name}</li>
-        ))}
-      </ul> */}
-      {/* {categoryList.length > 0 && (
-        <Autocomplete
-          multiple
-          id="checkboxes-tags-demo"
-          options={categoryList}
-          disableCloseOnSelect
-          getOptionLabel={(option) => option.name}
-          renderOption={(option, { selected }) => (
-            <React.Fragment>
-              
-              <Checkbox
-                icon={icon}
-               
-                checkedIcon={checkedIcon}
-                style={{ marginRight: 8 }}
-                checked={selected}
-                value={option.name}
-                onChange={(e) => onChangeHandler(e)}
-              />
-              {console.log(option.value)}
-              {option.name}
-            </React.Fragment>
-          )}
-          style={{ width: 500 }}
-          renderInput={(params) => (
-            <TextField
-              {...params}
-              variant="outlined"
-              label="Checkboxes"
-              placeholder="Favorites"
-            />
-          )}
-        />
-      )} */}
-    </Card>
+    <Card>
+    <h2>Filter</h2>
+    <Box className={classes.filterFlex} >
+    
+ 
+ <Autocomplete
+     
+      multiple
+      options={categoryList}
+      onChange={(e, value) => onChangeHandler(e, value)}
+      disableCloseOnSelect
+      width={100}
+      getOptionSelected={(option, value) => option.name === value.name}
+      getOptionLabel={(option) => option.name}
+      renderOption={(option, { selected }) => (
+        <React.Fragment>
+          <Checkbox
+            style={{ marginRight: 8 }}
+            checked={selected}
+            value={option.name}
+          />
+          {option.name}
+        </React.Fragment>
+      )}
+      style={{ width: "100%" }}
+      renderInput={(params) => (
+        <TextField   {...params}  className={classes.filterField}  variant="outlined" label="Filter by tags" placeholder="Choose a tag" />
+      )}
+    />
+
+   
+
+    <Autocomplete
+      
+      onChange={(e) => setCurrentState(e.currentTarget.textContent)}
+      options={states}
+      getOptionLabel={(state) => state.name}
+      style={{ width: "100%" }}
+      renderInput={(params) => <TextField   className={classes.filterField} {...params} label="Filter by state" variant="outlined" />}
+    />
+
+ </Box>
+
+ <Card className={classes.jobFlex}>
+   <Button className={classes.button}>Find a job!</Button>
+ </Card>
+ </Card>
+   
   );
 };

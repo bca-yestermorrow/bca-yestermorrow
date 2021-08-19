@@ -91,16 +91,15 @@ const ViewOtherProfile = ({ userUid }) => {
             </div>
             <div>
               <h4>Interests</h4>
-              <FormControl component="fieldset">
-                <FormGroup component="legend"></FormGroup>
+              
               {profile.interests ? ( profile.interests.map((interest, index) => {
                 return (
-                  <FormControlLabel control={<Checkbox name={interest} />} className="user-interests" key={index} label={interest} />
+                  <p className="user-interests" key={index}>{interest}</p>
                 );
               }) ) : (
                 <p></p>
               )}
-              </FormControl>
+
             </div>
           </div>
         ) : (

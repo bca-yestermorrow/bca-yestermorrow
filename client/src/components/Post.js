@@ -5,7 +5,10 @@ import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import { db } from "../firebase";
 import { useAuth } from "../context/AuthContext";
-import firebase from "firebase/app";
+import firebase from './firebase'
+import emailjs from "emailjs-com";
+import { init } from "emailjs-com";
+init("user_9X8kPJFZA4CtJoKGtOw8Y");
 
 const Post = ({ post }) => {
   const { currentUser } = useAuth();
@@ -27,12 +30,54 @@ const Post = ({ post }) => {
       });
   }, [currentUser.email]);
 
-  //onsubmit the callback function gets the value of the comment and sets it to state
+  //gets the info of the user who created the post
+  function handleCommentPull() {
+    if (!comment) {
+      db.collection("users")
+        .where("firstName", "==", `${post.user.firstName}`)
+        .get()
+        .then((querySnapshot) => {
+          querySnapshot.forEach((doc) => {
+            console.log(doc.data());
+          });
+        });
+    }
+  }
+
+  // Send email notification
+  function sendEmail(e) {
+    
+  
+   let comment = e.target.comment.value
+    emailjs
+      .send(
+        "service_ao3ljro",
+        "template_1g42coj",
+        {
+          posterName: post.user.firstName,
+          commenterName:  `${firstName} ${lastName}`,
+          comment: comment,
+          posterEmail: post.user.email,
+        },
+        "user_9X8kPJFZA4CtJoKGtOw8Y"
+      )
+      .then(
+        (result) => {
+          console.log("this is result " + result.text);
+        },
+        (error) => {
+          console.log(error.text);
+        }
+      );
+  }
+
+  //KEEP COMMENTS AFTER POSTING
   function handleComment(e) {
     setDocId(null);
     e.preventDefault();
+
     setComment(e.target.comment.value);
-    //resets displayed comment field
+    sendEmail(e);
     e.target.comment.value = "";
     //awaits the db to get the post that has been commented on
     db.collection("posts")

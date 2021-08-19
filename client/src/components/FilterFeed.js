@@ -12,11 +12,7 @@ import CheckBoxIcon from "@material-ui/icons/CheckBox";
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
 
-<<<<<<< HEAD
 export const FilterFeed = ({setChecked, setCategory, setCurrentState, currentState, checked, category}) => {
-=======
-export const FilterFeed = ({ setChecked, setCategory, checked, category }) => {
->>>>>>> 8941476a84f29b0125c604d4fb9f60896532c435
   // const [category, setCategory] = useState(["General"]);
   // const [posts, setPosts] = useState([]);
   const [categoryList, setCategoryList] = useState([]);
@@ -46,41 +42,50 @@ export const FilterFeed = ({ setChecked, setCategory, checked, category }) => {
   }, [])
 
  
-  function onChangeHandler(e) {
+  function onChangeHandler(e, value) {
     // console.log('onChangeHandler', e)
     if (category.length > 9) {
       e.currentTarget.checked = false;
       return console.log("cant be more than 10");
     }
 
-    console.log(e.currentTarget.textContent)
-    let newArr = [];
-    console.log("in");
-
     
-    if (!category.contains(e.currentTarget.textContent)) {
-      setChecked(!checked);
-
-      // add a filter tag
-      newArr = [...category, e.currentTarget.textContent];
-      setCategory(newArr);
-      console.log("in if")
-      console.log(newArr);
-    } else {
-      setChecked(!checked);
-      console.log("in else")
-      console.log(e.currentTarget.textContent)
-      // remove a filter tag
-      let tmpCategories = category;
-      let index = tmpCategories.indexOf(e.currentTarget.textContent);
-      if (index > -1) {
-        tmpCategories.splice(index, 1);
-      }
-      setCategory(tmpCategories);
-      // print out category
-      console.log(category);
-    }
+    let newArr = [];
+    value.forEach((cat) => newArr.push(cat.name))
+    setCategory(newArr) 
+    console.log("in");
+    //But it will not work when array.length === 0
+    console.log(value)
+    
+    
+    // if (!category.includes(e.currentTarget.textContent) && e.currentTarget.textContent !== '') {
+    //   setChecked(!checked);
+    //   value.forEach((cat) => newArr.push(cat.name))
+      
+    //   // add a filter tag
+    //   // newArr = [...category, e.currentTarget.textContent];
+    //   // setCategory(newArr);
+    //   // console.log("in if")
+    //   setCategory(newArr)
+    //   console.log(newArr);
+    // } else {
+    //   setChecked(!checked);
+    //   console.log("in else")
+      
+    //   // remove a filter tag
+    //   let tmpCategories = category;
+    //   value.forEach((cat) => category.push(cat.name) )
+    //   let index = tmpCategories.indexOf(value[0].name);
+    //   if (index > -1) {
+    //     tmpCategories.splice(index, 1);
+    //   }
+    //   setCategory(tmpCategories);
+    //   // print out category
+    //   console.log(category);
+    // }
   }
+
+  //it will automatically update the value array
 
   return (
     <Card id="filterFeed">
@@ -102,8 +107,10 @@ export const FilterFeed = ({ setChecked, setCategory, checked, category }) => {
       multiple
       id="checkboxes-tags-demo"
       options={categoryList}
-      onChange={(e) => onChangeHandler(e)}
+      
+      onChange={(e, value) => onChangeHandler(e, value)}
       disableCloseOnSelect
+      getOptionSelected={(option, value) => option.name === value.name}
       getOptionLabel={(option) => option.name}
       renderOption={(option, { selected }) => (
         <React.Fragment>

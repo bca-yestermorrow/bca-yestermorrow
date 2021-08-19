@@ -14,8 +14,6 @@ const Post = ({ post }) => {
   const [lastName, setLastName] = useState(null);
   const [docId, setDocId] = useState(null);
   const [docUpdated, setDocUpdated] = useState(false);
-  const [allComments, setAllComments] = useState();
-  // const [allComments, setAllComments] = useState([]);
   //gets current user by email and sets first and last name states to current user first and last
   useEffect(() => {
     db.collection("users")

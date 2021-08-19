@@ -10,6 +10,7 @@ const Connect = () => {
   const [category, setCategory] = useState([]);
   const [posts, setPosts] = useState([]);
   const [checked, setChecked] = useState(false);
+  const [currentState, setCurrentState] = useState('')
 
   useEffect(() => {
     let query = db.collection("posts");
@@ -20,16 +21,28 @@ const Connect = () => {
     }
 
     const unsub = query.onSnapshot((querysnap) => {
+      
       const updatedPosts = querysnap.docs.map((doc) => ({
         id: doc.id,
 
         ...doc.data(),
       }));
-      setPosts(updatedPosts);
+      if(currentState !== ''){
+        console.log('in if statement')
+        let filterdArr =updatedPosts.filter((post) =>{
+         
+          return post.user.state === currentState
+        })
+        console.log(filterdArr)
+        setPosts(filterdArr)
+      } else {
+        setPosts(updatedPosts)
+      }
+      
     });
     query = query.orderBy("createdAt").limitToLast(100);
     return () => unsub();
-  }, [category, checked]);
+  }, [category, checked, currentState]);
 
   return (
     <div id="connectPage">
@@ -40,6 +53,8 @@ const Connect = () => {
           checked={checked}
           setCategory={setCategory}
           category={category}
+          currentState={currentState}
+          setCurrentState={setCurrentState}
         />
         <div id="mainFeed">
           {!posts && <p>Welcome Yestomorrow Alumni!</p>}

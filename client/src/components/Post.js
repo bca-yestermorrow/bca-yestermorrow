@@ -5,7 +5,7 @@ import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import { db } from "../firebase";
 import { useAuth } from "../context/AuthContext";
-import firebase from './firebase'
+import firebase from "firebase";
 import emailjs from "emailjs-com";
 import { init } from "emailjs-com";
 init("user_9X8kPJFZA4CtJoKGtOw8Y");
@@ -153,7 +153,7 @@ const Post = ({ post }) => {
         </Button>
         {/* email button needs to be linked to posters email */}
         <Button id="emailButton" className="buttons">
-          Email Me
+         <a href={`mailto:${post.user.email}`}> Email Me </a>
         </Button>
       </form>
     </div>

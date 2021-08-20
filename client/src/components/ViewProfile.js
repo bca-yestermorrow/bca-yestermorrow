@@ -3,6 +3,7 @@ import { useAuth } from "../context/AuthContext";
 import { db } from "../firebase";
 import { useState, useEffect } from "react";
 import firebase from "firebase";
+import yesterLogo from "../assets/MAIN FORUM BANNER.jpg";
 import {
   Avatar,
   Button,
@@ -11,6 +12,7 @@ import {
   FormGroup,
   FormControlLabel,
   Card,
+  Divider,
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import EditProfile from "./EditProfile";
@@ -33,13 +35,13 @@ const ViewProfile = () => {
       fontSize: "25px",
     },
     green: {
-      backgroundColor: "#E0E0E0",
+      backgroundColor: "#59833b",
       "&:hover": {
         backgroundColor: "#59833b",
         color: "#fff",
       },
       profileCard: {
-        height: "200px",
+        marginTop: "10px",
       },
     },
   });
@@ -75,72 +77,82 @@ const ViewProfile = () => {
   };
   useEffect(() => {
     getProfile();
-  },[]);
+  }, []);
   console.log(profile.interests);
   return (
-    <div className="profile-page-wrapper">
-      <img id="banner" src="../main_forum_banner.jpg" alt="alt" />
-      {/* <div id="banner"></div> */}
-      <div className="view-profile-page">
-        <div>
-          {modal && <EditProfile handleModalClosed={handleModalClosed} />}
-        </div>
-
-        {profile ? (
-          <div className="view-profile-container">
-            <Avatar
-              src={profile.profilePic}
-              alt={profile.firstName}
-              className={classes.large}
-            >
-              {profile.firstName[0]}
-            </Avatar>
-            <p className="user-full-name">
-              {profile.firstName} {profile.lastName}
-            </p>
-            {profile.location && (
-              <p className="user-location">
-                {profile.location.city}, {profile.location.state},{" "}
-                {profile.location.country}
-              </p>
-            )}
-            <p className="user-links">{profile.portfolio}</p>
-            <div className="user-work">
-              <Card>
-                <div>
-                  <h4>About Me</h4>
-                  <p className="user-bio">{profile.bio}</p>
-                </div>
-              </Card>
-              <Card className={classes.profileCard}>
-                <div>
-                  <h4>Projects</h4>
-
-                  <p className="user-projects">{profile.projects}</p>
-                </div>
-              </Card>
-            </div>
-            <div>
-              <h4>Interests</h4>
-              {profile.interests ? (
-                profile.interests.map((interest, index) => {
-                  return (
-                    <p className="user-interests" key={index}>
-                      {interest}
-                    </p>
-                  );
-                })
-              ) : (
-                <p></p>
-              )}
-            </div>
-            <Button className={classes.green} onClick={handleModalOpen}>
-              Edit
-            </Button>
+    <div>
+      <div className="banner-wrapper">
+        <img className="profile-banner" src={yesterLogo} alt="alt" />
+      </div>
+      <div className="profile-page-wrapper">
+        {/* <div id="banner"></div> */}
+        <div className="view-profile-page">
+          <div>
+            {modal && <EditProfile handleModalClosed={handleModalClosed} />}
           </div>
-        ) : (
-          <p>loading...</p>
-        )}
+
+          {profile ? (
+            <div className="view-profile-container">
+              <Avatar
+                src={profile.profilePic}
+                alt={profile.firstName}
+                className={classes.large}
+              >
+                {profile.firstName[0]}
+              </Avatar>
+              <Card style={{ marginTop: "20px", marginBottom: "20px",  width: "40vw" }}>
+                <Button color="secondary" variant="contained" id="edit-button" onClick={handleModalOpen}>
+                Edit
+              </Button>
+              <div className="user-info">
+                  <h3>
+                    {profile.firstName} {profile.lastName}
+                  </h3>
+                  {profile.location && (
+                    <p className="user-location">
+                      {profile.location.city}, {profile.location.state},{" "}
+                      {profile.location.country}
+                    </p>
+                  )}
+                  <p className="user-links">{profile.portfolio}</p>
+                </div>
+                <Divider variant="middle" />
+                <div className="bio-div">
+                  <div>
+                    <h4>About Me</h4>
+                    <p className="user-bio">{profile.bio}</p>
+                  </div>
+                </div>
+                <Divider variant="middle" />
+                <div className="user-work">
+                  <div>
+                    <h4>Projects</h4>
+
+                    <p className="user-projects">{profile.projects}</p>
+                  </div>
+                  <Divider orientation="vertical" />
+                  <div>
+                    <h4>Interests</h4>
+                    {profile.interests ? (
+                      profile.interests.map((interest, index) => {
+                        return (
+                          <p className="user-interests" key={index}>
+                            {interest}
+                          </p>
+                        );
+                      })
+                    ) : (
+                      <p></p>
+                    )}
+                  </div>
+                </div>
+              </Card>
+              
+            </div>
+          ) : (
+            <p>loading...</p>
+          )}
+        </div>
       </div>
     </div>
   );

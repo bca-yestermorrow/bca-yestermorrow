@@ -6,6 +6,8 @@ import { db } from "../firebase";
 import firebaseApp from "../firebase";
 import {Autocomplete} from '@material-ui/lab'
 import { makeStyles } from '@material-ui/core/styles';
+import Paper from "@material-ui/core/Paper"
+import { ThemeProvider, createTheme } from "@material-ui/core/styles";
 
 
 
@@ -19,32 +21,30 @@ const useStyles = makeStyles({
   button: {
     color: "white",
     backgroundColor: "green",
-    height: "10vw",
-    width: "15vw",
-    fontSize: "3rem",
+    
+    
+    fontSize: ".5vw",
     '&:hover' : {
       backgroundColor:"black"
     }
   },
   filterFlex: {
     display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    fontSize: "2rem",
     flexDirection: "column",
-    height: "50%"
+    justifyContent: "space-evenly",
+    width: "90%",
+    height: "100%",
+    marginLeft: "1em"
   },
+
   jobFlex: {
-    display: "flex",
-    height: "50%",
-    alignItems: "center",
-    justifyContent: "center"
+    
   },
   filterField : {
    
-    
-    width: "15vw"
-  }
+  },
+ 
+
   
 })
 
@@ -97,12 +97,13 @@ export const FilterFeed = ({setChecked, setCategory, setCurrentState, currentSta
   const classes = useStyles() 
 
   return (
-    <Card>
+    <Paper elevation={5} className="createPost">
     
-    <Box className={classes.filterFlex} >
+    <h1  id="filterTitle">FILTER</h1>
     
+   <Box  className={classes.filterFlex}> 
  <FormControl>
-   <h2>Filter</h2>
+  
  <Autocomplete
      
       multiple
@@ -140,12 +141,17 @@ export const FilterFeed = ({setChecked, setCategory, setCurrentState, currentSta
     />
     </FormControl>
 
- </Box>
+ 
 
- <Card className={classes.jobFlex}>
-   <Button className={classes.button}>Find a job!</Button>
- </Card>
- </Card>
+ 
+   <Button  className={classes.filterField} color="secondary" variant="contained"><a href="https://yestermorrow.org/connect/jobs">Find a job!</a></Button>
+   <Button className={classes.filterField} color="secondary" variant="contained"><a href="https://yestermorrow.org/learn/courses"> Current Courses</a> </Button>
+   <Button className={classes.filterField}  color="secondary" variant="contained">My Profile</Button>
+
+   <div id="footer">FOOTER</div>
+ 
+   </Box>
+ </Paper>
    
   );
 };

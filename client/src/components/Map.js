@@ -14,6 +14,16 @@ const leafIcon = L.icon({
   shadowSize: [10, 15],
 })
 
+
+
+const greenIcon = new L.Icon({
+  iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-green.png',
+  iconSize: [10, 15],
+  shadowUrl: shadow,
+  shadowSize: [10, 15],
+  
+})
+
 const Map = () => {
   // stores location objects - Obj :
   // {Address: {City,State}, latlong: [45.027, -72.234], _id}
@@ -57,6 +67,7 @@ const Map = () => {
         url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
       />
       {lnglats}
+      <Marker  icon={greenIcon} position={[44.148985984799275, -72.83788414870979]} />
         </>
       ) : (
        <CircularProgress style={{zIndex: "5000"}}color="secondary" />

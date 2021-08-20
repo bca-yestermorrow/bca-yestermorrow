@@ -53,7 +53,7 @@ const SignUp = ({ handleSignUpClose }) => {
     setLoading(false);
   }
   return (
-    <Paper  elevation={2}>
+    <>
       <form action="/signUp" id="Login" className="login-flex" method="POST" onSubmit={handleSubmit}>
         <h1 className="login-header">Create Your Account</h1>
        
@@ -63,12 +63,12 @@ const SignUp = ({ handleSignUpClose }) => {
         <TextField size="small" id="filled-basic" label="Password" type="password" inputRef={passwordRef} variant="filled" />
         <TextField size="small" id="filled-basic" label="Confirm Password" type="password" inputRef={confirmPasswordRef} variant="filled" />
      
-        <Button  variant="contained" color="secondary" disable={loading} type="submit">Create Account</Button >
+        <Button  variant="contained" size="small" color="secondary" disable={loading} type="submit">Create Account</Button >
       </form>
 
       {passwordError && <h4>{passwordError}</h4>}
       
-      </Paper>
+     </>
   );
 };
 

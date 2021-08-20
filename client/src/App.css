@@ -4,7 +4,7 @@
 }
 
 body{
-  background-color: #FFFDD0;
+  background-color: #e9eaeb;
 }
 
 
@@ -42,6 +42,8 @@ body{
 .login {
   display: flex;
   flex-direction: column-reverse;
+  padding: 1vw;
+  gap: 1vw;
  
 }
 

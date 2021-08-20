@@ -33,7 +33,7 @@ const Landing = () => {
         </header>
         {/* main body */}
         <div id="mainLanding">
-          <Card className="login" >
+          <Paper  elevation={3} className="login" >
             
              <SignUp handleSignUpClose={handleSignUpClose}/>
             {/* between sign up and log in containers */}
@@ -41,8 +41,8 @@ const Landing = () => {
             {/* login form */}
             <Login />
          
-          </Card>
-
+          </Paper>
+          
           {/* check this out container with map and other content */}
           <Card >
             

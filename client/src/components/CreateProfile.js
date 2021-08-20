@@ -19,12 +19,12 @@ import {
 // import for material ui to customize styles
 import { makeStyles } from "@material-ui/core/styles";
 
-const EditProfile = ({ handleModalClosed }) => {
+const CreateProfile = ({ handleModalClosed }) => {
   const [user, setUser] = useState("");
   const [categories, setCategories] = useState("");
   const [categoryName, setCategoryName] = useState([]);
   const [imageURL, setImageURL] = useState("");
-  const [bool, setBool] = useState(false)
+  const [bool, setBool] = useState(false);
   // const [image, setImage] = useState("");
 
   const { currentUser } = useAuth();
@@ -53,9 +53,9 @@ const EditProfile = ({ handleModalClosed }) => {
     selectedGreen: {
       "&:select": {
         backgroundColor: "#59833b",
-        color: "#fff"
-      }
-    }
+        color: "#fff",
+      },
+    },
   });
   // allows use of classes.whatever on mui components
   const classes = useStyles();
@@ -108,6 +108,8 @@ const EditProfile = ({ handleModalClosed }) => {
   // function to handle form submit. updates user doc with new information
   const handleSubmit = async (evt) => {
     evt.preventDefault();
+    // let userCity = evt.target.city.value;
+    // let userState = evt.target.state.value;
     let userFirstName = evt.target.firstName.value;
     let userLastName = evt.target.lastName.value;
     let userBio = evt.target.bio.value;
@@ -195,12 +197,6 @@ const EditProfile = ({ handleModalClosed }) => {
     handleModalClosed();
   };
 
-  const handleClose = (evt) => {
-    if (evt.target.className === "edit-profile-container") {
-      handleModalClosed();
-    }
-  };
-
   const handleChange = (evt) => {
     setCategoryName(evt.target.value);
   };
@@ -216,39 +212,41 @@ const EditProfile = ({ handleModalClosed }) => {
   }, []);
   console.log(categoryName);
   return (
-    <div className="edit-profile-container" onClick={handleClose}>
+    <div className="edit-profile-container">
       <div className="form-container">
-        <h1>Edit your Profile</h1>
         <form
           className="edit-profile-form"
           onSubmit={handleSubmit}
           autoComplete="off"
         >
-          <button onClick={handleModalClosed} className="x-button">
-            X
-          </button>
-          <label className="label" for="profile-firstName">
-            First Name:{" "}
-          </label>
-          <TextField
-            className="input-field"
-            id="profile-firstName"
-            label={user.firstName}
-            name="firstName"
-            variant="filled"
-          />
-
-          <label className="label" for="profile-lastName">
-            Last Name:{" "}
-          </label>
-          <TextField
-            className="input-field"
-            id="profile-lastName"
-            label={user.lastName}
-            name="lastName"
-            variant="filled"
-          />
-          <label for="profile-city">City: </label>
+          <h1>Insert header here</h1>
+          <div className="fullname">
+            <div className="label-field-pair">
+              <label className="label" for="profile-firstName">
+                First Name:
+              </label>
+              <TextField
+                className="input-field"
+                id="profile-firstName"
+                label={user.firstName}
+                name="firstName"
+                variant="filled"
+              />
+            </div>
+            <div className="label-field-pair">
+              <label className="label" for="profile-lastName">
+                Last Name:
+              </label>
+              <TextField
+                className="input-field"
+                id="profile-lastName"
+                label={user.lastName}
+                name="lastName"
+                variant="filled"
+              />
+            </div>
+          </div>
+          <label for="profile-city">City:</label>
           <TextField
             className="input-field"
             id="profile-city"
@@ -257,7 +255,7 @@ const EditProfile = ({ handleModalClosed }) => {
             variant="filled"
           />
           <label className="label" for="profile-state">
-            State:{" "}
+            State:
           </label>
           <TextField
             className="input-field"
@@ -267,7 +265,7 @@ const EditProfile = ({ handleModalClosed }) => {
             variant="filled"
           />
           <label className="label" for="profile-country">
-            Country:{" "}
+            Country:
           </label>
           <TextField
             className="input-field"
@@ -277,7 +275,7 @@ const EditProfile = ({ handleModalClosed }) => {
             variant="filled"
           />
           <label className="label" for="profile-interests">
-            Interests:{" "}
+            Interests:
           </label>
           <Select
             className="input-field"
@@ -303,7 +301,7 @@ const EditProfile = ({ handleModalClosed }) => {
           </Select>
 
           <label className="label" for="profile-bio">
-            Bio:{" "}
+            Bio:
           </label>
           <TextField
             className="input-field"
@@ -314,7 +312,7 @@ const EditProfile = ({ handleModalClosed }) => {
           />
 
           <label className="label" for="profile-projects">
-            Projects:{" "}
+            Projects:
           </label>
           <TextField
             className="input-field"
@@ -324,7 +322,7 @@ const EditProfile = ({ handleModalClosed }) => {
             variant="filled"
           />
           <label className="label" for="profile-portfolio">
-            Portfolio/Social links:{" "}
+            Portfolio/Social links:
           </label>
           <TextField
             className="input-field"
@@ -336,7 +334,11 @@ const EditProfile = ({ handleModalClosed }) => {
           <label className="label" for="profile-picture">
             Upload a profile picture
           </label>
-          <ProfilePicture getImageURL={getImageURL} setBool={setBool} id="profile-picture" />
+          <ProfilePicture
+            getImageURL={getImageURL}
+            setBool={setBool}
+            id="profile-picture"
+          />
           <Button
             disabled={bool}
             id="profile-submit"
@@ -353,4 +355,4 @@ const EditProfile = ({ handleModalClosed }) => {
   );
 };
 
-export default EditProfile;
+export default CreateProfile;

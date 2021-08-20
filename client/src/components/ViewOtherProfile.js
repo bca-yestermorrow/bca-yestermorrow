@@ -1,17 +1,14 @@
 import React from "react";
-import { useAuth } from "../context/AuthContext";
 import { db } from "../firebase";
 import { useState, useEffect } from "react";
 import firebase from "firebase";
 import { Avatar, Button, FormControl, Checkbox, FormGroup, FormControlLabel } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import EditProfile from "./EditProfile";
 
-const ViewProfile = () => {
+const ViewOtherProfile = ({ userUid }) => {
   const [profile, setProfile] = useState("");
   const [modal, setModal] = useState("");
 
-  const { currentUser } = useAuth();
 
   const useStyles = makeStyles({
     large: {
@@ -35,21 +32,10 @@ const ViewProfile = () => {
 
   const classes = useStyles();
 
-  const handleModalOpen = () => {
-    setModal(true);
-  };
-
-  const handleModalClosed = () => {
-    setModal("");
-    setTimeout(getProfile, 500);
-    console.log("in modal close")
-  };
-
-
   const getProfile = async () => {
     let profileRef = await db
       .collection("users")
-      .doc(currentUser.uid)
+      .doc(userUid)
       .get()
       .then((doc) => {
         if (doc.exists) {
@@ -66,16 +52,13 @@ const ViewProfile = () => {
   };
   useEffect(() => {
     getProfile();
-  },[]);
+  }, []);
   console.log(profile.interests);
   return (
     <div>
       <img id="banner" src="../main_forum_banner.jpg" alt="alt" />
       {/* <div id="banner"></div> */}
       <div className="view-profile-page">
-        <div>
-          {modal && <EditProfile handleModalClosed={handleModalClosed} />}
-        </div>
 
         {profile ? (
           <div className="view-profile-container">
@@ -108,6 +91,7 @@ const ViewProfile = () => {
             </div>
             <div>
               <h4>Interests</h4>
+              
               {profile.interests ? ( profile.interests.map((interest, index) => {
                 return (
                   <p className="user-interests" key={index}>{interest}</p>
@@ -115,8 +99,8 @@ const ViewProfile = () => {
               }) ) : (
                 <p></p>
               )}
+
             </div>
-            <Button className={classes.green} onClick={handleModalOpen}>Edit</Button>
           </div>
         ) : (
           <p>loading...</p>
@@ -126,4 +110,4 @@ const ViewProfile = () => {
   );
 };
 
-export default ViewProfile;
+export default ViewOtherProfile;

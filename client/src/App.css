@@ -260,9 +260,15 @@ body{
 }
 
 .postName {
+  display: flex;
   font-size: 2.8vh;
   font-family: "Raleway", sans-serif;
   margin-bottom: 1vh;
+}
+
+#postAvatar {
+  margin-left: .5em;
+  margin-right: .5em;
 }
 
 .postBody {
@@ -344,7 +350,7 @@ body{
   width: 100%;
   height:100%;
   background-color: rgba(0, 0, 0, 0.5);
-  z-index: 1000
+  z-index: 1100
 }
 
 .form-container {
@@ -404,6 +410,16 @@ body{
 
 .menu-item {
   z-index: 10000
+}
+
+.fullname {
+  display: flex;
+}
+
+.label-field-pair {
+  display: flex;
+  flex-direction: column;
+  width: 50%;
 }
 
 /* ------------------- View Profile ------------------- */

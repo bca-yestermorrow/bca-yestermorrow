@@ -106,14 +106,14 @@ const Post = ({ post, profile }) => {
   //Updates post doc and adds the new comment to the comments field
   useEffect(() => {
     if (docId) {
-      console.log(commArr)
-      console.log(comment)
-      let newCommArr = commArr.concat(comment)
-      console.log(newCommArr)
+      console.log(commArr);
+      console.log(comment);
+      let newCommArr = commArr.concat(comment);
+      console.log(newCommArr);
       let docRef = db.collection("posts").doc(docId);
       try {
         docRef.update({
-          comments: newCommArr
+          comments: newCommArr,
         });
         console.log("update successful");
       } catch (e) {
@@ -127,22 +127,22 @@ const Post = ({ post, profile }) => {
     <div className="post">
       <div className="postNBC">
         <h4 className="postName">
-          {post.title} by:
-          {post ? (
-            <Avatar
-              id="postAvatar"
-              src={post.user.profilePic}
-              alt={post.user.firstName}
-              className={classes.small}
-            >
-              {post.user.firstName[0]}
-            </Avatar>
-          ) : (
-            "Loading..."
-          )}
-         <Link to={"/other-profile/" + post.userId} className="postName">
-        {post.title} by: {post.user.firstName} {post.user.lastName}
-        </Link>
+          {post.title} by:{" "}
+          <Link to={"/other-profile/" + post.userId} className="postName">
+            {post ? (
+              <Avatar
+                id="postAvatar"
+                src={post.user.profilePic}
+                alt={post.user.firstName}
+                className={classes.small}
+              >
+                {post.user.firstName[0]}
+              </Avatar>
+            ) : (
+              "Loading..."
+            )}{" "}
+            {post.user.firstName} {post.user.lastName}
+          </Link>
         </h4>
         <p className="postBody">{post.body}</p>
         <img
@@ -165,8 +165,10 @@ const Post = ({ post, profile }) => {
       <div id="commentSection">
         {post.comments.map((comment, index) => {
           return (
-        <p id="comment" key={index}>{comment}</p>
-        );
+            <p id="comment" key={index}>
+              {comment}
+            </p>
+          );
         })}
       </div>
       <form id="commentForm" onSubmit={handleComment}>
@@ -183,7 +185,7 @@ const Post = ({ post, profile }) => {
         </Button>
         {/* email button needs to be linked to posters email */}
         <Button id="emailButton" className="buttons">
-         <a href={`mailto:${post.user.email}`}> Email Me </a>
+          <a href={`mailto:${post.user.email}`}> Email Me </a>
         </Button>
       </form>
     </div>

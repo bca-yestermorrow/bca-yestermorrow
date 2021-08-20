@@ -164,6 +164,7 @@ const CreatePost = ({ profile }) => {
         <input type="file" onChange={handleInsertImage} />
         <Button
           id="setImageButton"
+          color="secondary"
           className="buttons"
           onClick={handleSetImage}
         >
@@ -206,6 +207,7 @@ const CreatePost = ({ profile }) => {
         </FormControl>
         <Button
           type="submit"
+          color="secondary"
           className="buttons"
           id="postButton"
           value="Create Post"

@@ -214,7 +214,7 @@ body{
 
 .createPostSections {
   margin-top: 1.5em;
-  color: #f50057;
+  color: #59833b;
   font-family: "Raleway", sans-serif;
 }
 
@@ -237,7 +237,7 @@ body{
 }
 
 #typeSelectTitle {
-  color: #f50057;
+  color: #59833b;
   font-family: "Raleway", sans-serif;
 }
 
@@ -339,7 +339,6 @@ body{
 
 .buttons:hover {
   box-shadow: 2px 2px rgba(0, 0, 0, 0.596);
-  background-color: #f50057;
 }
 /* -------------------------- Edit Profile Page --------------------------- */
 

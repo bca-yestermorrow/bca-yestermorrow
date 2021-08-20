@@ -26,19 +26,14 @@
 
 /* form container holding both sign up and log in */
 
-
 /* landing page log in form */
 
 /* class style for log in form inputs */
 /* landing page check this out container */
 
-
-body{
+body {
   background-color: #e9eaeb;
 }
-
-
-
 
 /* HOME PAGE STYLING */
 
@@ -53,19 +48,13 @@ body{
   justify-content: space-around;
 }
 
-
-
-
 /* job container */
 #jobs {
   border: solid black;
   margin-top: 15vh;
   height: 35em;
   width: 40em;
-
 }
-
-
 
 /* Connect & Collab Page */
 
@@ -88,15 +77,25 @@ body{
   margin: 2em;
   overflow: hidden;
   height: 80vh;
+  padding: 1vw;
   background-color: white;
-  box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.596);
+  
 }
 
-
+a, a:hover, a:focus, a:active {
+  text-decoration: none;
+  color: inherit;
+}
 
 #filterTitle {
   text-align: center;
   font-family: "Raleway", sans-serif;
+}
+
+#footer {
+  border: solid black;
+  margin: 1em;
+  height: 10em;
 }
 
 #mainFeed {
@@ -109,12 +108,11 @@ body{
   background-color: #ffffff;
 }
 
-#createPost {
+.createPost {
+  
   margin: 2em;
   background-color: #ffffff;
-  border-radius: 2em;
-  box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.596);
-  overflow-x: hidden;
+  border-radius: 1vw;
 }
 
 #createPostTitle {
@@ -122,7 +120,7 @@ body{
   font-family: "Raleway", sans-serif;
 }
 
-#createPostForm {
+.createPostForm {
   display: flex;
   flex-direction: column;
   margin-top: 1em;
@@ -185,8 +183,8 @@ body{
 }
 
 #postAvatar {
-  margin-left: .5em;
-  margin-right: .5em;
+  margin-left: 0.5em;
+  margin-right: 0.5em;
 }
 
 .postBody {
@@ -222,7 +220,7 @@ body{
 
 #commentSection {
   display: flex;
-  flex-direction: column-reverse;
+  flex-direction: column;
   border-top: solid rgb(0, 0, 0);
 }
 
@@ -265,16 +263,15 @@ body{
   top: 0;
   left: 0;
   width: 100%;
-  height:100%;
+  height: 100%;
   background-color: rgba(0, 0, 0, 0.5);
-  z-index: 1100
+  z-index: 1100;
 }
 
 .form-container {
   margin: 10vh auto;
   display: flex;
   justify-content: center;
-  
 }
 
 .x-button {
@@ -287,17 +284,17 @@ body{
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   grid-template-rows: 1fr 1fr;
-  grid-template-areas: 
-  "header main main"
-  ". main main";
+  grid-template-areas:
+    "header main main"
+    ". main main";
 }
 
 .user-header {
-  grid-area: "header"
+  grid-area: "header";
 }
 
 .user-body {
-  grid-area: "main"
+  grid-area: "main";
 }
 
 .edit-profile-form {
@@ -307,13 +304,15 @@ body{
   overflow-x: hidden;
   margin: auto;
   position: absolute;
-  top: 0; left: 0; bottom: 0; right: 0;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
   font-family: "Raleway", sans-serif;
   background-color: white;
   border-radius: 1em;
   box-shadow: 2px 2px 2px 0px rgba(0, 0, 0, 0.596);
   padding: 10px;
-
 }
 
 .form-section {
@@ -326,7 +325,7 @@ body{
 }
 
 .menu-item {
-  z-index: 10000
+  z-index: 10000;
 }
 
 .fullname {
@@ -340,6 +339,11 @@ body{
 }
 
 /* ------------------- View Profile ------------------- */
+.profile-page-wrapper {
+  background-color: #e9eaeb;
+  height: 70vh;
+  margin-top: 30vh;
+}
 
 .view-profile-page {
   width: 100%;
@@ -355,12 +359,6 @@ body{
   flex-direction: column;
   align-items: center;
   margin-top: -100px;
-
-}
-
-.profile-page-wrapper {
-  background-color: #e9eaeb;
-  height: 100vh;
 }
 
 #banner {
@@ -373,17 +371,17 @@ body{
 
 .user-work {
   display: flex;
-  margin-top: 10px;
+  margin-top: 20px;
   margin-bottom: 10px;
-  justify-content: space-between;
-
-  height: 200px; 
+  justify-content: space-around;
+  height: 200px;
   width: 100%;
+  
 }
 
 .user-work > div {
   width: 40%;
-  /* overflow: hidden; */
+  overflow-y: auto;
 }
 
 .user-work > div > h4 {
@@ -392,10 +390,36 @@ body{
 
 .user-info {
   display: flex;
-  margin-top: 10px;
+  margin-bottom: 10px;
+  align-items: center;
+  flex-wrap: wrap;
+  flex-direction: column;
 }
 
+.bio-div {
+  height: 200px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  text-align: center;
+}
 
+.bio-div > div {
+  width: 40%;
+  height: 200px;
+}
+
+.banner-wrapper {
+  position: relative;
+  height: 30vh;
+}
+
+#edit-button {
+
+position: absolute;
+margin: 10px 0 0 10px; 
+}
 
 /* Login page */
 #landing {
@@ -405,8 +429,8 @@ body{
 
   gap: 1vw;
   top: 50%;
-  left: 50%;  
-  transform: translate(-50%,-50%);
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 #header {
@@ -416,16 +440,14 @@ body{
   width: 70vw;
 }
 
-.yester-logo{
+.yester-logo {
   width: 100%;
 }
 
 #mainLanding {
   display: flex;
   justify-content: space-between;
-  font-size: .7vw;
- 
-  
+  font-size: 0.7vw;
 }
 
 .login {
@@ -433,7 +455,6 @@ body{
   flex-direction: column-reverse;
   padding: 1vw;
   gap: 1vw;
- 
 }
 
 .login-flex {
@@ -445,4 +466,15 @@ body{
 .login-header {
   padding: 20px;
   padding-left: 10px;
+}
+
+.profile-banner {
+  position: fixed;
+  display: block;
+  z-index: -1;
+  width: 100%;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-color: #000000;
 }

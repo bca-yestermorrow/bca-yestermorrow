@@ -4,6 +4,7 @@ import { useAuth } from "../context/AuthContext";
 import { db } from "../firebase";
 import { storage } from "../firebase";
 import TextField from "@material-ui/core/TextField";
+import Paper from "@material-ui/core/Paper"
 import Button from "@material-ui/core/Button";
 import Input from "@material-ui/core/Input";
 import InputLabel from "@material-ui/core/InputLabel";
@@ -135,17 +136,18 @@ const CreatePost = ({ profile }) => {
   }
 
   return (
-    <div id="createPost">
+    <Paper elevation={5} className="createPost">
       <h1 id="createPostTitle">CREATE A POST</h1>
       {firstName && (
         <h3 className="createPostName">
           {firstName} {lastName}
         </h3>
       )}
-      <form id="createPostForm" onSubmit={handlePostSubmit}>
+      <form className="createPostForm" onSubmit={handlePostSubmit}>
         <h4 className="createPostSections">Type Here:</h4>
         <TextField
           label="TITLE"
+          style={{marginTop: "1em"}}
           variant="outlined"
           multiline
           type="text"
@@ -153,6 +155,7 @@ const CreatePost = ({ profile }) => {
         ></TextField>
         <TextField
           label="BODY"
+          style={{marginTop: "1em"}}
           variant="outlined"
           multiline
           id="createPostBody"
@@ -218,7 +221,7 @@ const CreatePost = ({ profile }) => {
         </Button>
       </form>
       {error && error}
-    </div>
+    </Paper>
   );
 };
 

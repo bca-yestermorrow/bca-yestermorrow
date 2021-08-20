@@ -5,12 +5,23 @@ import { MapContainer, TileLayer, Marker } from 'react-leaflet'
 import L, { map } from 'leaflet'
 import icon from 'leaflet/dist/images/marker-icon.png'
 import shadow from 'leaflet/dist/images/marker-shadow.png'
+import { CircularProgress } from '@material-ui/core'
 
 const leafIcon = L.icon({
   iconUrl: icon,
   iconSize: [10, 15],
   shadowUrl: shadow,
   shadowSize: [10, 15],
+})
+
+
+
+const greenIcon = new L.Icon({
+  iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-green.png',
+  iconSize: [10, 15],
+  shadowUrl: shadow,
+  shadowSize: [10, 15],
+  
 })
 
 const Map = () => {
@@ -38,20 +49,35 @@ const Map = () => {
   }
 
   return (
-   
+    
+    
     <MapContainer
-      style={{ height: '100%', width: '50vw'}}
-      zoom={13}
+      style={{ height: '100%', width: '50vw' }}
+      zoom={5}
       scrollWheelZoom={false}
       center={[44.149398498395676, -72.83771521960242]}
     >
       {/* Insert map markers: */}
-      {lnglats.length > 0 ? lnglats : 'Loading...'}
-
+      {lnglats.length ? (
+        <>
+        
+         
       <TileLayer
         attribution=''
         url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
       />
+      {lnglats}
+      <Marker  icon={greenIcon} position={[44.148985984799275, -72.83788414870979]} />
+        </>
+      ) : (
+       <CircularProgress style={{zIndex: "5000"}}color="secondary" />
+      )}
+      
+      {/* <TileLayer
+        attribution=''
+        url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
+      /> */}
+     
     </MapContainer>
   )
 }

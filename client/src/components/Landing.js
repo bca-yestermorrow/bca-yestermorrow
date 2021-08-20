@@ -2,7 +2,7 @@
 import React from "react";
 import { useState } from "react";
 import "../App.css";
-import yesterLogo from "../assets/Copy of YESTER_logo_No background. Square PNG.png";
+import yesterLogo from "../assets/MAIN FORUM BANNER.jpg";
 import Map from "./Map";
 import SignUp from "./SignUp";
 import Login from "./Login";
@@ -29,30 +29,24 @@ const Landing = () => {
       <div id="landing">
         {/* header */}
         <header id="header">
-          <a href="https://yestermorrow.org/">
-            <img
-              id="yesterLogo"
-              src={`${yesterLogo}`}
-              alt="Yestermorrow Logo"
-            />
-          </a>
+          <img class="yester-logo" src={yesterLogo}></img>
         </header>
         {/* main body */}
         <div id="mainLanding">
-          <Card style={{padding: "2vw"}} >
+          <Paper  elevation={3} className="login" >
             
              <SignUp handleSignUpClose={handleSignUpClose}/>
             {/* between sign up and log in containers */}
-            <h1 id="or">Or</h1>
+            <h1 style={{textAlign: "center", fontSize: "1vw"}}>Or</h1>
             {/* login form */}
             <Login />
          
-          </Card>
-
+          </Paper>
+          
           {/* check this out container with map and other content */}
           <Card >
             
-         
+          
            
               <Map />
               {/* <div id="other">OTHER CONTENT</div> */}

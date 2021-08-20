@@ -11,73 +11,24 @@
 /* LANDING PAGE */
 
 /* entire landing page */
-#landing {
-  overflow: hidden;
-  z-index: 1;
-}
+
 /* background for landing page and home page */
 #background {
-  display: block;
-  position: fixed;
   background-color: #a9a9a9;
-  background-size: cover;
   height: 100vh;
   width: 100vw;
-  filter: blur(5px);
-  z-index: -1;
 }
 /* landing page header */
-#header {
-  position: absolute;
-  width: 90vw;
-  height: 5vh;
-  padding: 2.5vh;
-  font-size: 5vh;
-}
-/* yestermorrow logo for header on landing page */
-#yesterLogo {
-  float: left;
-  height: 12vh;
-  width: 8vw;
-}
-/* body container for landing page */
-#mainLanding {
-  margin-top: 1.5vw;
-  display: flex;
-  justify-content: space-around;
-}
-/* form container holding both sign up and log in */
-#form {
-  width: 30vw;
-  margin-left: 5vw;
-  font-family: "Raleway", sans-serif;
-}
 
-#signUpButton {
-  margin-left: 8vw;
-  margin-bottom: 2vh;
-}
-/* landing page sign up form */
-#Signup {
-  display: flex;
-  flex-direction: column;
-  padding: 2vw;
-}
-/* class style for sign in form inputs */
-.signForm {
-  width: 25vw;
-}
-/* in between both forms */
-#or {
-  text-align: center;
-  margin: 1vw;
-}
+/* yestermorrow logo for header on landing page */
+
+/* body container for landing page */
+
+/* form container holding both sign up and log in */
+
+
 /* landing page log in form */
-#Login {
-  display: flex;
-  flex-direction: column;
-  padding: 2vw;
-}
+
 /* class style for log in form inputs */
 /* landing page check this out container */
 
@@ -88,23 +39,6 @@ body{
 
 
 
-#landing {
-  display: flex;
-  flex-direction: column;
-  position: absolute;
-
-  gap: 1vw;
-  top: 50%;
-  left: 50%;  
-  transform: translate(-50%,-50%);
-}
-
-#header {
-  background-color: black;
-  height: 13vw;
-  overflow: hidden;
-  width: 70vw;
-}
 
 /* HOME PAGE STYLING */
 
@@ -119,21 +53,8 @@ body{
   justify-content: space-around;
 }
 
-#mainLanding {
-  display: flex;
-  justify-content: space-between;
-  font-size: .7vw;
- 
-  
-}
 
-.login {
-  display: flex;
-  flex-direction: column-reverse;
-  padding: 1vw;
-  gap: 1vw;
- 
-}
+
 
 /* job container */
 #jobs {
@@ -144,10 +65,7 @@ body{
 
 }
 
-.login-header {
-  padding: 20px;
-  padding-left: 10px;
-}
+
 
 /* Connect & Collab Page */
 
@@ -214,7 +132,7 @@ body{
 
 .createPostSections {
   margin-top: 1.5em;
-  color: #f50057;
+  color: #59833b;
   font-family: "Raleway", sans-serif;
 }
 
@@ -237,7 +155,7 @@ body{
 }
 
 #typeSelectTitle {
-  color: #f50057;
+  color: #59833b;
   font-family: "Raleway", sans-serif;
 }
 
@@ -339,7 +257,6 @@ body{
 
 .buttons:hover {
   box-shadow: 2px 2px rgba(0, 0, 0, 0.596);
-  background-color: #f50057;
 }
 /* -------------------------- Edit Profile Page --------------------------- */
 
@@ -441,12 +358,17 @@ body{
 
 }
 
+.profile-page-wrapper {
+  background-color: #e9eaeb;
+  height: 100vh;
+}
+
 #banner {
   width: 100%;
   height: 0;
   padding-top: 18%;
   overflow: hidden;
-  background-color: black;
+  background-color: #a9a9a9;
 }
 
 .user-work {
@@ -468,5 +390,59 @@ body{
   text-align: center;
 }
 
+.user-info {
+  display: flex;
+  margin-top: 10px;
+}
 
 
+
+/* Login page */
+#landing {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+
+  gap: 1vw;
+  top: 50%;
+  left: 50%;  
+  transform: translate(-50%,-50%);
+}
+
+#header {
+  background-color: black;
+  height: 13vw;
+  overflow: hidden;
+  width: 70vw;
+}
+
+.yester-logo{
+  width: 100%;
+}
+
+#mainLanding {
+  display: flex;
+  justify-content: space-between;
+  font-size: .7vw;
+ 
+  
+}
+
+.login {
+  display: flex;
+  flex-direction: column-reverse;
+  padding: 1vw;
+  gap: 1vw;
+ 
+}
+
+.login-flex {
+  display: flex;
+  flex-direction: column;
+  width: 17vw;
+}
+
+.login-header {
+  padding: 20px;
+  padding-left: 10px;
+}

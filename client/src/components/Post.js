@@ -87,7 +87,7 @@ const Post = ({ post, profile }) => {
   function handleComment(e) {
     setDocId(null);
     e.preventDefault();
-    setComment([firstName, lastName, e.target.comment.value]);
+    setComment({firstName: firstName, lastName: lastName, comment: e.target.comment.value});
     sendEmail(e);
     e.target.comment.value = "";
     //awaits the db to get the post that has been commented on
@@ -113,7 +113,7 @@ const Post = ({ post, profile }) => {
       let docRef = db.collection("posts").doc(docId);
       try {
         docRef.update({
-          comments: newCommArr,
+          comments: firebase.firestore.FieldValue.arrayUnion(comment)
         });
         console.log("update successful");
       } catch (e) {
@@ -166,7 +166,7 @@ const Post = ({ post, profile }) => {
         {post.comments.map((comment, index) => {
           return (
             <p id="comment" key={index}>
-              {comment}
+              {comment.firstName} {comment.lastName} {comment.comment}
             </p>
           );
         })}

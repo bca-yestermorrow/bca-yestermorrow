@@ -70,7 +70,7 @@ const Map = () => {
       <Marker  icon={greenIcon} position={[44.148985984799275, -72.83788414870979]} />
         </>
       ) : (
-       <CircularProgress style={{zIndex: "5000"}}color="secondary" />
+       <CircularProgress style={{zIndex: "5000"}} color="secondary" />
       )}
       
       {/* <TileLayer

@@ -163,6 +163,7 @@ const CreatePost = ({ profile }) => {
         <h4 className="createPostSections">Upload Image:</h4>
         <input type="file" onChange={handleInsertImage} />
         <Button
+          variant="contained"
           id="setImageButton"
           color="secondary"
           className="buttons"
@@ -206,6 +207,7 @@ const CreatePost = ({ profile }) => {
           </Select>
         </FormControl>
         <Button
+          variant="contained"
           type="submit"
           color="secondary"
           className="buttons"

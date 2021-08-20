@@ -66,7 +66,7 @@ const ViewProfile = () => {
   };
   useEffect(() => {
     getProfile();
-  }, []);
+  },[]);
   console.log(profile.interests);
   return (
     <div>
@@ -89,10 +89,12 @@ const ViewProfile = () => {
             <p className="user-full-name">
               {profile.firstName} {profile.lastName}
             </p>
+            {profile.location &&
             <p className="user-location">
               {profile.location.city}, {profile.location.state},{" "}
               {profile.location.country}
             </p>
+            }
             <p className="user-links">{profile.portfolio}</p>
             <div className="user-work">
               <div>
@@ -106,16 +108,13 @@ const ViewProfile = () => {
             </div>
             <div>
               <h4>Interests</h4>
-              <FormControl component="fieldset">
-                <FormGroup component="legend"></FormGroup>
               {profile.interests ? ( profile.interests.map((interest, index) => {
                 return (
-                  <FormControlLabel control={<Checkbox name={interest} />} className="user-interests" key={index} label={interest} />
+                  <p className="user-interests" key={index}>{interest}</p>
                 );
               }) ) : (
                 <p></p>
               )}
-              </FormControl>
             </div>
             <Button className={classes.green} onClick={handleModalOpen}>Edit</Button>
           </div>

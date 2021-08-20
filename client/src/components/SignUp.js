@@ -7,7 +7,7 @@ import { Link, useHistory } from "react-router-dom";
 import { db } from "../firebase";
 import { TextField, Button, Paper } from "@material-ui/core";
 
-const SignUp = ({ handleSignUpClose }) => {
+const SignUp = ({ handleSignUpClose, handleModalOpen }) => {
   //Gives us a reference to the value of input
   const emailRef = useRef();
   const passwordRef = useRef();
@@ -42,34 +42,30 @@ const SignUp = ({ handleSignUpClose }) => {
       setPasswordError("");
       await signup(emailRef.current.value, passwordRef.current.value, firstNameRef.current.value, lastNameRef.current.value);
       //saving user to the database
-      await db.collection("users").add({
-        firstName: firstNameRef.current.value,
-        lastName: lastNameRef.current.value,
-        email: emailRef.current.value,
-      });
-      history.push("/connect");
+      handleModalOpen()
+      // history.push("/connect");
     } catch {
       setPasswordError("Invalid Email");
     }
     setLoading(false);
   }
   return (
-    <Paper elevation={2}>
-      <form action="/signUp" id="Login" method="POST" onSubmit={handleSubmit}>
-        <h1>Create Your Account</h1>
+    <>
+      <form action="/signUp" id="Login" className="login-flex" method="POST" onSubmit={handleSubmit}>
+        <h1 className="login-header">Create Your Account</h1>
        
-        <TextField id="filled-basic" label="First Name" type="text" inputRef={firstNameRef} variant="filled" />
-        <TextField id="filled-basic" label="Last Name" type="text" inputRef={lastNameRef} variant="filled" />
-        <TextField id="filled-basic" label="Email" type="Email" inputRef={emailRef} variant="filled" />
-        <TextField id="filled-basic" label="Password" type="password" inputRef={passwordRef} variant="filled" />
-        <TextField id="filled-basic" label="Confirm Password" type="password" inputRef={confirmPasswordRef} variant="filled" />
+        <TextField size="small" id="filled-basic" label="First Name" type="text" inputRef={firstNameRef} variant="filled" />
+        <TextField size="small" id="filled-basic" label="Last Name" type="text" inputRef={lastNameRef} variant="filled" />
+        <TextField size="small" id="filled-basic" label="Email" type="Email" inputRef={emailRef} variant="filled" />
+        <TextField size="small" id="filled-basic" label="Password" type="password" inputRef={passwordRef} variant="filled" />
+        <TextField size="small" id="filled-basic" label="Confirm Password" type="password" inputRef={confirmPasswordRef} variant="filled" />
      
-        <Button  variant="contained" color="secondary" disable={loading} type="submit">Create Account</Button >
+        <Button  variant="contained" size="small" color="secondary" disable={loading} type="submit">Create Account</Button >
       </form>
 
       {passwordError && <h4>{passwordError}</h4>}
       
-      </Paper>
+     </>
   );
 };
 

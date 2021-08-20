@@ -108,8 +108,6 @@ const EditProfile = ({ handleModalClosed }) => {
   // function to handle form submit. updates user doc with new information
   const handleSubmit = async (evt) => {
     evt.preventDefault();
-    // let userCity = evt.target.city.value;
-    // let userState = evt.target.state.value;
     let userFirstName = evt.target.firstName.value;
     let userLastName = evt.target.lastName.value;
     let userBio = evt.target.bio.value;
@@ -197,27 +195,6 @@ const EditProfile = ({ handleModalClosed }) => {
     handleModalClosed();
   };
 
-  // const handleUpload = () => {
-  //   const upload = storage.ref(`images/${image.name}`).put(image);
-  //   upload.on(
-  //     "state_changed",
-  //     (snapshot) => {},
-  //     (error) => {
-  //       console.log(error);
-  //     },
-  //     () => {
-  //       storage
-  //         .ref("images")
-  //         .child(image.name)
-  //         .getDownloadURL()
-  //         .then((url) => {
-  //           console.log(url);
-  //           getImageURL(url);
-  //         });
-  //     }
-  //   );
-  // };
-
   const handleClose = (evt) => {
     if (evt.target.className === "edit-profile-container") {
       handleModalClosed();
@@ -241,6 +218,7 @@ const EditProfile = ({ handleModalClosed }) => {
   return (
     <div className="edit-profile-container" onClick={handleClose}>
       <div className="form-container">
+        <h1>Edit your Profile</h1>
         <form
           className="edit-profile-form"
           onSubmit={handleSubmit}

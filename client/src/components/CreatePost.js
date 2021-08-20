@@ -14,7 +14,7 @@ import Select from "@material-ui/core/Select";
 // import Checkbox from "@material-ui/core/Checkbox";
 // import Chip from "@material-ui/core/Chip";
 
-const CreatePost = () => {
+const CreatePost = ({ profile }) => {
   const [firstName, setFirstName] = useState(null);
   const [lastName, setLastName] = useState(null);
   const [error, setError] = useState("");
@@ -27,15 +27,17 @@ const CreatePost = () => {
 
   useEffect(() => {
     db.collection("users")
-      .where("email", "==", `${currentUser.email}`)
+      .doc(currentUser.uid)
       .get()
-      .then((querySnapshot) => {
-        querySnapshot.forEach((doc) => {
+      .then((doc) => {
+        if (doc.exists) {
           setFirstName(doc.data().firstName);
           setLastName(doc.data().lastName);
-        });
+        } else {
+          console.log("Doc not found...");
+        }
       });
-  }, [currentUser.email]);
+  });
 
   useEffect(() => {
     if (categories.length === 0) {
@@ -91,6 +93,8 @@ const CreatePost = () => {
 
     let type = e.target.type.value;
 
+    let profilePic = profile.profilePic;
+
     // reset error
     setError("");
 
@@ -108,6 +112,7 @@ const CreatePost = () => {
           email: currentUser.email,
           firstName: firstName,
           lastName: lastName,
+          profilePic: profilePic,
         },
         createdAt: Date(),
       });

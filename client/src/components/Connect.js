@@ -5,11 +5,15 @@ import CreatePost from "./CreatePost";
 import Post from "./Post";
 import { FilterFeed } from "./FilterFeed";
 import { useState, useEffect } from "react";
+import { useAuth } from "../context/AuthContext";
 
 const Connect = () => {
   const [category, setCategory] = useState([]);
   const [posts, setPosts] = useState([]);
   const [checked, setChecked] = useState(false);
+  const [profile, setProfile] = useState("");
+  const { currentUser } = useAuth();
+  const [currentState, setCurrentState] = useState('')
 
   useEffect(() => {
     let query = db.collection("posts");
@@ -20,16 +24,49 @@ const Connect = () => {
     }
 
     const unsub = query.onSnapshot((querysnap) => {
+      
       const updatedPosts = querysnap.docs.map((doc) => ({
         id: doc.id,
 
         ...doc.data(),
       }));
-      setPosts(updatedPosts);
+      if(currentState !== ''){
+        console.log('in if statement')
+        let filterdArr =updatedPosts.filter((post) =>{
+         
+          return post.user.state === currentState
+        })
+        console.log(filterdArr)
+        setPosts(filterdArr)
+      } else {
+        setPosts(updatedPosts)
+      }
+      
     });
     query = query.orderBy("createdAt").limitToLast(100);
     return () => unsub();
-  }, [category, checked]);
+  }, [category, checked, currentState]);
+
+  const getProfile = async () => {
+    let profileRef = await db
+      .collection("users")
+      .doc(currentUser.uid)
+      .get()
+      .then((doc) => {
+        if (doc.exists) {
+          setProfile(doc.data());
+          console.log(profile);
+        } else {
+          console.log("No doc found");
+        }
+      })
+      .catch((error) => {
+        console.log("Error getting documents: ", error);
+      });
+  };
+  useEffect(() => {
+    getProfile();
+  }, []);
 
   return (
     <div id="connectPage">
@@ -40,13 +77,15 @@ const Connect = () => {
           checked={checked}
           setCategory={setCategory}
           category={category}
+          currentState={currentState}
+          setCurrentState={setCurrentState}
         />
         <div id="mainFeed">
           {!posts && <p>Welcome Yestomorrow Alumni!</p>}
           {posts &&
-            posts.map((post, index) => <Post post={post} key={index} />)}
+            posts.map((post, index) => <Post post={post} profile={profile} key={index} />)}
         </div>
-        <CreatePost />
+        <CreatePost profile={profile}/>
       </div>
     </div>
   );

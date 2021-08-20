@@ -15,7 +15,7 @@ export const GoogleBtn = () => {
     }
     return (
         <div>
-            <GoogleLoginButton  iconSize={"1.5vw"} align={"center"} onClick={()=> signInHandle()} /> 
+            <GoogleLoginButton  style={{fontSize:"1rem"}}iconSize={"1.5vw"} align={"center"} onClick={()=> signInHandle()} /> 
          </div>
     )
 }

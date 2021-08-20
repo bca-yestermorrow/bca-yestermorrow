@@ -1,5 +1,5 @@
 import React from "react";
-import { Chip, Card, Avatar, Checkbox, TextField, Button, Box } from "@material-ui/core";
+import { Chip, Card, Avatar, Checkbox, TextField, Button, Box, FormControlLabel, FormControl, InputLabel } from "@material-ui/core";
 import AcUnitIcon from "@material-ui/icons/AcUnit";
 import { useState, useEffect } from "react";
 import { db } from "../firebase";
@@ -32,9 +32,7 @@ const useStyles = makeStyles({
     justifyContent: "center",
     fontSize: "2rem",
     flexDirection: "column",
-    
-   
-
+    height: "50%"
   },
   jobFlex: {
     display: "flex",
@@ -100,10 +98,11 @@ export const FilterFeed = ({setChecked, setCategory, setCurrentState, currentSta
 
   return (
     <Card>
-    <h2>Filter</h2>
+    
     <Box className={classes.filterFlex} >
     
- 
+ <FormControl>
+   <h2>Filter</h2>
  <Autocomplete
      
       multiple
@@ -139,6 +138,7 @@ export const FilterFeed = ({setChecked, setCategory, setCurrentState, currentSta
       style={{ width: "100%" }}
       renderInput={(params) => <TextField   className={classes.filterField} {...params} label="Filter by state" variant="outlined" />}
     />
+    </FormControl>
 
  </Box>
 

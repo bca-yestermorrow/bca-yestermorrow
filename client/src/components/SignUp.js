@@ -16,6 +16,7 @@ const SignUp = ({ handleSignUpClose, handleModalOpen }) => {
   const lastNameRef = useRef();
   const { signup } = useAuth();
   const [passwordError, setPasswordError] = useState("");
+  const [error, setError] = useState(false)
   const [loading, setLoading] = useState(false);
   const history = useHistory();
   const { currentUser } = useAuth()
@@ -25,17 +26,21 @@ const SignUp = ({ handleSignUpClose, handleModalOpen }) => {
     e.preventDefault();
 
     if (passwordRef.current.value !== confirmPasswordRef.current.value) {
+      setError(true)
       return setPasswordError("Passwords do not match");
     }
 
     if (firstNameRef.current.value === "" || lastNameRef.current.value === "") {
+      setError(true)
       return setPasswordError("Please enter your first and last name");
     }
 
     if (!passwordValidation.test(passwordRef.current.value)) {
+      setError(true)
       return setPasswordError(
-        "password must contain at least one number, at least one symbol, and be at least 6 characters long "
+        "Password must contain a capital letter, number, symbol, and be 6 characters long "
       );
+      
     }
 
     try {
@@ -54,16 +59,16 @@ const SignUp = ({ handleSignUpClose, handleModalOpen }) => {
       <form action="/signUp" id="Login" className="login-flex" method="POST" onSubmit={handleSubmit}>
         <h1 className="login-header">Create Your Account</h1>
        
-        <TextField size="small" id="filled-basic" label="First Name" type="text" inputRef={firstNameRef} variant="filled" />
-        <TextField size="small" id="filled-basic" label="Last Name" type="text" inputRef={lastNameRef} variant="filled" />
-        <TextField size="small" id="filled-basic" label="Email" type="Email" inputRef={emailRef} variant="filled" />
-        <TextField size="small" id="filled-basic" label="Password" type="password" inputRef={passwordRef} variant="filled" />
-        <TextField size="small" id="filled-basic" label="Confirm Password" type="password" inputRef={confirmPasswordRef} variant="filled" />
+        <TextField required  size="small" id="filled-basic" label="First Name" type="text" inputRef={firstNameRef} variant="filled" />
+        <TextField required  size="small" id="filled-basic" label="Last Name" type="text" inputRef={lastNameRef} variant="filled" />
+        <TextField required  size="small" id="filled-basic" label="Email" type="Email" inputRef={emailRef} variant="filled" />
+        <TextField required  error={error} size="small" id="filled-basic" label="Password" type="password" inputRef={passwordRef} variant="filled" />
+        <TextField required helperText={passwordError} error={error} size="small" id="filled-basic" label="Confirm Password" type="password" inputRef={confirmPasswordRef} variant="filled" />
      
         <Button  variant="contained" size="small" color="secondary" disable={loading} type="submit">Create Account</Button >
       </form>
 
-      {passwordError && <h4>{passwordError}</h4>}
+     
       
      </>
   );

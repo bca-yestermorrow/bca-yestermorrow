@@ -101,6 +101,7 @@ const CreatePost = ({ profile }) => {
 
     // add user to the posts collection
     try {
+      if (profilePic) {
       await db.collection("posts").add({
         userId: currentUser.uid,
         title: title,
@@ -117,6 +118,23 @@ const CreatePost = ({ profile }) => {
         },
         createdAt: Date(),
       });
+    } else {
+      await db.collection("posts").add({
+        userId: currentUser.uid,
+        title: title,
+        body: body,
+        comments: [],
+        category: options,
+        type: type,
+        imageUrl: imageUrl,
+        user: {
+          email: currentUser.email,
+          firstName: firstName,
+          lastName: lastName,
+        },
+        createdAt: Date(),
+      });
+    }
     } catch (err) {
       setError("Sorry, please try again.");
       console.log(err);

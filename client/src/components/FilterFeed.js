@@ -1,6 +1,6 @@
 import React from "react";
-import { Chip, Card, Avatar, Checkbox, TextField, Button, Box, FormControlLabel, FormControl, InputLabel } from "@material-ui/core";
-import AcUnitIcon from "@material-ui/icons/AcUnit";
+import { Chip, Card, Avatar, Checkbox, TextField, Button, Box, FormControlLabel, FormControl, InputLabel, Icon } from "@material-ui/core";
+import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import { useState, useEffect } from "react";
 import { db } from "../firebase";
 import firebaseApp from "../firebase";
@@ -8,6 +8,7 @@ import {Autocomplete} from '@material-ui/lab'
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from "@material-ui/core/Paper"
 import { ThemeProvider, createTheme } from "@material-ui/core/styles";
+import { Link } from "react-router-dom"
 
 
 

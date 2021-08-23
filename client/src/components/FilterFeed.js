@@ -8,6 +8,7 @@ import {Autocomplete} from '@material-ui/lab'
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from "@material-ui/core/Paper"
 import { ThemeProvider, createTheme } from "@material-ui/core/styles";
+import { Link } from "react-router-dom";
 
 
 
@@ -143,7 +144,7 @@ export const FilterFeed = ({setChecked, setCategory, setCurrentState, currentSta
 
  
 
-    <Button className={classes.filterField}  color="secondary" variant="contained">My Profile</Button>
+    <Link to="/profile"><Button style={{width: "100%"}}   color="secondary" variant="contained">My Profile</Button></Link>
    <Typography color="secondary">External Resources:</Typography>
    <Button  className={classes.filterField} color="secondary" variant="contained"><a href="https://yestermorrow.org/connect/jobs">Find a job!</a></Button>
    <Button className={classes.filterField} color="secondary" variant="contained"><a href="https://yestermorrow.org/learn/courses"> Current Courses</a> </Button>

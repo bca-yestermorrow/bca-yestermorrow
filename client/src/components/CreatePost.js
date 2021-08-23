@@ -4,7 +4,7 @@ import { useAuth } from "../context/AuthContext";
 import { db } from "../firebase";
 import { storage } from "../firebase";
 import TextField from "@material-ui/core/TextField";
-import Paper from "@material-ui/core/Paper"
+import Paper from "@material-ui/core/Paper";
 import Button from "@material-ui/core/Button";
 import Input from "@material-ui/core/Input";
 import InputLabel from "@material-ui/core/InputLabel";
@@ -86,6 +86,10 @@ const CreatePost = ({ profile }) => {
 
     let title = e.target.title.value;
 
+    if (e.target.title.value === "") {
+      return setError("Please enter a title...");
+    }
+
     // grab body message
     let body = e.target.body.value;
 
@@ -94,29 +98,54 @@ const CreatePost = ({ profile }) => {
 
     let type = e.target.type.value;
 
+    if (e.target.type.value === "") {
+      return setError("Please select the type of post...");
+    }
+
     let profilePic = profile.profilePic;
 
-    // reset error
-    setError("");
+    if (image !== "" && imageUrl === "") {
+      return setError("Please click add image...");
+    }
 
     // add user to the posts collection
     try {
-      await db.collection("posts").add({
-        userId: currentUser.uid,
-        title: title,
-        body: body,
-        comments: [],
-        category: options,
-        type: type,
-        imageUrl: imageUrl,
-        user: {
-          email: currentUser.email,
-          firstName: firstName,
-          lastName: lastName,
-          profilePic: profilePic,
-        },
-        createdAt: Date(),
-      });
+      // reset error
+      setError("");
+      if (profilePic) {
+        await db.collection("posts").add({
+          userId: currentUser.uid,
+          title: title,
+          body: body,
+          comments: [],
+          category: options,
+          type: type,
+          imageUrl: imageUrl,
+          user: {
+            email: currentUser.email,
+            firstName: firstName,
+            lastName: lastName,
+            profilePic: profilePic,
+          },
+          createdAt: Date(),
+        });
+      } else {
+        await db.collection("posts").add({
+          userId: currentUser.uid,
+          title: title,
+          body: body,
+          comments: [],
+          category: options,
+          type: type,
+          imageUrl: imageUrl,
+          user: {
+            email: currentUser.email,
+            firstName: firstName,
+            lastName: lastName,
+          },
+          createdAt: Date(),
+        });
+      }
     } catch (err) {
       setError("Sorry, please try again.");
       console.log(err);
@@ -125,6 +154,7 @@ const CreatePost = ({ profile }) => {
     e.target.title.value = "";
     setTypePost("");
     setCatPost([]);
+    setImage("");
   }
 
   function handleTypeSelect(e) {
@@ -147,7 +177,7 @@ const CreatePost = ({ profile }) => {
         <h4 className="createPostSections">Type Here:</h4>
         <TextField
           label="TITLE"
-          style={{marginTop: "1em"}}
+          style={{ marginTop: "1em" }}
           variant="outlined"
           multiline
           type="text"
@@ -155,13 +185,12 @@ const CreatePost = ({ profile }) => {
         ></TextField>
         <TextField
           label="BODY"
-          style={{marginTop: "1em"}}
+          style={{ marginTop: "1em" }}
           variant="outlined"
           multiline
           id="createPostBody"
           type="text"
           name="body"
-          placeholder="Post message..."
         ></TextField>
         <h4 className="createPostSections">Upload Image:</h4>
         <input type="file" onChange={handleInsertImage} />

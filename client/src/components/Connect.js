@@ -19,7 +19,6 @@ const Connect = () => {
   useEffect(() => {
     let query = db.collection("posts");
 
-    console.log("Category changed...");
     if (category.length > 0) {
       query = query.where("category", "array-contains-any", category);
     }
@@ -56,7 +55,6 @@ const Connect = () => {
       .then((doc) => {
         if (doc.exists) {
           setProfile(doc.data());
-          console.log(profile);
         } else {
           console.log("No doc found");
         }

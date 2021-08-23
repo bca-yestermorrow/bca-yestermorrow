@@ -2,7 +2,7 @@
 import React from "react";
 import { useState } from "react";
 import "../App.css";
-import yesterLogo from "../assets/MAIN FORUM BANNER.jpg";
+import yesterLogo from "../assets/Banner-2000X600.png";
 import Map from "./Map";
 import SignUp from "./SignUp";
 import Login from "./Login";

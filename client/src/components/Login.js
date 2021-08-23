@@ -16,6 +16,7 @@ const Login = ({currentUser}) => {
   const emailRef = useRef();
   const passwordRef = useRef();
   const { login } = useAuth();
+  const [loginError, setLoginError] = useState(false)
   const [passwordError, setPasswordError] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -45,11 +46,11 @@ const Login = ({currentUser}) => {
       <form id="Login" className="login-flex" onSubmit={handleSubmit}>
         <h1 className="login-header">Log In</h1>
         <TextField size="small" id="filled-basic" label="Email" type="email" inputRef={emailRef} variant="filled" />
-        <TextField size="small" id="filled-basic" label="Password" type="password" inputRef={passwordRef} variant="filled" />
+        <TextField size="small" error={loginError} helperText={passwordError} id="filled-basic" label="Password" type="password" inputRef={passwordRef} variant="filled" />
         
         <Button size="small" variant="contained" color="secondary" disable={loading} type="submit" >Log in</Button >
         
-        {passwordError && <h4>{passwordError}</h4>}
+       
 
       </form>
       </Box>

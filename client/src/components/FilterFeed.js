@@ -1,4 +1,10 @@
 import React from "react";
+import IconButton from "@material-ui/core/IconButton";
+import Facebook from "@material-ui/icons/Facebook";
+import Twitter from "@material-ui/icons/Twitter";
+import LinkedIn from "@material-ui/icons/LinkedIn";
+import YouTube from "@material-ui/icons/YouTube";
+import Instagram from "@material-ui/icons/Instagram";
 import {
   Chip,
   Card,
@@ -10,13 +16,8 @@ import {
   FormControlLabel,
   FormControl,
   InputLabel,
+  Typography,
 } from "@material-ui/core";
-import IconButton from "@material-ui/core/IconButton";
-import Facebook from "@material-ui/icons/Facebook";
-import Twitter from "@material-ui/icons/Twitter";
-import LinkedIn from "@material-ui/icons/LinkedIn";
-import YouTube from "@material-ui/icons/YouTube";
-import Instagram from "@material-ui/icons/Instagram";
 import AcUnitIcon from "@material-ui/icons/AcUnit";
 import { useState, useEffect } from "react";
 import { db } from "../firebase";
@@ -26,7 +27,6 @@ import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import { ThemeProvider, createTheme } from "@material-ui/core/styles";
 import { Link } from "react-router-dom";
-
 import CheckBoxOutlineBlankIcon from "@material-ui/icons/CheckBoxOutlineBlank";
 import CheckBoxIcon from "@material-ui/icons/CheckBox";
 
@@ -158,23 +158,54 @@ export const FilterFeed = ({
               />
             )}
           />
-        </FormControl>
-        <Link to="/profile">
+          <Link to="/profile">
+            <Button
+              className={classes.filterField}
+              color="secondary"
+              variant="contained"
+              id="profileButton"
+            >
+              My Profile
+            </Button>
+          </Link>
+          <h4 className="createPostSections" style={{ marginTop: "0" }}>
+            External Sources:
+          </h4>
           <Button
             className={classes.filterField}
             color="secondary"
             variant="contained"
-            id="profileButton"
+            id="jobButton"
+          >
+            <a href="https://yestermorrow.org/connect/jobs">Find a job!</a>
+          </Button>
+          <Button
+            className={classes.filterField}
+            color="secondary"
+            variant="contained"
+            id="coursesButton"
+          >
+            <a href="https://yestermorrow.org/learn/courses">
+              {" "}
+              Current Courses
+            </a>{" "}
+          </Button>
+        </FormControl>
+
+        <Link to="/profile">
+          <Button
+            style={{ width: "100%" }}
+            color="secondary"
+            variant="contained"
           >
             My Profile
           </Button>
         </Link>
-        <h4 className="createPostSections" style={{marginTop: "0"}}>External Sources:</h4>
+        <Typography color="secondary">External Resources:</Typography>
         <Button
           className={classes.filterField}
           color="secondary"
           variant="contained"
-          id="jobButton"
         >
           <a href="https://yestermorrow.org/connect/jobs">Find a job!</a>
         </Button>
@@ -182,57 +213,58 @@ export const FilterFeed = ({
           className={classes.filterField}
           color="secondary"
           variant="contained"
-          id="coursesButton"
         >
           <a href="https://yestermorrow.org/learn/courses"> Current Courses</a>{" "}
         </Button>
 
         <div id="footer">
-          <h4 style={{ color: "#939598" }}>
-            Address: 7865 Main Street, Waitsfield VT 05673
-          </h4>
-          <h4 style={{ color: "#939598" }}>
-            Phone:{" "}
-            <a
-              href="tel:802-496-5545"
-              style={{ textDecoration: "underline", color: "#800080" }}
-            >
-              802-496-5545
-            </a>
-          </h4>
-          <h4 style={{ color: "#939598" }}>
-            Website:{" "}
-            <a
-              href="https://yestermorrow.org"
-              style={{ textDecoration: "underline", color: "#800080" }}
-            >
-              www.yestermorrow.org
-            </a>
-          </h4>
-          <div id="social">
-            <IconButton aria-label="facebook" className={classes.social}>
-              <a href="https://www.facebook.com/YestermorrowDesignBuildSchool/?ref=ts">
-                {<Facebook />}
+          <div id="footer">
+            <h4 style={{ color: "#939598" }}>
+              Address: 7865 Main Street, Waitsfield VT 05673
+            </h4>
+            <h4 style={{ color: "#939598" }}>
+              Phone:{" "}
+              <a
+                href="tel:802-496-5545"
+                style={{ textDecoration: "underline", color: "#800080" }}
+              >
+                802-496-5545
               </a>
-            </IconButton>
-            <IconButton aria-label="twitter" className={classes.social}>
-              <a href="https://twitter.com/yestermorrow">{<Twitter />}</a>
-            </IconButton>
-            <IconButton aria-label="LinkedIn" className={classes.social}>
-              <a href="https://www.linkedin.com/company/yestermorrow-design-build-school/">
-                {<LinkedIn />}
+            </h4>
+            <h4 style={{ color: "#939598" }}>
+              Website:{" "}
+              <a
+                href="https://yestermorrow.org"
+                style={{ textDecoration: "underline", color: "#800080" }}
+              >
+                www.yestermorrow.org
               </a>
-            </IconButton>
-            <IconButton aria-label="YouTube" className={classes.social}>
-              <a href="https://www.youtube.com/user/yestermorrowdb">
-                {<YouTube />}
-              </a>
-            </IconButton>
-            <IconButton aria-label="Instagram" className={classes.social}>
-              <a href="https://www.instagram.com/yestermorrow/">
-                {<Instagram />}
-              </a>
-            </IconButton>
+            </h4>
+            <div id="social">
+              <IconButton aria-label="facebook" className={classes.social}>
+                <a href="https://www.facebook.com/YestermorrowDesignBuildSchool/?ref=ts">
+                  {<Facebook />}
+                </a>
+              </IconButton>
+              <IconButton aria-label="twitter" className={classes.social}>
+                <a href="https://twitter.com/yestermorrow">{<Twitter />}</a>
+              </IconButton>
+              <IconButton aria-label="LinkedIn" className={classes.social}>
+                <a href="https://www.linkedin.com/company/yestermorrow-design-build-school/">
+                  {<LinkedIn />}
+                </a>
+              </IconButton>
+              <IconButton aria-label="YouTube" className={classes.social}>
+                <a href="https://www.youtube.com/user/yestermorrowdb">
+                  {<YouTube />}
+                </a>
+              </IconButton>
+              <IconButton aria-label="Instagram" className={classes.social}>
+                <a href="https://www.instagram.com/yestermorrow/">
+                  {<Instagram />}
+                </a>
+              </IconButton>
+            </div>
           </div>
         </div>
       </Box>

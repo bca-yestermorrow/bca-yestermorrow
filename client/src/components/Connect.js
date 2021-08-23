@@ -6,6 +6,7 @@ import Post from "./Post";
 import { FilterFeed } from "./FilterFeed";
 import { useState, useEffect } from "react";
 import { useAuth } from "../context/AuthContext";
+import Paper from "@material-ui/core/Paper"
 
 const Connect = () => {
   const [category, setCategory] = useState([]);
@@ -71,7 +72,7 @@ const Connect = () => {
   return (
     <div id="connectPage">
       <header id="connectHeader"></header>
-      <div id="connectContainer">
+      <Paper elevation={5} id="connectContainer">
         <FilterFeed
           setChecked={setChecked}
           checked={checked}
@@ -86,7 +87,7 @@ const Connect = () => {
             posts.map((post, index) => <Post post={post} profile={profile} key={index} />)}
         </div>
         <CreatePost profile={profile}/>
-      </div>
+      </Paper>
     </div>
   );
 };

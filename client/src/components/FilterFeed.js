@@ -1,5 +1,5 @@
 import React from "react";
-import { Chip, Card, Avatar, Checkbox, TextField, Button, Box, FormControlLabel, FormControl, InputLabel } from "@material-ui/core";
+import { Chip, Card, Avatar, Checkbox, TextField, Button, Box, FormControlLabel, FormControl, InputLabel, Typography } from "@material-ui/core";
 import AcUnitIcon from "@material-ui/icons/AcUnit";
 import { useState, useEffect } from "react";
 import { db } from "../firebase";
@@ -143,10 +143,11 @@ export const FilterFeed = ({setChecked, setCategory, setCurrentState, currentSta
 
  
 
- 
+    <Button className={classes.filterField}  color="secondary" variant="contained">My Profile</Button>
+   <Typography color="secondary">External Resources:</Typography>
    <Button  className={classes.filterField} color="secondary" variant="contained"><a href="https://yestermorrow.org/connect/jobs">Find a job!</a></Button>
    <Button className={classes.filterField} color="secondary" variant="contained"><a href="https://yestermorrow.org/learn/courses"> Current Courses</a> </Button>
-   <Button className={classes.filterField}  color="secondary" variant="contained">My Profile</Button>
+
 
    <div id="footer">FOOTER</div>
  

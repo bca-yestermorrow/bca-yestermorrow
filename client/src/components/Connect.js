@@ -6,7 +6,7 @@ import Post from "./Post";
 import { FilterFeed } from "./FilterFeed";
 import { useState, useEffect } from "react";
 import { useAuth } from "../context/AuthContext";
-import Paper from "@material-ui/core/Paper"
+import Paper from "@material-ui/core/Paper";
 
 const Connect = () => {
   const [category, setCategory] = useState([]);
@@ -14,7 +14,7 @@ const Connect = () => {
   const [checked, setChecked] = useState(false);
   const [profile, setProfile] = useState("");
   const { currentUser } = useAuth();
-  const [currentState, setCurrentState] = useState('')
+  const [currentState, setCurrentState] = useState("");
 
   useEffect(() => {
     let query = db.collection("posts");
@@ -24,24 +24,21 @@ const Connect = () => {
     }
 
     const unsub = query.onSnapshot((querysnap) => {
-      
       const updatedPosts = querysnap.docs.map((doc) => ({
         id: doc.id,
 
         ...doc.data(),
       }));
-      if(currentState !== ''){
-        console.log('in if statement')
-        let filterdArr =updatedPosts.filter((post) =>{
-         
-          return post.user.state === currentState
-        })
-        console.log(filterdArr)
-        setPosts(filterdArr)
+      if (currentState !== "") {
+        console.log("in if statement");
+        let filterdArr = updatedPosts.filter((post) => {
+          return post.user.state === currentState;
+        });
+        console.log(filterdArr);
+        setPosts(filterdArr);
       } else {
-        setPosts(updatedPosts)
+        setPosts(updatedPosts);
       }
-      
     });
     query = query.orderBy("createdAt").limitToLast(100);
     return () => unsub();
@@ -82,9 +79,11 @@ const Connect = () => {
         <div id="mainFeed">
           {!posts && <p>Welcome Yestomorrow Alumni!</p>}
           {posts &&
-            posts.map((post, index) => <Post post={post} profile={profile} key={index} />)}
+            posts.map((post, index) => (
+              <Post post={post} profile={profile} key={index} />
+            ))}
         </div>
-        <CreatePost profile={profile}/>
+        <CreatePost profile={profile} />
       </Paper>
     </div>
   );

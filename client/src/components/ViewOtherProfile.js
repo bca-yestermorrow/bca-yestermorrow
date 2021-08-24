@@ -89,7 +89,7 @@ const ViewOtherProfile = ({ userUid }) => {
               >
                 {profile.firstName[0]}
               </Avatar>
-              <Card style={{ marginTop: "20px", marginBottom: "20px"}}>
+              <Card style={{ marginTop: "20px", marginBottom: "20px"}} id="profile-card2">
                 <div className="user-info">
                   <h3>
                     {profile.firstName} {profile.lastName}

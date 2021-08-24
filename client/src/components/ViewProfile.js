@@ -2,8 +2,9 @@ import React from "react";
 import { useAuth } from "../context/AuthContext";
 import { db } from "../firebase";
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import firebase from "firebase";
-import yesterLogo from "../assets/MAIN FORUM BANNER.jpg";
+import yesterLogo from "../assets/YM_Banner.jpg";
 import {
   Avatar,
   Button,
@@ -13,7 +14,11 @@ import {
   FormControlLabel,
   Card,
   Divider,
+  Icon,
 } from "@material-ui/core";
+
+import ArrowBackIcon from "@material-ui/icons/ArrowBack";
+import EditIcon from "@material-ui/icons/Edit";
 import { makeStyles } from "@material-ui/core/styles";
 import EditProfile from "./EditProfile";
 
@@ -40,9 +45,9 @@ const ViewProfile = () => {
         backgroundColor: "#59833b",
         color: "#fff",
       },
-      profileCard: {
-        marginTop: "10px",
-      },
+    },
+    profileCard: {
+      marginTop: "10px",
     },
   });
 
@@ -85,7 +90,16 @@ const ViewProfile = () => {
         <img className="profile-banner" src={yesterLogo} alt="alt" />
       </div>
       <div className="profile-page-wrapper">
-        {/* <div id="banner"></div> */}
+        <Link to="/connect">
+          <Button
+            variant="contained"
+            color="secondary"
+            startIcon={<ArrowBackIcon />}
+            id="back-button"
+          >
+            Back
+          </Button>
+        </Link>
         <div className="view-profile-page">
           <div>
             {modal && <EditProfile handleModalClosed={handleModalClosed} />}
@@ -100,11 +114,24 @@ const ViewProfile = () => {
               >
                 {profile.firstName[0]}
               </Avatar>
-              <Card style={{ marginTop: "20px", marginBottom: "20px",  width: "40vw" }}>
-                <Button color="secondary" variant="contained" id="edit-button" onClick={handleModalOpen}>
-                Edit
-              </Button>
-              <div className="user-info">
+              <Card
+                style={{
+                  marginTop: "20px",
+                  marginBottom: "20px",
+                  position: "relative",
+                }}
+                id="profile-card"
+              >
+                <Button
+                  color="secondary"
+                  variant="contained"
+                  id="edit-button"
+                  startIcon={<EditIcon />}
+                  onClick={handleModalOpen}
+                >
+                  Edit
+                </Button>
+                <div className="user-info">
                   <h3>
                     {profile.firstName} {profile.lastName}
                   </h3>
@@ -147,7 +174,6 @@ const ViewProfile = () => {
                   </div>
                 </div>
               </Card>
-              
             </div>
           ) : (
             <p>loading...</p>

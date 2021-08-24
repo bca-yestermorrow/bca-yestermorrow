@@ -11,7 +11,7 @@ import emailjs from "emailjs-com";
 import { init } from "emailjs-com";
 import { makeStyles } from "@material-ui/core/styles";
 import { Avatar } from "@material-ui/core";
-import Paper from "@material-ui/core/Paper"
+import Paper from "@material-ui/core/Paper";
 init("user_9X8kPJFZA4CtJoKGtOw8Y");
 
 const Post = ({ post, profile }) => {
@@ -21,6 +21,8 @@ const Post = ({ post, profile }) => {
   const [lastName, setLastName] = useState(null);
   const [docId, setDocId] = useState(null);
   const [commArr, setCommArr] = useState([]);
+  const [error, setError] = useState("");
+  const [commentUser, serCommentUser] = useState("")
 
   const useStyles = makeStyles({
     large: {
@@ -86,11 +88,20 @@ const Post = ({ post, profile }) => {
 
   //KEEP COMMENTS AFTER POSTING
   function handleComment(e) {
+    setError("");
     setDocId(null);
     e.preventDefault();
-    setComment({firstName: firstName, lastName: lastName, comment: e.target.comment.value});
+    setComment({
+      firstName: firstName,
+      lastName: lastName,
+      comment: e.target.comment.value,
+    });
+    if (e.target.comment.value === "") {
+      return setError("Please add a comment...");
+    }
     sendEmail(e);
     e.target.comment.value = "";
+
     //awaits the db to get the post that has been commented on
     db.collection("posts")
       .where("body", "==", `${post.body}`)
@@ -114,7 +125,7 @@ const Post = ({ post, profile }) => {
       let docRef = db.collection("posts").doc(docId);
       try {
         docRef.update({
-          comments: firebase.firestore.FieldValue.arrayUnion(comment)
+          comments: firebase.firestore.FieldValue.arrayUnion(comment),
         });
         console.log("update successful");
       } catch (e) {
@@ -189,6 +200,7 @@ const Post = ({ post, profile }) => {
           <a href={`mailto:${post.user.email}`}> Email Me </a>
         </Button>
       </form>
+      {error && error}
     </div>
   );
 };

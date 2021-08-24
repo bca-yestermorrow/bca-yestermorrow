@@ -118,7 +118,6 @@ const CreateProfile = ({ handleModalClosed }) => {
     let userCity = evt.target.city.value;
     let userState = evt.target.state.value;
     let userCountry = evt.target.country.value;
-    let userClasses = categoryName;
     let categoryLength = categoryName.length;
 
     let userProfile = await db
@@ -219,7 +218,7 @@ const CreateProfile = ({ handleModalClosed }) => {
           onSubmit={handleSubmit}
           autoComplete="off"
         >
-          <h1>Insert header here</h1>
+          <h1>Create Your Profile</h1>
           <div className="fullname">
             <div className="label-field-pair">
               <label className="label" for="profile-firstName">

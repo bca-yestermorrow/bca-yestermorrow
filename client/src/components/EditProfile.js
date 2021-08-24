@@ -5,10 +5,9 @@ import { db, storage } from "../firebase";
 import { useState, useEffect } from "react";
 import ProfilePicture from "./ProfilePicture";
 import firebase from "firebase/app";
+import { Autocomplete } from "@material-ui/lab";
 // imports for material ui
 import {
-  Card,
-  Container,
   TextField,
   Button,
   Select,
@@ -24,7 +23,9 @@ const EditProfile = ({ handleModalClosed }) => {
   const [categories, setCategories] = useState("");
   const [categoryName, setCategoryName] = useState([]);
   const [imageURL, setImageURL] = useState("");
-  const [bool, setBool] = useState(false)
+  const [bool, setBool] = useState(false);
+  const [states, setStates] = useState([]);
+  const [currentState, setCurrentState] = useState("");
   // const [image, setImage] = useState("");
 
   const { currentUser } = useAuth();
@@ -53,18 +54,12 @@ const EditProfile = ({ handleModalClosed }) => {
     selectedGreen: {
       "&:select": {
         backgroundColor: "#59833b",
-        color: "#fff"
-      }
-    }
+        color: "#fff",
+      },
+    },
   });
   // allows use of classes.whatever on mui components
   const classes = useStyles();
-
-  // const handleImage = (evt) => {
-  //   if (evt.target.files[0]) {
-  //     setImage(evt.target.files[0]);
-  //   }
-  // };
 
   const getImageURL = (url) => {
     setImageURL(url);
@@ -83,6 +78,9 @@ const EditProfile = ({ handleModalClosed }) => {
           console.log(user);
           console.log(doc.data());
           setUser(doc.data());
+          doc.data().interests.forEach((interest) => {
+            categoryName.push(interest);
+          });
         } else {
           console.log("No document");
         }
@@ -105,6 +103,7 @@ const EditProfile = ({ handleModalClosed }) => {
     // setCategories to the array of docs to be used in the form dropdown
     setCategories(categoryArray);
   };
+  console.log(categories);
   // function to handle form submit. updates user doc with new information
   const handleSubmit = async (evt) => {
     evt.preventDefault();
@@ -116,8 +115,14 @@ const EditProfile = ({ handleModalClosed }) => {
     let userCity = evt.target.city.value;
     let userState = evt.target.state.value;
     let userCountry = evt.target.country.value;
-    let userClasses = categoryName;
     let categoryLength = categoryName.length;
+    let removeInterestArray = [];
+
+    categories.forEach((category) => {
+      if (!categoryName.includes(category.name)) {
+        removeInterestArray.push(category.name);
+      }
+    });
 
     let userProfile = await db
       .collection("users")
@@ -160,6 +165,11 @@ const EditProfile = ({ handleModalClosed }) => {
               console.log(categoryLength);
               categoryLength -= 1;
             }
+            removeInterestArray.forEach((category) => {
+              doc.ref.update({
+                interests: firebase.firestore.FieldValue.arrayRemove(category),
+              });
+            });
           }
           if (imageURL) {
             doc.ref.update({ profilePic: imageURL });
@@ -206,6 +216,16 @@ const EditProfile = ({ handleModalClosed }) => {
   };
 
   useEffect(() => {
+    let statesArr = [];
+    db.collection("states")
+      .doc("states")
+      .get()
+      .then((doc) => {
+        setStates(doc.data().states);
+      });
+  }, []);
+
+  useEffect(() => {
     getCurrentUser();
   }, []);
 
@@ -214,11 +234,9 @@ const EditProfile = ({ handleModalClosed }) => {
       getCategories();
     }
   }, []);
-  console.log(categoryName);
   return (
     <div className="edit-profile-container" onClick={handleClose}>
       <div className="form-container">
-        <h1>Edit your Profile</h1>
         <form
           className="edit-profile-form"
           onSubmit={handleSubmit}
@@ -228,7 +246,7 @@ const EditProfile = ({ handleModalClosed }) => {
             X
           </button>
           <label className="label" for="profile-firstName">
-            First Name:{" "}
+            First Name:
           </label>
           <TextField
             className="input-field"
@@ -239,7 +257,7 @@ const EditProfile = ({ handleModalClosed }) => {
           />
 
           <label className="label" for="profile-lastName">
-            Last Name:{" "}
+            Last Name:
           </label>
           <TextField
             className="input-field"
@@ -257,17 +275,26 @@ const EditProfile = ({ handleModalClosed }) => {
             variant="filled"
           />
           <label className="label" for="profile-state">
-            State:{" "}
+            State:
           </label>
-          <TextField
-            className="input-field"
-            id="profile-state"
-            label={user.location ? user.location.state : "state"}
-            name="state"
-            variant="filled"
+          <Autocomplete
+            
+            onChange={(e) => setCurrentState(e.currentTarget.textContent)}
+            options={states}
+            getOptionLabel={(state) => state.name}
+            style={{ width: "100%" }}
+            renderInput={(params) => (
+              <TextField
+                className={classes.filterField}
+                {...params}
+                label={user.location ? user.location.state : "State"}
+                name="state"
+                variant="filled"
+              />
+            )}
           />
           <label className="label" for="profile-country">
-            Country:{" "}
+            Country:
           </label>
           <TextField
             className="input-field"
@@ -277,7 +304,7 @@ const EditProfile = ({ handleModalClosed }) => {
             variant="filled"
           />
           <label className="label" for="profile-interests">
-            Interests:{" "}
+            Interests:
           </label>
           <Select
             className="input-field"
@@ -303,18 +330,19 @@ const EditProfile = ({ handleModalClosed }) => {
           </Select>
 
           <label className="label" for="profile-bio">
-            Bio:{" "}
+            Bio:
           </label>
           <TextField
             className="input-field"
             id="profile-bio"
             label={user.bio}
             name="bio"
+            inputProps={{ maxLength: 500 }}
             variant="filled"
           />
 
           <label className="label" for="profile-projects">
-            Projects:{" "}
+            Projects:
           </label>
           <TextField
             className="input-field"
@@ -324,7 +352,7 @@ const EditProfile = ({ handleModalClosed }) => {
             variant="filled"
           />
           <label className="label" for="profile-portfolio">
-            Portfolio/Social links:{" "}
+            Portfolio/Social links:
           </label>
           <TextField
             className="input-field"
@@ -336,7 +364,11 @@ const EditProfile = ({ handleModalClosed }) => {
           <label className="label" for="profile-picture">
             Upload a profile picture
           </label>
-          <ProfilePicture getImageURL={getImageURL} setBool={setBool} id="profile-picture" />
+          <ProfilePicture
+            getImageURL={getImageURL}
+            setBool={setBool}
+            id="profile-picture"
+          />
           <Button
             disabled={bool}
             id="profile-submit"

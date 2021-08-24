@@ -159,38 +159,6 @@ export const FilterFeed = ({
               />
             )}
           />
-          <Link to="/profile">
-            <Button
-              className={classes.filterField}
-              color="secondary"
-              variant="contained"
-              id="profileButton"
-            >
-              My Profile
-            </Button>
-          </Link>
-          <h4 className="createPostSections" style={{ marginTop: "0" }}>
-            External Sources:
-          </h4>
-          <Button
-            className={classes.filterField}
-            color="secondary"
-            variant="contained"
-            id="jobButton"
-          >
-            <a href="https://yestermorrow.org/connect/jobs">Find a job!</a>
-          </Button>
-          <Button
-            className={classes.filterField}
-            color="secondary"
-            variant="contained"
-            id="coursesButton"
-          >
-            <a href="https://yestermorrow.org/learn/courses">
-              {" "}
-              Current Courses
-            </a>{" "}
-          </Button>
         </FormControl>
 
         <Link to="/profile">
@@ -202,7 +170,7 @@ export const FilterFeed = ({
             My Profile
           </Button>
         </Link>
-        <Typography color="secondary">External Resources:</Typography>
+        <h4 className="createPostSections"style={{ color: "#59833B" }}>External Resources:</h4>
         <Button
           className={classes.filterField}
           color="secondary"

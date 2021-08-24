@@ -7,6 +7,7 @@
     "heroku-postbuild": "cd client && npm install --only=dev && npm install && npm run build",
     "dev": "cd client && npm start",
     "start": "node Server/server.js",
+    "nodemon": "nodemon Server/server.js",
     "test": "mocha",
     "data": "node Server/alumnidata.js"
   },
@@ -31,6 +32,7 @@
     "mocha": "^9.0.3",
     "mongodb": "^3.6.10",
     "mongoose": "^5.13.5",
+    "nodemon": "^2.0.12",
     "react-leaflet": "^3.2.1"
   },
   "devDependencies": {}

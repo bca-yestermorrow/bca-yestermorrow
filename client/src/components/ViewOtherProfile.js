@@ -14,7 +14,7 @@ import {
   Divider,
   Icon
 } from "@material-ui/core";
-import yesterLogo from "../assets/MAIN FORUM BANNER.jpg";
+import yesterLogo from "../assets/YM_Banner.jpg";
 import { makeStyles } from "@material-ui/core/styles";
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 

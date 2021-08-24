@@ -6,7 +6,7 @@
 * {
   margin: 0;
   padding: 0;
-  font-family: 'Raleway', sans-serif;
+  font-family: "Raleway", sans-serif;
 }
 
 /* LANDING PAGE */
@@ -80,10 +80,12 @@ body {
   height: 80vh;
   padding: 1vw;
   background-color: white;
-  
 }
 
-a, a:hover, a:focus, a:active {
+a,
+a:hover,
+a:focus,
+a:active {
   text-decoration: none;
   color: inherit;
 }
@@ -262,7 +264,7 @@ a, a:hover, a:focus, a:active {
 #commentButton {
   border-radius: 1vh;
   margin-top: 1vh;
-  position:relative;
+  position: relative;
 }
 
 #emailButton {
@@ -399,7 +401,6 @@ a, a:hover, a:focus, a:active {
   justify-content: space-around;
   height: 200px;
   width: 100%;
-  
 }
 
 .user-work > div {
@@ -444,25 +445,25 @@ a, a:hover, a:focus, a:active {
 }
 
 #edit-button {
-right: 0;
-position: absolute;
-margin: 10px 10px 0 0; 
+  right: 0;
+  position: absolute;
+  margin: 10px 10px 0 0;
 }
 
 #profile-card {
-  width: 40vw
+  width: 40vw;
 }
 
 #profile-card2 {
-  width: 40vw
+  width: 40vw;
 }
 
 @media screen and (max-width: 1050px) {
   #profile-card {
-    width: 70vw
+    width: 70vw;
   }
   #profile-card2 {
-    width: 70vw
+    width: 70vw;
   }
 }
 

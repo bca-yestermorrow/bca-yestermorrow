@@ -1,6 +1,7 @@
 import React from "react";
 import { db } from "../firebase";
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom"
 import firebase from "firebase";
 import {
   Avatar,
@@ -11,9 +12,11 @@ import {
   FormControlLabel,
   Card,
   Divider,
+  Icon
 } from "@material-ui/core";
 import yesterLogo from "../assets/MAIN FORUM BANNER.jpg";
 import { makeStyles } from "@material-ui/core/styles";
+import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 
 const ViewOtherProfile = ({ userUid }) => {
   const [profile, setProfile] = useState("");
@@ -68,7 +71,14 @@ const ViewOtherProfile = ({ userUid }) => {
         <img className="profile-banner" src={yesterLogo} alt="alt" />
       </div>
       <div className="profile-page-wrapper">
-        {/* <div id="banner"></div> */}
+      <Link to="/connect"><Button
+          variant="contained"
+          color="secondary"
+          startIcon={<ArrowBackIcon />}
+          id="back-button2"
+        >
+          Back
+        </Button></Link>
         <div className="view-profile-page">
           {profile ? (
             <div className="view-profile-container">
@@ -79,7 +89,7 @@ const ViewOtherProfile = ({ userUid }) => {
               >
                 {profile.firstName[0]}
               </Avatar>
-              <Card style={{ marginTop: "20px", width: "40vw" }}>
+              <Card style={{ marginTop: "20px", marginBottom: "20px"}}>
                 <div className="user-info">
                   <h3>
                     {profile.firstName} {profile.lastName}

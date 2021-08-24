@@ -17,8 +17,9 @@ import {
   FormControl,
   InputLabel,
   Typography,
+  Icon,
 } from "@material-ui/core";
-import AcUnitIcon from "@material-ui/icons/AcUnit";
+import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import { useState, useEffect } from "react";
 import { db } from "../firebase";
 import firebaseApp from "../firebase";

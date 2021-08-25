@@ -9,6 +9,20 @@ import { useAuth } from "../context/AuthContext";
 import Paper from "@material-ui/core/Paper";
 import yesterLogo from "../assets/Banner-2000X600.png";
 
+// helper function to sort our posts array
+// source: https://stackoverflow.com/questions/10123953/how-to-sort-an-object-array-by-date-property
+const sortPostsArray = (arr) => {
+  console.log("Entering sortPostsArray....");
+  console.log("===========================");
+  return arr.sort((a, b) => {
+    console.log("new Date(a.createdAt): ", new Date(a.createdAt));
+    console.log("b.createdAt: ", b.createdAt);
+
+    return new Date(b.createdAt) - new Date(a.createdAt);
+  });
+  // return arr; // no-op test case - works
+};
+
 const Connect = () => {
   const [category, setCategory] = useState([]);
   const [posts, setPosts] = useState([]);
@@ -31,17 +45,21 @@ const Connect = () => {
         ...doc.data(),
       }));
       if (currentState !== "") {
-        console.log("in if statement");
+        // console.log("in if statement");
         let filterdArr = updatedPosts.filter((post) => {
           return post.user.state === currentState;
         });
-        console.log(filterdArr);
-        setPosts(filterdArr);
+
+        // sort & update filtered posts
+        setPosts(sortPostsArray(filterdArr));
       } else {
-        setPosts(updatedPosts);
+        // sort & update posts
+        setPosts(sortPostsArray(updatedPosts));
       }
     });
-    query = query.orderBy("createdAt").limitToLast(100);
+    // this line isn't sorting, and the limit hasn't been tested.
+    // a different solutions will be used for sorting (Just before display)
+    // query = query.orderBy("createdAt").limitToLast(100);
     return () => unsub();
   }, [category, checked, currentState]);
 

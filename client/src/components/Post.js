@@ -158,7 +158,7 @@ const Post = ({ post, profile }) => {
         </h4>
         <p className="postBody">{post.body}</p>
         <img
-          style={{ width: "35vw" }}
+          style={{ width: "25vw" }}
           src={post.imageUrl}
           alt={post.imageUrl}
         />

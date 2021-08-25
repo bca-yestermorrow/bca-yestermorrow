@@ -124,6 +124,11 @@ a, a:hover, a:focus, a:active {
   font-family: "Raleway", sans-serif;
 }
 
+.footerLinks:hover {
+  text-decoration: underline;
+  color: #708c84;
+}
+
 #social {
   display: flex;
   justify-content: space-evenly;

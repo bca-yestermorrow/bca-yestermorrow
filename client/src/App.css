@@ -225,17 +225,17 @@ a, a:hover, a:focus, a:active {
 }
 
 .postType {
-  font-size: 1.5vh;
+  font-size: 1.6vh;
   border-radius: 1vh;
 }
 
 .postCategory {
-  font-size: 1.5vh;
+  font-size: 1.6vh;
   border-radius: 1vh;
 }
 
 .postDate {
-  font-size: 1.3vh;
+  font-size: 1.6vh;
 }
 
 #commentSection {
@@ -245,8 +245,11 @@ a, a:hover, a:focus, a:active {
 }
 
 #comment {
-  margin-top: 1em;
+  margin-top: .5em;
+  padding: .5vh;
   background-color: rgba(0, 0, 0, 0.089);
+  font-size: 2vh;
+  border-radius: 1.5vh;
 }
 
 #commentForm {

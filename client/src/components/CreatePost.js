@@ -188,6 +188,7 @@ const CreatePost = ({ profile }) => {
           style={{ marginTop: "1em" }}
           variant="outlined"
           multiline
+          maxRows={4}
           id="createPostBody"
           type="text"
           name="body"

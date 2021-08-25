@@ -7,6 +7,7 @@ import { FilterFeed } from "./FilterFeed";
 import { useState, useEffect } from "react";
 import { useAuth } from "../context/AuthContext";
 import Paper from "@material-ui/core/Paper";
+import yesterLogo from "../assets/Banner-2000X600.png";
 
 const Connect = () => {
   const [category, setCategory] = useState([]);
@@ -65,26 +66,30 @@ const Connect = () => {
   }, []);
 
   return (
-    <div id="connectPage">
-      <header id="connectHeader"></header>
-      <Paper elevation={5} id="connectContainer">
-        <FilterFeed
-          setChecked={setChecked}
-          checked={checked}
-          setCategory={setCategory}
-          category={category}
-          currentState={currentState}
-          setCurrentState={setCurrentState}
-        />
-        <div id="mainFeed">
-          {!posts && <p>Welcome Yestomorrow Alumni!</p>}
-          {posts &&
-            posts.map((post, index) => (
-              <Post post={post} profile={profile} key={index} />
-            ))}
-        </div>
-        <CreatePost profile={profile} />
-      </Paper>
+    <div>
+      <div className="banner-wrapper">
+        <img className="connect-banner" src={yesterLogo} alt="alt" />
+      </div>
+      <div className="connect-wrapper">
+        <Paper elevation={5} id="connectContainer">
+          <FilterFeed
+            setChecked={setChecked}
+            checked={checked}
+            setCategory={setCategory}
+            category={category}
+            currentState={currentState}
+            setCurrentState={setCurrentState}
+          />
+          <div id="mainFeed">
+            {!posts && <p>Welcome Yestermorrow Alumni!</p>}
+            {posts &&
+              posts.map((post, index) => (
+                <Post post={post} profile={profile} key={index} />
+              ))}
+          </div>
+          <CreatePost profile={profile} />
+        </Paper>
+      </div>
     </div>
   );
 };

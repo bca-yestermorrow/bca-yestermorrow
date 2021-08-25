@@ -164,7 +164,7 @@ export const FilterFeed = ({
         <Link to="/profile">
           <Button
             style={{ width: "100%" }}
-            color="secondary"
+            color="primary"
             variant="contained"
           >
             My Profile

@@ -16,6 +16,9 @@ const yesterTheme = createTheme({
   palette: {
     secondary: {
       main: "#67a641"
+    },
+    primary: {
+      main: "#708c84"
     }
   }
 })

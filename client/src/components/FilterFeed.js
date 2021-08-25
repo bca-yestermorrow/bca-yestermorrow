@@ -164,23 +164,23 @@ export const FilterFeed = ({
         <Link to="/profile">
           <Button
             style={{ width: "100%" }}
-            color="primary"
+            color="secondary"
             variant="contained"
           >
             My Profile
           </Button>
         </Link>
-        <h4 className="createPostSections"style={{ color: "#59833B" }}>External Resources:</h4>
+        <h4 className="createPostSections"style={{ color: "#708c84" }}>External Resources:</h4>
         <Button
           className={classes.filterField}
-          color="secondary"
+          color="primary"
           variant="contained"
         >
           <a href="https://yestermorrow.org/connect/jobs">Find a job!</a>
         </Button>
         <Button
           className={classes.filterField}
-          color="secondary"
+          color="primary"
           variant="contained"
         >
           <a href="https://yestermorrow.org/learn/courses"> Current Courses</a>{" "}
@@ -191,20 +191,20 @@ export const FilterFeed = ({
             <h4 style={{ color: "#939598" }}>
               Address: 7865 Main Street, Waitsfield VT 05673
             </h4>
-            <h4 style={{ color: "#939598" }}>
+            <h4  style={{ color: "#939598" }}>
               Phone:{" "}
               <a
                 href="tel:802-496-5545"
-                style={{ textDecoration: "underline", color: "#800080" }}
+                className="footerLinks"
               >
                 802-496-5545
               </a>
             </h4>
-            <h4 style={{ color: "#939598" }}>
+            <h4  style={{ color: "#939598" }}>
               Website:{" "}
               <a
                 href="https://yestermorrow.org"
-                style={{ textDecoration: "underline", color: "#800080" }}
+                className="footerLinks"
               >
                 www.yestermorrow.org
               </a>

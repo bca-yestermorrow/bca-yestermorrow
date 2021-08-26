@@ -18,7 +18,7 @@ const leafIcon = L.icon({
 
 const greenIcon = new L.Icon({
   iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-green.png',
-  iconSize: [10, 15],
+  iconSize: [16, 24],
   shadowUrl: shadow,
   shadowSize: [10, 15],
   

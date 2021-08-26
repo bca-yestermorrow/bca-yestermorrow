@@ -1,4 +1,5 @@
 import React from "react";
+import { SignOut } from "./SignOut";
 import IconButton from "@material-ui/core/IconButton";
 import Facebook from "@material-ui/icons/Facebook";
 import Twitter from "@material-ui/icons/Twitter";
@@ -161,6 +162,8 @@ export const FilterFeed = ({
           />
         </FormControl>
 
+        
+
         <Link to="/profile">
           <Button
             style={{ width: "100%" }}
@@ -170,6 +173,7 @@ export const FilterFeed = ({
             My Profile
           </Button>
         </Link>
+        <SignOut />
         <h4 className="createPostSections" style={{ color: "#708c84" }}>
           External Resources:
         </h4>

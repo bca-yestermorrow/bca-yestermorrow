@@ -7,13 +7,7 @@ import ProfilePicture from "./ProfilePicture";
 import firebase from "firebase/app";
 import { Autocomplete } from "@material-ui/lab";
 // imports for material ui
-import {
-  TextField,
-  Button,
-  Select,
-  MenuItem,
-  Input,
-} from "@material-ui/core";
+import { TextField, Button, Select, MenuItem, Input } from "@material-ui/core";
 // import for material ui to customize styles
 import { makeStyles } from "@material-ui/core/styles";
 
@@ -244,64 +238,82 @@ const EditProfile = ({ handleModalClosed }) => {
           <button onClick={handleModalClosed} className="x-button">
             X
           </button>
-          <label className="label" for="profile-firstName">
-            First Name:
-          </label>
-          <TextField
-            className="input-field"
-            id="profile-firstName"
-            label={user.firstName}
-            name="firstName"
-            variant="filled"
-          />
-
-          <label className="label" for="profile-lastName">
-            Last Name:
-          </label>
-          <TextField
-            className="input-field"
-            id="profile-lastName"
-            label={user.lastName}
-            name="lastName"
-            variant="filled"
-          />
-          <label for="profile-city">City: </label>
-          <TextField
-            className="input-field"
-            id="profile-city"
-            label={user.location ? user.location.city : "city"}
-            name="city"
-            variant="filled"
-          />
-          <label className="label" for="profile-state">
-            State:
-          </label>
-          <Autocomplete
-            
-            onChange={(e) => setCurrentState(e.currentTarget.textContent)}
-            options={states}
-            getOptionLabel={(state) => state.name}
-            style={{ width: "100%" }}
-            renderInput={(params) => (
+          <div className="fullname">
+            <div className="name-label-field-pair">
+              <label className="label" for="profile-firstName">
+                First Name:
+              </label>
               <TextField
-                className={classes.filterField}
-                {...params}
-                label={user.location ? user.location.state : "State"}
-                name="state"
+                className="input-field"
+                style={{ width: "96%" }}
+                id="profile-firstName"
+                label={user.firstName}
+                name="firstName"
                 variant="filled"
               />
-            )}
-          />
-          <label className="label" for="profile-country">
-            Country:
-          </label>
-          <TextField
-            className="input-field"
-            id="profile-country"
-            label={user.location ? user.location.country : "country"}
-            name="country"
-            variant="filled"
-          />
+            </div>
+            <div className="name-label-field-pair">
+              <label className="label" for="profile-lastName">
+                Last Name:
+              </label>
+              <TextField
+                className="input-field"
+                style={{ width: "96%" }}
+                id="profile-lastName"
+                label={user.lastName}
+                name="lastName"
+                variant="filled"
+              />
+            </div>
+          </div>
+          <div className="full-location">
+            <div className="location-label-field-pair">
+              <label for="profile-city">City:</label>
+              <TextField
+                className="input-field"
+                style={{ width: "96%" }}
+                id="profile-city"
+                label={user.location ? user.location.city : "city"}
+                name="city"
+                variant="filled"
+              />
+            </div>
+
+            <div className="location-label-field-pair">
+              <label className="label" for="profile-state">
+                State:
+              </label>
+              <Autocomplete
+                onChange={(e) => setCurrentState(e.currentTarget.textContent)}
+                options={states}
+                getOptionLabel={(state) => state.name}
+                style={{ width: "100%" }}
+                renderInput={(params) => (
+                  <TextField
+                    className={classes.filterField}
+                    style={{ width: "96%" }}
+                    {...params}
+                    label={user.location ? user.location.state : "State"}
+                    name="state"
+                    variant="filled"
+                  />
+                )}
+              />
+            </div>
+            <div className="location-label-field-pair">
+              <label className="label" for="profile-country">
+                Country:
+              </label>
+              <TextField
+                className="input-field"
+                style={{ width: "96%" }}
+                id="profile-country"
+                label={user.location ? user.location.country : "country"}
+                name="country"
+                variant="filled"
+              />
+            </div>
+          </div>
           <label className="label" for="profile-interests">
             Interests:
           </label>
@@ -371,8 +383,7 @@ const EditProfile = ({ handleModalClosed }) => {
           <Button
             disabled={bool}
             id="profile-submit"
-            className={classes.green}
-            color="green"
+            color="secondary"
             variant="contained"
             type="submit"
           >

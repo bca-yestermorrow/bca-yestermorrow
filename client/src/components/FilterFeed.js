@@ -1,4 +1,5 @@
 import React from "react";
+import { SignOut } from "./SignOut";
 import IconButton from "@material-ui/core/IconButton";
 import Facebook from "@material-ui/icons/Facebook";
 import Twitter from "@material-ui/icons/Twitter";
@@ -161,6 +162,8 @@ export const FilterFeed = ({
           />
         </FormControl>
 
+        
+
         <Link to="/profile">
           <Button
             style={{ width: "100%" }}
@@ -170,6 +173,7 @@ export const FilterFeed = ({
             My Profile
           </Button>
         </Link>
+        <SignOut />
         <h4 className="createPostSections" style={{ color: "#708c84" }}>
           External Resources:
         </h4>
@@ -193,21 +197,15 @@ export const FilterFeed = ({
             <h4 style={{ color: "#939598" }}>
               Address: 7865 Main Street, Waitsfield VT 05673
             </h4>
-            <h4  style={{ color: "#939598" }}>
+            <h4 style={{ color: "#939598" }}>
               Phone:{" "}
-              <a
-                href="tel:802-496-5545"
-                className="footerLinks"
-              >
+              <a href="tel:802-496-5545" className="footerLinks">
                 802-496-5545
               </a>
             </h4>
-            <h4  style={{ color: "#939598" }}>
+            <h4 style={{ color: "#939598" }}>
               Website:{" "}
-              <a
-                href="https://yestermorrow.org"
-                className="footerLinks"
-              >
+              <a href="https://yestermorrow.org" className="footerLinks">
                 www.yestermorrow.org
               </a>
             </h4>

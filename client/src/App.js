@@ -31,9 +31,9 @@ function App() {
         <Route exact path="/" component={Landing}></Route>
         <PrivateRoute path="/home" component={Home}></PrivateRoute>
         <PrivateRoute path="/connect" component={Connect}></PrivateRoute>
-        <Route path="/edit-profile" component={EditProfile}></Route>
-        <Route path="/profile" component={ViewProfile}></Route>
-        <Route path="/other-profile/:userUid" render={({ match }) => ( <ViewOtherProfile userUid={match.params.userUid} />)} />
+        <PrivateRoute path="/edit-profile" component={EditProfile}></PrivateRoute>
+        <PrivateRoute path="/profile" component={ViewProfile}></PrivateRoute>
+        <Route path="/other-profile/:userUid" render={({ match }) => ( <ViewOtherProfile userUid={match.params.userUid} />)}></Route>
         </ThemeProvider>
       </Switch>
       

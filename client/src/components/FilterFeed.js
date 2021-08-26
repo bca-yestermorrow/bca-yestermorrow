@@ -170,7 +170,7 @@ export const FilterFeed = ({
             My Profile
           </Button>
         </Link>
-        <h4 className="createPostSections" style={{ color: "#59833B" }}>
+        <h4 className="createPostSections" style={{ color: "#708c84" }}>
           External Resources:
         </h4>
         <Button

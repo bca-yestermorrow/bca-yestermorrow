@@ -239,6 +239,8 @@ a:active {
   flex-direction: row;
   justify-content: space-around;
   background-color: rgba(0, 0, 0, 0.11);
+  padding-top: 2px;
+  padding-bottom: 2px;
 }
 
 .postType {

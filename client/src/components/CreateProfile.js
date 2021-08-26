@@ -5,16 +5,14 @@ import { db, storage } from "../firebase";
 import { useState, useEffect } from "react";
 import ProfilePicture from "./ProfilePicture";
 import firebase from "firebase/app";
+import { Autocomplete } from "@material-ui/lab";
 // imports for material ui
 import {
-  Card,
-  Container,
   TextField,
   Button,
   Select,
   MenuItem,
   Input,
-  Avatar,
 } from "@material-ui/core";
 // import for material ui to customize styles
 import { makeStyles } from "@material-ui/core/styles";
@@ -25,6 +23,8 @@ const CreateProfile = ({ handleModalClosed }) => {
   const [categoryName, setCategoryName] = useState([]);
   const [imageURL, setImageURL] = useState("");
   const [bool, setBool] = useState(false);
+  const [states, setStates] = useState([]);
+  const [currentState, setCurrentState] = useState("");
   // const [image, setImage] = useState("");
 
   const { currentUser } = useAuth();
@@ -201,6 +201,16 @@ const CreateProfile = ({ handleModalClosed }) => {
   };
 
   useEffect(() => {
+    let statesArr = [];
+    db.collection("states")
+      .doc("states")
+      .get()
+      .then((doc) => {
+        setStates(doc.data().states);
+      });
+  }, []);
+
+  useEffect(() => {
     getCurrentUser();
   }, []);
 
@@ -220,24 +230,26 @@ const CreateProfile = ({ handleModalClosed }) => {
         >
           <h1>Create Your Profile</h1>
           <div className="fullname">
-            <div className="label-field-pair">
+            <div className="name-label-field-pair">
               <label className="label" for="profile-firstName">
                 First Name:
               </label>
               <TextField
                 className="input-field"
+                style={{ width: "96%" }}
                 id="profile-firstName"
                 label={user.firstName}
                 name="firstName"
                 variant="filled"
               />
             </div>
-            <div className="label-field-pair">
+            <div className="name-label-field-pair">
               <label className="label" for="profile-lastName">
                 Last Name:
               </label>
               <TextField
                 className="input-field"
+                style={{ width: "96%" }}
                 id="profile-lastName"
                 label={user.lastName}
                 name="lastName"
@@ -245,34 +257,55 @@ const CreateProfile = ({ handleModalClosed }) => {
               />
             </div>
           </div>
-          <label for="profile-city">City:</label>
-          <TextField
-            className="input-field"
-            id="profile-city"
-            label={user.location ? user.location.city : "city"}
-            name="city"
-            variant="filled"
+          <div className="full-location">
+          <div className="location-label-field-pair">
+            <label for="profile-city">City:</label>
+            <TextField
+              className="input-field"
+              style={{width: "96%"}}
+              id="profile-city"
+              label={user.location ? user.location.city : "city"}
+              name="city"
+              variant="filled"
+            />
+          </div>
+          
+          <div className="location-label-field-pair">
+            <label className="label" for="profile-state">
+              State:
+            </label>
+            <Autocomplete
+            
+            onChange={(e) => setCurrentState(e.currentTarget.textContent)}
+            options={states}
+            getOptionLabel={(state) => state.name}
+            style={{ width: "100%" }}
+            renderInput={(params) => (
+              <TextField
+                className={classes.filterField}
+                style={{width: "96%"}}
+                {...params}
+                label={user.location ? user.location.state : "State"}
+                name="state"
+                variant="filled"
+              />
+            )}
           />
-          <label className="label" for="profile-state">
-            State:
-          </label>
-          <TextField
-            className="input-field"
-            id="profile-state"
-            label={user.location ? user.location.state : "state"}
-            name="state"
-            variant="filled"
-          />
-          <label className="label" for="profile-country">
-            Country:
-          </label>
-          <TextField
-            className="input-field"
-            id="profile-country"
-            label={user.location ? user.location.country : "country"}
-            name="country"
-            variant="filled"
-          />
+          </div>
+          <div className="location-label-field-pair">
+            <label className="label" for="profile-country">
+              Country:
+            </label>
+            <TextField
+              className="input-field"
+              style={{width: "96%"}}
+              id="profile-country"
+              label={user.location ? user.location.country : "country"}
+              name="country"
+              variant="filled"
+            />
+          </div>
+          </div>
           <label className="label" for="profile-interests">
             Interests:
           </label>
@@ -341,8 +374,7 @@ const CreateProfile = ({ handleModalClosed }) => {
           <Button
             disabled={bool}
             id="profile-submit"
-            className={classes.green}
-            color="green"
+            color="secondary"
             variant="contained"
             type="submit"
           >

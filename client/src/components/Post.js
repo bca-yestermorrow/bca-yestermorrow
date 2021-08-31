@@ -11,7 +11,6 @@ import emailjs from "emailjs-com";
 import { init } from "emailjs-com";
 import { makeStyles } from "@material-ui/core/styles";
 import { Avatar } from "@material-ui/core";
-import Paper from "@material-ui/core/Paper";
 init("user_9X8kPJFZA4CtJoKGtOw8Y");
 
 const Post = ({ post, profile }) => {
@@ -22,7 +21,6 @@ const Post = ({ post, profile }) => {
   const [docId, setDocId] = useState(null);
   const [commArr, setCommArr] = useState([]);
   const [error, setError] = useState("");
-  const [commentUser, serCommentUser] = useState("")
 
   const useStyles = makeStyles({
     large: {

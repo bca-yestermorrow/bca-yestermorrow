@@ -38,8 +38,8 @@ const Connect = () => {
       query = query.where("category", "array-contains-any", category);
     }
 
-    const unsub = query.onSnapshot((querysnap) => {
-      const updatedPosts = querysnap.docs.map((doc) => ({
+    const unSub = query.onSnapshot((querySnap) => {
+      const updatedPosts = querySnap.docs.map((doc) => ({
         id: doc.id,
 
         ...doc.data(),
@@ -60,7 +60,7 @@ const Connect = () => {
     // this line isn't sorting, and the limit hasn't been tested.
     // a different solutions will be used for sorting (Just before display)
     // query = query.orderBy("createdAt").limitToLast(100);
-    return () => unsub();
+    return () => unSub();
   }, [category, checked, currentState]);
 
   const getProfile = async () => {

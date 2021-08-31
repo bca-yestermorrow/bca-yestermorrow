@@ -7,33 +7,19 @@ import LinkedIn from "@material-ui/icons/LinkedIn";
 import YouTube from "@material-ui/icons/YouTube";
 import Instagram from "@material-ui/icons/Instagram";
 import {
-  Chip,
-  Card,
-  Avatar,
   Checkbox,
   TextField,
   Button,
   Box,
-  FormControlLabel,
   FormControl,
-  InputLabel,
-  Typography,
-  Icon,
 } from "@material-ui/core";
-import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import { useState, useEffect } from "react";
 import { db } from "../firebase";
-import firebaseApp from "../firebase";
 import { Autocomplete } from "@material-ui/lab";
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
-import { ThemeProvider, createTheme } from "@material-ui/core/styles";
 import { Link } from "react-router-dom";
-import CheckBoxOutlineBlankIcon from "@material-ui/icons/CheckBoxOutlineBlank";
-import CheckBoxIcon from "@material-ui/icons/CheckBox";
 
-const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
-const checkedIcon = <CheckBoxIcon fontSize="small" />;
 
 const useStyles = makeStyles({
   button: {
@@ -75,14 +61,14 @@ export const FilterFeed = ({
   // const [posts, setPosts] = useState([]);
   const [categoryList, setCategoryList] = useState([]);
   useEffect(() => {
-    let updatedCatagoreys = [];
+    let updatedCatagories = [];
     db.collection("categories")
       .get()
       .then((querySnap) => {
         querySnap.forEach((doc) => {
-          updatedCatagoreys.push(doc.data());
+          updatedCatagories.push(doc.data());
         });
-        setCategoryList(updatedCatagoreys);
+        setCategoryList(updatedCatagories);
       });
   }, []);
 

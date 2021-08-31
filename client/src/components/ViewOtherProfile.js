@@ -6,10 +6,6 @@ import firebase from "firebase";
 import {
   Avatar,
   Button,
-  FormControl,
-  Checkbox,
-  FormGroup,
-  FormControlLabel,
   Card,
   Divider,
   Icon
@@ -52,7 +48,6 @@ const ViewOtherProfile = ({ userUid }) => {
       .then((doc) => {
         if (doc.exists) {
           setProfile(doc.data());
-          console.log(profile);
         } else {
           console.log("No doc found");
         }
@@ -64,7 +59,7 @@ const ViewOtherProfile = ({ userUid }) => {
   useEffect(() => {
     getProfile();
   }, []);
-  console.log(profile.interests);
+
   return (
     <div>
       <div className="banner-wrapper">

@@ -19,7 +19,6 @@ const EditProfile = ({ handleModalClosed }) => {
   const [bool, setBool] = useState(false);
   const [states, setStates] = useState([]);
   const [currentState, setCurrentState] = useState("");
-  // const [image, setImage] = useState("");
 
   const { currentUser } = useAuth();
   let categoryArray = [];
@@ -68,8 +67,6 @@ const EditProfile = ({ handleModalClosed }) => {
         // if there is a doc with this id
         if (doc.exists) {
           // doc.data() is never undefined for query doc snapshots
-          console.log(user);
-          console.log(doc.data());
           setUser(doc.data());
           doc.data().interests.forEach((interest) => {
             categoryName.push(interest);
@@ -96,7 +93,6 @@ const EditProfile = ({ handleModalClosed }) => {
     // setCategories to the array of docs to be used in the form dropdown
     setCategories(categoryArray);
   };
-  console.log(categories);
   // function to handle form submit. updates user doc with new information
   const handleSubmit = async (evt) => {
     evt.preventDefault();
@@ -155,7 +151,6 @@ const EditProfile = ({ handleModalClosed }) => {
                   categoryName[categoryLength]
                 ),
               });
-              console.log(categoryLength);
               categoryLength -= 1;
             }
             removeInterestArray.forEach((category) => {
@@ -209,7 +204,6 @@ const EditProfile = ({ handleModalClosed }) => {
   };
 
   useEffect(() => {
-    let statesArr = [];
     db.collection("states")
       .doc("states")
       .get()

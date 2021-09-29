@@ -21,6 +21,7 @@ const Post = ({ post, profile }) => {
   const [docId, setDocId] = useState(null);
   const [commArr, setCommArr] = useState([]);
   const [error, setError] = useState("");
+  const [user, setUser] = useState("");
 
   const useStyles = makeStyles({
     large: {
@@ -45,19 +46,19 @@ const Post = ({ post, profile }) => {
   const classes = useStyles();
 
   // gets current user by email and sets first and last name states to current user first and last
-  useEffect(() => {
-    db.collection("users")
-      .doc(currentUser.uid)
-      .get()
-      .then((doc) => {
-        if (doc.exists) {
-          setFirstName(doc.data().firstName);
-          setLastName(doc.data().lastName);
-        } else {
-          console.log("Doc not found...");
-        }
-      });
-  });
+  // useEffect(() => {
+  //   db.collection("users")
+  //     .doc(currentUser.uid)
+  //     .get()
+  //     .then((doc) => {
+  //       if (doc.exists) {
+  //         setFirstName(doc.data().firstName);
+  //         setLastName(doc.data().lastName);
+  //       } else {
+  //         console.log("Doc not found...");
+  //       }
+  //     });
+  // });
 
   // Send email notification
   function sendEmail(e) {
@@ -68,7 +69,7 @@ const Post = ({ post, profile }) => {
         "template_1g42coj",
         {
           posterName: post.user.firstName,
-          commenterName: `${firstName} ${lastName}`,
+          commenterName: `${profile.firstName} ${profile.lastName}`,
           comment: comment,
           posterEmail: post.user.email,
         },
@@ -90,9 +91,10 @@ const Post = ({ post, profile }) => {
     setDocId(null);
     e.preventDefault();
     setComment({
-      firstName: firstName,
-      lastName: lastName,
+      firstName: profile.firstName,
+      lastName: profile.lastName,
       comment: e.target.comment.value,
+      userId: currentUser.uid
     });
     if (e.target.comment.value === "") {
       return setError("Please add a comment...");
@@ -176,7 +178,7 @@ const Post = ({ post, profile }) => {
         {post.comments.map((comment, index) => {
           return (
             <p id="comment" key={index}>
-              {comment.firstName} {comment.lastName} : {comment.comment}
+              <Link to={"/other-profile/" + comment.userId}>{comment.firstName} {comment.lastName}</Link> : {comment.comment}
             </p>
           );
         })}

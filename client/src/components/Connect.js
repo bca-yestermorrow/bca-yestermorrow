@@ -9,20 +9,22 @@ import { useAuth } from "../context/AuthContext";
 import Paper from "@material-ui/core/Paper";
 import yesterLogo from "../assets/Banner-2000X600.png";
 
-// helper function to sort our posts array
-// source: https://stackoverflow.com/questions/10123953/how-to-sort-an-object-array-by-date-property
-const sortPostsArray = (arr) => {
-  console.log("Entering sortPostsArray....");
-  console.log("===========================");
-  return arr.sort((a, b) => {
-    console.log("new Date(a.createdAt): ", new Date(a.createdAt));
-    console.log("b.createdAt: ", b.createdAt);
+/**
+ * Name: sortPostsArray
+ *
+ * Helper function to sort posts, from latest to oldest.
+ * @source https://stackoverflow.com/questions/10123953/how-to-sort-an-object-array-by-date-property
+ * @param {post} arr - array of posts
+ * @returns sorted by createAt property (latest first)
+ */
+const sortPostsArray = (arr) =>
+  arr.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
 
-    return new Date(b.createdAt) - new Date(a.createdAt);
-  });
-  // return arr; // no-op test case - works
-};
-
+/**
+ * Name: Connect
+ *
+ * @returns Connect component
+ */
 const Connect = () => {
   const [category, setCategory] = useState([]);
   const [posts, setPosts] = useState([]);
@@ -31,6 +33,7 @@ const Connect = () => {
   const { currentUser } = useAuth();
   const [currentState, setCurrentState] = useState("");
 
+  // loads & auto-updates Posts based on user filters
   useEffect(() => {
     let query = db.collection("posts");
 
@@ -38,8 +41,8 @@ const Connect = () => {
       query = query.where("category", "array-contains-any", category);
     }
 
-    const unsub = query.onSnapshot((querysnap) => {
-      const updatedPosts = querysnap.docs.map((doc) => ({
+    const unSub = query.onSnapshot((querySnap) => {
+      const updatedPosts = querySnap.docs.map((doc) => ({
         id: doc.id,
 
         ...doc.data(),
@@ -56,10 +59,11 @@ const Connect = () => {
         setPosts(sortPostsArray(updatedPosts));
       }
     });
-    // this line isn't sorting, and the limit hasn't been tested.
-    // a different solutions will be used for sorting (Just before display)
-    // query = query.orderBy("createdAt").limitToLast(100);
-    return () => unsub();
+
+    // TODO need to test this limit and re-add in
+    // query = query.limitToLast(100);
+
+    return () => unSub();
   }, [category, checked, currentState]);
 
   const getProfile = async () => {
@@ -78,6 +82,7 @@ const Connect = () => {
         console.log("Error getting documents: ", error);
       });
   };
+
   useEffect(() => {
     getProfile();
   }, []);

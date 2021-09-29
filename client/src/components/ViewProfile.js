@@ -8,10 +8,6 @@ import yesterLogo from "../assets/YM_Banner.jpg";
 import {
   Avatar,
   Button,
-  FormControl,
-  Checkbox,
-  FormGroup,
-  FormControlLabel,
   Card,
   Divider,
   Icon,
@@ -60,7 +56,6 @@ const ViewProfile = () => {
   const handleModalClosed = () => {
     setModal("");
     setTimeout(getProfile, 500);
-    console.log("in modal close");
   };
 
   const getProfile = async () => {
@@ -71,7 +66,6 @@ const ViewProfile = () => {
       .then((doc) => {
         if (doc.exists) {
           setProfile(doc.data());
-          console.log(profile);
         } else {
           console.log("No doc found");
         }
@@ -84,7 +78,7 @@ const ViewProfile = () => {
   useEffect(() => {
     getProfile();
   }, []);
-  console.log(profile.interests);
+  
   return (
     <div>
       <div className="banner-wrapper">

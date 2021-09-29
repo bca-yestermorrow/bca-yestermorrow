@@ -488,6 +488,10 @@ a:active {
   width: 40vw;
 }
 
+#profile-submit {
+  margin-top: 15px;
+}
+
 @media screen and (max-width: 1050px) {
   #profile-card {
     width: 70vw;

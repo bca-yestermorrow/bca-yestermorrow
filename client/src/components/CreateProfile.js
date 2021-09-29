@@ -60,12 +60,6 @@ const CreateProfile = ({ handleModalClosed }) => {
   // allows use of classes.whatever on mui components
   const classes = useStyles();
 
-  // const handleImage = (evt) => {
-  //   if (evt.target.files[0]) {
-  //     setImage(evt.target.files[0]);
-  //   }
-  // };
-
   const getImageURL = (url) => {
     setImageURL(url);
   };
@@ -80,8 +74,7 @@ const CreateProfile = ({ handleModalClosed }) => {
         // if there is a doc with this id
         if (doc.exists) {
           // doc.data() is never undefined for query doc snapshots
-          console.log(user);
-          console.log(doc.data());
+
           setUser(doc.data());
         } else {
           console.log("No document");
@@ -126,7 +119,6 @@ const CreateProfile = ({ handleModalClosed }) => {
       .get()
       .then((doc) => {
         // doc.data() is never undefined for query doc snapshots
-        //we are doing this twice, here and getCurrentUser
         // each if statement is separate so the database isnt updated with empty values
         if (doc.exists) {
           // if userFirstName, the user input value, is true, update the user doc
@@ -158,7 +150,6 @@ const CreateProfile = ({ handleModalClosed }) => {
                   categoryName[categoryLength]
                 ),
               });
-              console.log(categoryLength);
               categoryLength -= 1;
             }
           }
@@ -219,7 +210,7 @@ const CreateProfile = ({ handleModalClosed }) => {
       getCategories();
     }
   }, []);
-  console.log(categoryName);
+
   return (
     <div className="edit-profile-container">
       <div className="form-container">

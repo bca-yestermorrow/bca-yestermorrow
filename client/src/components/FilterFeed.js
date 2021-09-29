@@ -1,4 +1,5 @@
 import React from "react";
+import { SignOut } from "./SignOut";
 import IconButton from "@material-ui/core/IconButton";
 import Facebook from "@material-ui/icons/Facebook";
 import Twitter from "@material-ui/icons/Twitter";
@@ -6,33 +7,19 @@ import LinkedIn from "@material-ui/icons/LinkedIn";
 import YouTube from "@material-ui/icons/YouTube";
 import Instagram from "@material-ui/icons/Instagram";
 import {
-  Chip,
-  Card,
-  Avatar,
   Checkbox,
   TextField,
   Button,
   Box,
-  FormControlLabel,
   FormControl,
-  InputLabel,
-  Typography,
-  Icon,
 } from "@material-ui/core";
-import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import { useState, useEffect } from "react";
 import { db } from "../firebase";
-import firebaseApp from "../firebase";
 import { Autocomplete } from "@material-ui/lab";
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
-import { ThemeProvider, createTheme } from "@material-ui/core/styles";
 import { Link } from "react-router-dom";
-import CheckBoxOutlineBlankIcon from "@material-ui/icons/CheckBoxOutlineBlank";
-import CheckBoxIcon from "@material-ui/icons/CheckBox";
 
-const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
-const checkedIcon = <CheckBoxIcon fontSize="small" />;
 
 const useStyles = makeStyles({
   button: {
@@ -74,14 +61,14 @@ export const FilterFeed = ({
   // const [posts, setPosts] = useState([]);
   const [categoryList, setCategoryList] = useState([]);
   useEffect(() => {
-    let updatedCatagoreys = [];
+    let updatedCatagories = [];
     db.collection("categories")
       .get()
       .then((querySnap) => {
         querySnap.forEach((doc) => {
-          updatedCatagoreys.push(doc.data());
+          updatedCatagories.push(doc.data());
         });
-        setCategoryList(updatedCatagoreys);
+        setCategoryList(updatedCatagories);
       });
   }, []);
 
@@ -161,6 +148,8 @@ export const FilterFeed = ({
           />
         </FormControl>
 
+        
+
         <Link to="/profile">
           <Button
             style={{ width: "100%" }}
@@ -170,6 +159,7 @@ export const FilterFeed = ({
             My Profile
           </Button>
         </Link>
+        <SignOut />
         <h4 className="createPostSections" style={{ color: "#708c84" }}>
           External Resources:
         </h4>
@@ -193,21 +183,15 @@ export const FilterFeed = ({
             <h4 style={{ color: "#939598" }}>
               Address: 7865 Main Street, Waitsfield VT 05673
             </h4>
-            <h4  style={{ color: "#939598" }}>
+            <h4 style={{ color: "#939598" }}>
               Phone:{" "}
-              <a
-                href="tel:802-496-5545"
-                className="footerLinks"
-              >
+              <a href="tel:802-496-5545" className="footerLinks">
                 802-496-5545
               </a>
             </h4>
-            <h4  style={{ color: "#939598" }}>
+            <h4 style={{ color: "#939598" }}>
               Website:{" "}
-              <a
-                href="https://yestermorrow.org"
-                className="footerLinks"
-              >
+              <a href="https://yestermorrow.org" className="footerLinks">
                 www.yestermorrow.org
               </a>
             </h4>

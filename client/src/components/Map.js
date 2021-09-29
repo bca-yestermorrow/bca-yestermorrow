@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import React from 'react'
 import 'leaflet/dist/leaflet.css'
 import { MapContainer, TileLayer, Marker } from 'react-leaflet'
-import L, { map } from 'leaflet'
+import L from 'leaflet'
 import icon from 'leaflet/dist/images/marker-icon.png'
 import shadow from 'leaflet/dist/images/marker-shadow.png'
 import { CircularProgress } from '@material-ui/core'
@@ -18,7 +18,7 @@ const leafIcon = L.icon({
 
 const greenIcon = new L.Icon({
   iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-green.png',
-  iconSize: [10, 15],
+  iconSize: [16, 24],
   shadowUrl: shadow,
   shadowSize: [10, 15],
   

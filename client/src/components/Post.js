@@ -149,7 +149,7 @@ const Post = ({ post, profile }) => {
           <EditIcon
             color="secondary"
             variant="contained"
-            style={{ paddingLeft: "47vw" }}
+            style={{ paddingLeft: "30vw" }}
             onClick={handleEditModal}
           />
         )}

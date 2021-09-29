@@ -67,8 +67,18 @@ const CreatePost = ({ profile }) => {
     );
   }
 
+  let state;
+  if (!profile.location) {
+    state = "Vermont"
+  } else if (!profile.location.state) {
+    state = "Vermont"
+  } else {
+    state = profile.location.state
+  }
+
   async function handlePostSubmit(e) {
     e.preventDefault();
+    
 
     let title = e.target.title.value;
 
@@ -112,8 +122,9 @@ const CreatePost = ({ profile }) => {
             firstName: profile.firstName,
             lastName: profile.lastName,
             profilePic: profilePic,
+            state: state,
           },
-          state: profile.location.state,
+          
           createdAt: Date(),
         });
       } else {
@@ -129,8 +140,9 @@ const CreatePost = ({ profile }) => {
             email: currentUser.email,
             firstName: profile.firstName,
             lastName: profile.lastName,
+            state: state,
           },
-          state: profile.location.state,
+          
           createdAt: Date(),
         });
       }

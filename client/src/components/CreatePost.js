@@ -17,14 +17,12 @@ import Select from "@material-ui/core/Select";
 
 const CreatePost = ({ profile }) => {
   const [error, setError] = useState("");
-  const { currentUser } = useAuth();
   const [categories, setCategories] = useState([]);
   const [image, setImage] = useState("");
   const [imageUrl, setImageUrl] = useState("");
   const [typePost, setTypePost] = useState("");
   const [catPost, setCatPost] = useState([]);
-
-
+  const { currentUser } = useAuth();
 
   useEffect(() => {
     if (categories.length === 0) {
@@ -117,6 +115,7 @@ const CreatePost = ({ profile }) => {
           category: options,
           type: type,
           imageUrl: imageUrl,
+          state: profile.location.state,
           user: {
             email: currentUser.email,
             firstName: profile.firstName,
@@ -136,6 +135,7 @@ const CreatePost = ({ profile }) => {
           category: options,
           type: type,
           imageUrl: imageUrl,
+          state: profile.location.state,
           user: {
             email: currentUser.email,
             firstName: profile.firstName,

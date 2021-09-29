@@ -17,14 +17,12 @@ import Select from "@material-ui/core/Select";
 
 const CreatePost = ({ profile }) => {
   const [error, setError] = useState("");
-  const { currentUser } = useAuth();
   const [categories, setCategories] = useState([]);
   const [image, setImage] = useState("");
   const [imageUrl, setImageUrl] = useState("");
   const [typePost, setTypePost] = useState("");
   const [catPost, setCatPost] = useState([]);
-
-
+  const { currentUser } = useAuth();
 
   useEffect(() => {
     if (categories.length === 0) {
@@ -67,8 +65,18 @@ const CreatePost = ({ profile }) => {
     );
   }
 
+  let state;
+  if (!profile.location) {
+    state = "Vermont"
+  } else if (!profile.location.state) {
+    state = "Vermont"
+  } else {
+    state = profile.location.state
+  }
+
   async function handlePostSubmit(e) {
     e.preventDefault();
+    
 
     let title = e.target.title.value;
 
@@ -107,13 +115,15 @@ const CreatePost = ({ profile }) => {
           category: options,
           type: type,
           imageUrl: imageUrl,
+          state: profile.location.state,
           user: {
             email: currentUser.email,
             firstName: profile.firstName,
             lastName: profile.lastName,
             profilePic: profilePic,
+            state: state,
           },
-          state: profile.location.state,
+          
           createdAt: Date(),
         });
       } else {
@@ -125,12 +135,14 @@ const CreatePost = ({ profile }) => {
           category: options,
           type: type,
           imageUrl: imageUrl,
+          state: profile.location.state,
           user: {
             email: currentUser.email,
             firstName: profile.firstName,
             lastName: profile.lastName,
+            state: state,
           },
-          state: profile.location.state,
+          
           createdAt: Date(),
         });
       }

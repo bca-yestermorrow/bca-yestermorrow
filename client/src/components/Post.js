@@ -13,6 +13,7 @@ import emailjs from "emailjs-com";
 import { init } from "emailjs-com";
 import { makeStyles } from "@material-ui/core/styles";
 import { Avatar } from "@material-ui/core";
+import { DeleteBtn } from "./DeleteBtn";
 init("user_9X8kPJFZA4CtJoKGtOw8Y");
 
 const Post = ({ post, profile }) => {
@@ -25,6 +26,7 @@ const Post = ({ post, profile }) => {
   const [error, setError] = useState("");
   const [editPost, setEditPost] = useState(false);
   const [editModal, setEditModal] = useState(false);
+  const [user, setUser] = useState("");
 
   const useStyles = makeStyles({
     large: {
@@ -50,17 +52,6 @@ const Post = ({ post, profile }) => {
 
   // gets current user by email and sets first and last name states to current user first and last
   useEffect(() => {
-    db.collection("users")
-      .doc(currentUser.uid)
-      .get()
-      .then((doc) => {
-        if (doc.exists) {
-          setFirstName(doc.data().firstName);
-          setLastName(doc.data().lastName);
-        } else {
-          console.log("Doc not found...");
-        }
-      });
     if (currentUser.uid === post.userId) {
       setEditPost(true);
     }
@@ -75,7 +66,7 @@ const Post = ({ post, profile }) => {
         "template_1g42coj",
         {
           posterName: post.user.firstName,
-          commenterName: `${firstName} ${lastName}`,
+          commenterName: `${profile.firstName} ${profile.lastName}`,
           comment: comment,
           posterEmail: post.user.email,
         },
@@ -97,9 +88,10 @@ const Post = ({ post, profile }) => {
     setDocId(null);
     e.preventDefault();
     setComment({
-      firstName: firstName,
-      lastName: lastName,
+      firstName: profile.firstName,
+      lastName: profile.lastName,
       comment: e.target.comment.value,
+      userId: currentUser.uid
     });
     if (e.target.comment.value === "") {
       return setError("Please add a comment...");
@@ -115,6 +107,7 @@ const Post = ({ post, profile }) => {
         querySnapshot.forEach((doc) => {
           //sets the post doc id to state
           setDocId(doc.id);
+
           setCommArr(doc.data().comments);
           // setCommArr(doc.comments)
         });
@@ -156,7 +149,7 @@ const Post = ({ post, profile }) => {
           <EditIcon
             color="secondary"
             variant="contained"
-            style={{ paddingLeft: "47vw" }}
+            style={{ paddingLeft: "30vw" }}
             onClick={handleEditModal}
           />
         )}
@@ -200,7 +193,7 @@ const Post = ({ post, profile }) => {
         {post.comments.map((comment, index) => {
           return (
             <p id="comment" key={index}>
-              {comment.firstName} {comment.lastName} : {comment.comment}
+              <Link to={"/other-profile/" + comment.userId}>{comment.firstName} {comment.lastName}</Link> : {comment.comment}
             </p>
           );
         })}
@@ -217,6 +210,7 @@ const Post = ({ post, profile }) => {
         <Button id="commentButton" className="buttons" type="submit">
           Comment
         </Button>
+        <DeleteBtn docId={docId} post={post} />
         {/* email button needs to be linked to posters email */}
         <Button id="emailButton" className="buttons">
           <a href={`mailto:${post.user.email}`}> Email Me </a>

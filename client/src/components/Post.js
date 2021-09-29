@@ -1,7 +1,9 @@
 import React from "react";
 import "../App.css";
+import EditModal from "./EditModal";
 import { useState, useEffect } from "react";
 import Button from "@material-ui/core/Button";
+import EditIcon from "@material-ui/icons/Edit";
 import TextField from "@material-ui/core/TextField";
 import { Link } from "react-router-dom";
 import { db } from "../firebase";
@@ -22,6 +24,8 @@ const Post = ({ post, profile }) => {
   const [docId, setDocId] = useState(null);
   const [commArr, setCommArr] = useState([]);
   const [error, setError] = useState("");
+  const [editPost, setEditPost] = useState(false);
+  const [editModal, setEditModal] = useState(false);
 
 
 
@@ -61,7 +65,10 @@ const Post = ({ post, profile }) => {
           console.log("Doc not found...");
         }
       });
-  });
+    if (currentUser.uid === post.userId) {
+      setEditPost(true);
+    }
+  }, [currentUser.uid, post.userId]);
 
   // Send email notification
   function sendEmail(e) {
@@ -138,9 +145,26 @@ const Post = ({ post, profile }) => {
     setDocId(null);
   }, [comment, docId, commArr]);
 
+  function handleEditModal() {
+    setEditModal(true);
+  }
+
+  function handleEditModalClose() {
+    setEditModal(false);
+  }
+
   return (
     <div className="post">
+      {editModal && <EditModal handleEditModalClose={handleEditModalClose} post={post}/>}
       <div className="postNBC">
+        {editPost && (
+          <EditIcon
+            color="secondary"
+            variant="contained"
+            style={{ paddingLeft: "47vw" }}
+            onClick={handleEditModal}
+          />
+        )}
         <h4 className="postName">
           {post.title} by:{" "}
           <Link to={"/other-profile/" + post.userId} className="postName">

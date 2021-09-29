@@ -16,8 +16,6 @@ import Select from "@material-ui/core/Select";
 // import Chip from "@material-ui/core/Chip";
 
 const CreatePost = ({ profile }) => {
-  const [firstName, setFirstName] = useState(null);
-  const [lastName, setLastName] = useState(null);
   const [error, setError] = useState("");
   const { currentUser } = useAuth();
   const [categories, setCategories] = useState([]);
@@ -26,19 +24,7 @@ const CreatePost = ({ profile }) => {
   const [typePost, setTypePost] = useState("");
   const [catPost, setCatPost] = useState([]);
 
-  useEffect(() => {
-    db.collection("users")
-      .doc(currentUser.uid)
-      .get()
-      .then((doc) => {
-        if (doc.exists) {
-          setFirstName(doc.data().firstName);
-          setLastName(doc.data().lastName);
-        } else {
-          console.log("Doc not found...");
-        }
-      });
-  });
+
 
   useEffect(() => {
     if (categories.length === 0) {
@@ -123,10 +109,11 @@ const CreatePost = ({ profile }) => {
           imageUrl: imageUrl,
           user: {
             email: currentUser.email,
-            firstName: firstName,
-            lastName: lastName,
+            firstName: profile.firstName,
+            lastName: profile.lastName,
             profilePic: profilePic,
           },
+          state: profile.location.state,
           createdAt: Date(),
         });
       } else {
@@ -140,9 +127,10 @@ const CreatePost = ({ profile }) => {
           imageUrl: imageUrl,
           user: {
             email: currentUser.email,
-            firstName: firstName,
-            lastName: lastName,
+            firstName: profile.firstName,
+            lastName: profile.lastName,
           },
+          state: profile.location.state,
           createdAt: Date(),
         });
       }
@@ -168,9 +156,9 @@ const CreatePost = ({ profile }) => {
   return (
     <Paper elevation={5} className="createPost">
       <h1 id="createPostTitle">CREATE A POST</h1>
-      {firstName && (
+      {profile.firstName && (
         <h3 className="createPostName">
-          {firstName} {lastName}
+          {profile.firstName} {profile.lastName}
         </h3>
       )}
       <form className="createPostForm" onSubmit={handlePostSubmit}>

@@ -80,6 +80,7 @@ const ViewProfile = () => {
         console.log("Error getting documents: ", error);
       });
   };
+  
   useEffect(() => {
     getProfile();
   }, []);

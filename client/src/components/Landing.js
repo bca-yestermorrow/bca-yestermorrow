@@ -2,7 +2,7 @@
 import React from "react";
 import { useState } from "react";
 import "../App.css";
-import yesterLogo from "../assets/Banner-2000X600.png";
+import yesterLogo from "../assets/banner.svg";
 import Map from "./Map";
 import SignUp from "./SignUp";
 import Login from "./Login";
@@ -44,7 +44,7 @@ const Landing = () => {
       <div id="landing">
         {/* header */}
         <header id="header">
-          <img class="yester-logo" src={yesterLogo}></img>
+          <embed class="yester-logo" src={yesterLogo}></embed>
         </header>
         {/* main body */}
         <div id="mainLanding">

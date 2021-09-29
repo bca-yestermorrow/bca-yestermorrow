@@ -45,7 +45,6 @@ const Connect = () => {
         ...doc.data(),
       }));
       if (currentState !== "") {
-        // console.log("in if statement");
         let filterdArr = updatedPosts.filter((post) => {
           return post.user.state === currentState;
         });

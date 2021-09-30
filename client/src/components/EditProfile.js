@@ -4,6 +4,7 @@ import { useAuth } from "../context/AuthContext";
 import { db, storage } from "../firebase";
 import { useState, useEffect } from "react";
 import ProfilePicture from "./ProfilePicture";
+import BannerPicture from "./BannerPicture";
 import firebase from "firebase/app";
 import { Autocomplete } from "@material-ui/lab";
 // imports for material ui
@@ -17,6 +18,7 @@ const EditProfile = ({ handleModalClosed }) => {
   const [categoryName, setCategoryName] = useState([]);
   const [imageURL, setImageURL] = useState("");
   const [bool, setBool] = useState(false);
+  const [bannerURL, setBannerURL] = useState("");
   const [states, setStates] = useState([]);
   const [currentState, setCurrentState] = useState("");
 
@@ -56,6 +58,11 @@ const EditProfile = ({ handleModalClosed }) => {
   const getImageURL = (url) => {
     setImageURL(url);
   };
+
+  const getBannerURL = (url) => {
+    setBannerURL(url);
+  };
+
   // function to get the user document of the current user from the database
   const getCurrentUser = async () => {
     // from the users collection, get the doc with the id of currentuser.uid
@@ -161,6 +168,9 @@ const EditProfile = ({ handleModalClosed }) => {
           }
           if (imageURL) {
             doc.ref.update({ profilePic: imageURL });
+          }
+          if (bannerURL) {
+            doc.ref.update({ bannerImg: bannerURL });
           }
           if (userCity) {
             doc.ref.update({
@@ -373,6 +383,14 @@ const EditProfile = ({ handleModalClosed }) => {
             getImageURL={getImageURL}
             setBool={setBool}
             id="profile-picture"
+          />
+          <label className="label" for="banner-picture">
+            Change your banner image
+          </label>
+          <BannerPicture
+            getBannerURL={getBannerURL}
+            setBool={setBool}
+            id="banner-picture"
           />
           <Button
             disabled={bool}

@@ -126,36 +126,57 @@ const EditPostModal = ({ handleEditModalClose, post }) => {
   return (
     <div id="editModal">
       <div id="postModal">
-        <CancelIcon onClick={handleEditModalClose} style={{ margin: ".5em", cursor: "pointer" }} />
-        <DeleteBtn post={post} handleEditModalClose={handleEditModalClose} />
+        <div id="deleteButton">
+          <CancelIcon
+            onClick={handleEditModalClose}
+            style={{ margin: ".5em", cursor: "pointer" }}
+          />
+          <h1 className="editFormTitles">EDIT POST</h1>
+          <DeleteBtn post={post} handleEditModalClose={handleEditModalClose} />
+        </div>
+
         <form id="editForm" onSubmit={handleEditSave}>
-          Current Title:
+          <div className="editFormTitles">Current Title:</div>
           <TextField
             label={post.title}
             variant="outlined"
             multiline
             type="text"
             name="title"
+            style={{ margin: "1em" }}
           />
-          Current Body:
+          <div className="editFormTitles">Current Body:</div>
+
           <TextField
             label={post.body}
             variant="outlined"
             multiline
             type="text"
             name="body"
+            style={{ margin: "1em" }}
           />
-          Current Image:
+          <div className="editFormTitles">Current Image:</div>
+
           {post.imageUrl ? (
             <h3>{post.imageUrl}</h3>
           ) : (
             " No Current Image On Post"
           )}
-          <input type="file" onChange={handleInsertImage} />
-          <button onClick={handleEditImage}>Set Image</button>
+          <input
+            type="file"
+            style={{ margin: "1em" }}
+            onChange={handleInsertImage}
+          />
+          <button onClick={handleEditImage} style={{ margin: "1em" }}>
+            Set Image
+          </button>
           <FormControl>
-            Current Type Of Post: {post.type}
+            <div className="editFormTitles">
+              Current Type Of Post: {post.type}
+            </div>
+
             <Select
+              style={{ margin: "1em" }}
               className="postSelect"
               name="type"
               input={<Input />}
@@ -168,8 +189,12 @@ const EditPostModal = ({ handleEditModalClose, post }) => {
             </Select>
           </FormControl>
           <FormControl>
-            Current Category/Categories: {post.category}
+            <div className="editFormTitles">
+              Current Category/Categories: {post.category}
+            </div>
+
             <Select
+              style={{ margin: "1em" }}
               className="postSelect"
               name="category"
               value={editCatPost}
@@ -185,6 +210,7 @@ const EditPostModal = ({ handleEditModalClose, post }) => {
             </Select>
           </FormControl>
           <Button
+            style={{ marginTop: "1em" }}
             disabled={disabled}
             variant="contained"
             type="submit"

@@ -150,7 +150,12 @@ const Post = ({ post, profile }) => {
           <EditIcon
             color="secondary"
             variant="contained"
-            style={{ paddingLeft: "30vw" }}
+            style={{ 
+              position: "relative",
+              right: "10px",
+              top: "10px",
+              cursor: "pointer"
+            }}
             onClick={handleEditModal}
           />
         )}
@@ -194,7 +199,7 @@ const Post = ({ post, profile }) => {
         {post.comments.map((comment, index) => {
           return (
             <p id="comment" key={index}>
-              <Link to={"/other-profile/" + comment.userId}>{comment.firstName} {comment.lastName}</Link> : {comment.comment}
+              <Link to={currentUser.uid === comment.userId ? "/profile" : "/other-profile/" + comment.userId}>{comment.firstName} {comment.lastName}</Link> : {comment.comment}
             </p>
           );
         })}

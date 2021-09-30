@@ -42,6 +42,7 @@ const EditPostModal = ({ handleEditModalClose, post }) => {
   //sets categories selected from list on edit form
   function handleCatSelect(e) {
     setEditCatPost(e.target.value);
+    console.log(editCatPost)
   }
   //edited type of post set to state
   function handleEditType(e) {
@@ -128,7 +129,7 @@ const EditPostModal = ({ handleEditModalClose, post }) => {
         <div id="deleteButton">
           <CancelIcon
             onClick={handleEditModalClose}
-            style={{ margin: ".5em" }}
+            style={{ margin: ".5em", cursor: "pointer" }}
           />
           <h1 className="editFormTitles">EDIT POST</h1>
           <DeleteBtn post={post} handleEditModalClose={handleEditModalClose} />

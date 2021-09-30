@@ -9,14 +9,22 @@ import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import Button from "@material-ui/core/Button";
+import { DeleteBtn } from "./DeleteBtn";
 
-const EditModal = ({ handleEditModalClose, post }) => {
+const EditPostModal = ({ handleEditModalClose, post }) => {
   const [categories, setCategories] = useState([]);
   const [editCatPost, setEditCatPost] = useState([]);
-  const [postId, setPostId] = useState("");
   const [editImageUrl, setEditImageUrl] = useState("");
   const [editType, setEditType] = useState("");
   const [newImage, setNewImage] = useState("");
+  const [disabled, setDisabled] = useState(false);
+  console.log(post.category);
+  useEffect(() => {
+    post.category.forEach((cat) => {
+      editCatPost.push(cat);
+    });
+  }, []);
+
   //retrieves full list of categories
   useEffect(() => {
     if (categories.length === 0) {
@@ -35,17 +43,6 @@ const EditModal = ({ handleEditModalClose, post }) => {
   function handleCatSelect(e) {
     setEditCatPost(e.target.value);
   }
-  //retrieves current post and gets the post id and sets it to state
-  useEffect(() => {
-    db.collection("posts")
-      .where("body", "==", `${post.body}`)
-      .get()
-      .then((querySnapshot) => {
-        querySnapshot.forEach((doc) => {
-          setPostId(doc.id);
-        });
-      });
-  });
   //edited type of post set to state
   function handleEditType(e) {
     setEditType(e.target.value);
@@ -58,7 +55,8 @@ const EditModal = ({ handleEditModalClose, post }) => {
   }
   //sends image to database and sets it's URL to state
   function handleEditImage(e) {
-    e.preventDefault()
+    setDisabled(true);
+    e.preventDefault();
     const uploadImage = storage.ref(`images/${newImage.name}`).put(newImage);
     uploadImage.on(
       "state_changed",
@@ -73,6 +71,7 @@ const EditModal = ({ handleEditModalClose, post }) => {
           .getDownloadURL()
           .then((url) => {
             setEditImageUrl(url);
+            setDisabled(false);
           });
       }
     );
@@ -80,14 +79,15 @@ const EditModal = ({ handleEditModalClose, post }) => {
 
   //edit post function
   async function handleEditSave(e) {
+    e.preventDefault();
     let title = e.target.title.value;
     let body = e.target.body.value;
     let imageUrl = editImageUrl;
     let type = editType;
-    let category = [editCatPost];
+    let category = editCatPost;
     let editPost = await db
       .collection("posts")
-      .doc(postId)
+      .doc(post.id)
       .get()
       .then((doc) => {
         if (doc.exists) {
@@ -111,19 +111,22 @@ const EditModal = ({ handleEditModalClose, post }) => {
               type: type,
             });
           }
-          if (category) {
+          if (category !== []) {
             doc.ref.update({
               category: category,
             });
           }
         }
       });
+    setEditCatPost([]);
+    handleEditModalClose();
   }
 
   return (
     <div id="editModal">
       <div id="postModal">
         <CancelIcon onClick={handleEditModalClose} style={{ margin: ".5em" }} />
+        <DeleteBtn post={post} handleEditModalClose={handleEditModalClose} />
         <form id="editForm" onSubmit={handleEditSave}>
           Current Title:
           <TextField
@@ -147,7 +150,7 @@ const EditModal = ({ handleEditModalClose, post }) => {
           ) : (
             " No Current Image On Post"
           )}
-          <input type="file" onClick={handleInsertImage} />
+          <input type="file" onChange={handleInsertImage} />
           <button onClick={handleEditImage}>Set Image</button>
           <FormControl>
             Current Type Of Post: {post.type}
@@ -181,6 +184,7 @@ const EditModal = ({ handleEditModalClose, post }) => {
             </Select>
           </FormControl>
           <Button
+            disabled={disabled}
             variant="contained"
             type="submit"
             color="secondary"
@@ -195,4 +199,4 @@ const EditModal = ({ handleEditModalClose, post }) => {
   );
 };
 
-export default EditModal;
+export default EditPostModal;

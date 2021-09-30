@@ -29,7 +29,6 @@ function App() {
       <Switch>
         <ThemeProvider theme={yesterTheme}>
         <Route exact path="/" component={Landing}></Route>
-        <PrivateRoute path="/home" component={Home}></PrivateRoute>
         <PrivateRoute path="/connect" component={Connect}></PrivateRoute>
         <PrivateRoute path="/edit-profile" component={EditProfile}></PrivateRoute>
         <PrivateRoute path="/profile" component={ViewProfile}></PrivateRoute>

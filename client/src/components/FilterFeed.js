@@ -178,7 +178,7 @@ export const FilterFeed = ({
           <a href="https://yestermorrow.org/learn/courses"> Current Courses</a>{" "}
         </Button>
 
-        <div id="footer">
+        <div >
           <div id="footer">
             <h4 style={{ color: "#939598" }}>
               Address: 7865 Main Street, Waitsfield VT 05673

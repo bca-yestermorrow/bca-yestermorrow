@@ -93,7 +93,7 @@ const Connect = () => {
         <img className="connect-banner" src={yesterLogo} alt="alt" />
       </div>
       <div className="connect-wrapper">
-        <Paper elevation={5} id="connectContainer">
+        <div elevation={5} id="connectContainer">
           <FilterFeed
             setChecked={setChecked}
             checked={checked}
@@ -110,7 +110,7 @@ const Connect = () => {
               ))}
           </div>
           <CreatePost profile={profile} />
-        </Paper>
+        </div>
       </div>
     </div>
   );

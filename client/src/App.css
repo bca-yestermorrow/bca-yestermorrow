@@ -83,10 +83,10 @@ body {
 
 #connectContainer {
   display: grid;
-  grid-template-columns: 20vw 55vw 20vw;
-  margin: 2em;
+  grid-template-columns: 22.5vw 55vw 22.5vw;
+  padding-bottom: 2em;
   overflow: hidden;
-  height: 100%;
+  
   padding: 1vw;
   background-color: white;
 }
@@ -142,8 +142,7 @@ a:active {
   /* flex-direction: column-reverse; */
   flex-direction: column;
   margin: 2em;
-  height: 75vh;
-  overflow-y: scroll;
+  overflow-y:auto;
   background-color: #ffffff;
 }
 
@@ -151,6 +150,7 @@ a:active {
   margin: 2em;
   background-color: #ffffff;
   border-radius: 1vw;
+  padding: 10px;
 }
 
 #createPostTitle {

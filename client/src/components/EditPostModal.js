@@ -9,15 +9,22 @@ import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import Button from "@material-ui/core/Button";
+import { DeleteBtn } from "./DeleteBtn";
 
 const EditPostModal = ({ handleEditModalClose, post }) => {
   const [categories, setCategories] = useState([]);
   const [editCatPost, setEditCatPost] = useState([]);
-  const [postId, setPostId] = useState("");
   const [editImageUrl, setEditImageUrl] = useState("");
   const [editType, setEditType] = useState("");
   const [newImage, setNewImage] = useState("");
-  const [disabled, setDisabled] = useState(false)
+  const [disabled, setDisabled] = useState(false);
+  console.log(post.category);
+  useEffect(() => {
+    post.category.forEach((cat) => {
+      editCatPost.push(cat);
+    });
+  }, []);
+
   //retrieves full list of categories
   useEffect(() => {
     if (categories.length === 0) {
@@ -37,17 +44,6 @@ const EditPostModal = ({ handleEditModalClose, post }) => {
     setEditCatPost(e.target.value);
     console.log(editCatPost)
   }
-  //retrieves current post and gets the post id and sets it to state
-  useEffect(() => {
-    db.collection("posts")
-      .where("body", "==", `${post.body}`)
-      .get()
-      .then((querySnapshot) => {
-        querySnapshot.forEach((doc) => {
-          setPostId(doc.id);
-        });
-      });
-  });
   //edited type of post set to state
   function handleEditType(e) {
     setEditType(e.target.value);
@@ -59,9 +55,9 @@ const EditPostModal = ({ handleEditModalClose, post }) => {
     }
   }
   //sends image to database and sets it's URL to state
-  function handleEditImage(evt) {
-    evt.preventDefault()
-    setDisabled(true)
+  function handleEditImage(e) {
+    setDisabled(true);
+    e.preventDefault();
     const uploadImage = storage.ref(`images/${newImage.name}`).put(newImage);
     uploadImage.on(
       "state_changed",
@@ -76,7 +72,7 @@ const EditPostModal = ({ handleEditModalClose, post }) => {
           .getDownloadURL()
           .then((url) => {
             setEditImageUrl(url);
-            setDisabled(false)
+            setDisabled(false);
           });
       }
     );
@@ -84,13 +80,12 @@ const EditPostModal = ({ handleEditModalClose, post }) => {
 
   //edit post function
   async function handleEditSave(e) {
-    e.preventDefault()
+    e.preventDefault();
     let title = e.target.title.value;
     let body = e.target.body.value;
     let imageUrl = editImageUrl;
     let type = editType;
     let category = editCatPost;
-    console.log(title, body, imageUrl, type, category)
     let editPost = await db
       .collection("posts")
       .doc(post.id)
@@ -117,20 +112,22 @@ const EditPostModal = ({ handleEditModalClose, post }) => {
               type: type,
             });
           }
-          if (category) {
+          if (category !== []) {
             doc.ref.update({
               category: category,
             });
           }
         }
       });
-      handleEditModalClose()
+    setEditCatPost([]);
+    handleEditModalClose();
   }
 
   return (
     <div id="editModal">
       <div id="postModal">
         <CancelIcon onClick={handleEditModalClose} style={{ margin: ".5em" }} />
+        <DeleteBtn post={post} handleEditModalClose={handleEditModalClose} />
         <form id="editForm" onSubmit={handleEditSave}>
           Current Title:
           <TextField

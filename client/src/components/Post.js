@@ -13,7 +13,6 @@ import emailjs from "emailjs-com";
 import { init } from "emailjs-com";
 import { makeStyles } from "@material-ui/core/styles";
 import { Avatar } from "@material-ui/core";
-import { DeleteBtn } from "./DeleteBtn";
 init("user_9X8kPJFZA4CtJoKGtOw8Y");
 
 const Post = ({ post, profile }) => {
@@ -54,6 +53,8 @@ const Post = ({ post, profile }) => {
   useEffect(() => {
     if (currentUser.uid === post.userId) {
       setEditPost(true);
+    } else {
+      setEditPost(false)
     }
   }, [currentUser.uid, post.userId]);
 
@@ -214,7 +215,6 @@ const Post = ({ post, profile }) => {
         <Button id="commentButton" className="buttons" type="submit">
           Comment
         </Button>
-        <DeleteBtn docId={docId} post={post} />
         {/* email button needs to be linked to posters email */}
         <Button id="emailButton" className="buttons">
           <a href={`mailto:${post.user.email}`}> Email Me </a>

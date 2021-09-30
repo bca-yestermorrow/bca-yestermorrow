@@ -57,7 +57,8 @@ const EditModal = ({ handleEditModalClose, post }) => {
     }
   }
   //sends image to database and sets it's URL to state
-  function handleEditImage() {
+  function handleEditImage(e) {
+    e.preventDefault()
     const uploadImage = storage.ref(`images/${newImage.name}`).put(newImage);
     uploadImage.on(
       "state_changed",

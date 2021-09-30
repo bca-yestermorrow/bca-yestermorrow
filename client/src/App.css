@@ -83,7 +83,7 @@ body {
 
 #connectContainer {
   display: grid;
-  grid-template-columns: 22.5vw 55vw 22.5vw;
+  grid-template-columns: 20vw 55vw 20vw;
   padding-bottom: 2em;
   overflow: hidden;
   
@@ -142,6 +142,7 @@ a:active {
   /* flex-direction: column-reverse; */
   flex-direction: column;
   margin: 2em;
+  height: 75vh;
   overflow-y:auto;
   background-color: #ffffff;
 }

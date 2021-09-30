@@ -1,6 +1,6 @@
 import React from "react";
 import "../App.css";
-import EditModal from "./EditModal";
+import EditModal from "./EditPostModal";
 import { useState, useEffect } from "react";
 import Button from "@material-ui/core/Button";
 import EditIcon from "@material-ui/icons/Edit";

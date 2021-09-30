@@ -82,7 +82,7 @@ const ViewProfile = () => {
   return (
     <div>
       <div className="banner-wrapper">
-        <img className="profile-banner" src={yesterLogo} alt="alt" />
+        <img className="profile-banner" src={profile.bannerImg ? profile.bannerImg : yesterLogo } alt="alt" />
       </div>
       <div className="profile-page-wrapper">
         <Link to="/connect">

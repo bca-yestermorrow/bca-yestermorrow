@@ -10,13 +10,14 @@ import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import Button from "@material-ui/core/Button";
 
-const EditModal = ({ handleEditModalClose, post }) => {
+const EditPostModal = ({ handleEditModalClose, post }) => {
   const [categories, setCategories] = useState([]);
   const [editCatPost, setEditCatPost] = useState([]);
   const [postId, setPostId] = useState("");
   const [editImageUrl, setEditImageUrl] = useState("");
   const [editType, setEditType] = useState("");
   const [newImage, setNewImage] = useState("");
+  const [disabled, setDisabled] = useState(false)
   //retrieves full list of categories
   useEffect(() => {
     if (categories.length === 0) {
@@ -34,6 +35,7 @@ const EditModal = ({ handleEditModalClose, post }) => {
   //sets categories selected from list on edit form
   function handleCatSelect(e) {
     setEditCatPost(e.target.value);
+    console.log(editCatPost)
   }
   //retrieves current post and gets the post id and sets it to state
   useEffect(() => {
@@ -57,7 +59,9 @@ const EditModal = ({ handleEditModalClose, post }) => {
     }
   }
   //sends image to database and sets it's URL to state
-  function handleEditImage() {
+  function handleEditImage(evt) {
+    evt.preventDefault()
+    setDisabled(true)
     const uploadImage = storage.ref(`images/${newImage.name}`).put(newImage);
     uploadImage.on(
       "state_changed",
@@ -72,6 +76,7 @@ const EditModal = ({ handleEditModalClose, post }) => {
           .getDownloadURL()
           .then((url) => {
             setEditImageUrl(url);
+            setDisabled(false)
           });
       }
     );
@@ -79,14 +84,16 @@ const EditModal = ({ handleEditModalClose, post }) => {
 
   //edit post function
   async function handleEditSave(e) {
+    e.preventDefault()
     let title = e.target.title.value;
     let body = e.target.body.value;
     let imageUrl = editImageUrl;
     let type = editType;
-    let category = [editCatPost];
+    let category = editCatPost;
+    console.log(title, body, imageUrl, type, category)
     let editPost = await db
       .collection("posts")
-      .doc(postId)
+      .doc(post.id)
       .get()
       .then((doc) => {
         if (doc.exists) {
@@ -117,6 +124,7 @@ const EditModal = ({ handleEditModalClose, post }) => {
           }
         }
       });
+      handleEditModalClose()
   }
 
   return (
@@ -146,7 +154,7 @@ const EditModal = ({ handleEditModalClose, post }) => {
           ) : (
             " No Current Image On Post"
           )}
-          <input type="file" onClick={handleInsertImage} />
+          <input type="file" onChange={handleInsertImage} />
           <button onClick={handleEditImage}>Set Image</button>
           <FormControl>
             Current Type Of Post: {post.type}
@@ -180,6 +188,7 @@ const EditModal = ({ handleEditModalClose, post }) => {
             </Select>
           </FormControl>
           <Button
+            disabled={disabled}
             variant="contained"
             type="submit"
             color="secondary"
@@ -194,4 +203,4 @@ const EditModal = ({ handleEditModalClose, post }) => {
   );
 };
 
-export default EditModal;
+export default EditPostModal;

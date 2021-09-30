@@ -1,6 +1,6 @@
 import React from "react";
 import "../App.css";
-import EditModal from "./EditPostModal";
+import EditPostModal from "./EditPostModal";
 import { useState, useEffect } from "react";
 import Button from "@material-ui/core/Button";
 import EditIcon from "@material-ui/icons/Edit";
@@ -143,7 +143,7 @@ const Post = ({ post, profile }) => {
 
   return (
     <div className="post">
-      {editModal && <EditModal handleEditModalClose={handleEditModalClose} post={post}/>}
+      {editModal && <EditPostModal handleEditModalClose={handleEditModalClose} post={post}/>}
       <div className="postNBC">
         {editPost && (
           <EditIcon
@@ -197,7 +197,7 @@ const Post = ({ post, profile }) => {
         {post.comments.map((comment, index) => {
           return (
             <p id="comment" key={index}>
-              <Link to={"/other-profile/" + comment.userId}>{comment.firstName} {comment.lastName}</Link> : {comment.comment}
+              <Link to={currentUser.uid === comment.userId ? "/profile" : "/other-profile/" + comment.userId}>{comment.firstName} {comment.lastName}</Link> : {comment.comment}
             </p>
           );
         })}

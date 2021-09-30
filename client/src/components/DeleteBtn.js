@@ -3,7 +3,6 @@ import { db } from "../firebase";
 import { useAuth } from '../context/AuthContext';
 
 export const DeleteBtn = ({docId, post}) => {
-    console.log(post.id)
     const postRef = db.collection("posts").doc(post.id)
 
     const {currentUser} = useAuth()

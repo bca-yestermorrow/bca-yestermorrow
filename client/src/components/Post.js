@@ -153,7 +153,8 @@ const Post = ({ post, profile }) => {
             style={{ 
               position: "relative",
               right: "10px",
-              top: "10px"
+              top: "10px",
+              cursor: "pointer"
             }}
             onClick={handleEditModal}
           />

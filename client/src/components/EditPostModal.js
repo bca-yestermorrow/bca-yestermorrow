@@ -126,7 +126,7 @@ const EditPostModal = ({ handleEditModalClose, post }) => {
   return (
     <div id="editModal">
       <div id="postModal">
-        <CancelIcon onClick={handleEditModalClose} style={{ margin: ".5em" }} />
+        <CancelIcon onClick={handleEditModalClose} style={{ margin: ".5em", cursor: "pointer" }} />
         <DeleteBtn post={post} handleEditModalClose={handleEditModalClose} />
         <form id="editForm" onSubmit={handleEditSave}>
           Current Title:

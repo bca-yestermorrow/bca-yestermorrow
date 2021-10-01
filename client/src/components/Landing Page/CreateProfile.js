@@ -264,9 +264,10 @@ const CreateProfile = ({ handleModalClosed }) => {
             </div>
 
             <div className="location-label-field-pair">
-              <label className="label" for="profile-state">
+              <label style={{ color: "red" }} className="label" for="profile-state">
                 State:
               </label>
+              
               <Autocomplete
                 onChange={(e) => setCurrentState(e.currentTarget.textContent)}
                 options={states}
@@ -285,7 +286,7 @@ const CreateProfile = ({ handleModalClosed }) => {
               />
             </div>
             <div className="location-label-field-pair">
-              <label className="label" for="profile-country">
+              <label style={{ color: "red" }} className="label" for="profile-country">
                 Country:
               </label>
               <TextField
@@ -373,7 +374,7 @@ const CreateProfile = ({ handleModalClosed }) => {
           >
             Submit
           </Button>
-          <h4 style={{color: "red"}} >{error && error}</h4>
+          <h4 style={{ color: "red" }}>{error ? error : "Required fields in red."}</h4>
         </form>
       </div>
     </div>

@@ -6,34 +6,28 @@ import yesterLogo from "../../assets/banner.svg";
 import Map from "./Map";
 import SignUp from "./SignUp";
 import Login from "./Login";
-import { GoogleBtn } from "./GoogleBtn";
-import { Container, Button, Box} from "@material-ui/core";
 import { Paper, Card } from "@material-ui/core";
-import { Link, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import CreateProfile from "./CreateProfile";
 
 //landing page function
 const Landing = () => {
   const [signUp, setSignUp] = useState(false);
-  const [modal, setModal] = useState("")
+  const [modal, setModal] = useState("");
   const history = useHistory();
 
   function handleSignUpClose() {
     setSignUp(false);
   }
 
-  function handleSignUp() {
-    setSignUp(true);
-  }
-
   const handleModalOpen = () => {
-    setModal(true)
-  }
+    setModal(true);
+  };
 
   const handleModalClosed = () => {
-    setModal("")
-    history.push("/connect")
-  }
+    setModal("");
+    history.push("/connect");
+  };
 
   //return holds sign up / log in containers and check this out container
   return (
@@ -48,24 +42,20 @@ const Landing = () => {
         </header>
         {/* main body */}
         <div id="mainLanding">
-          <Paper  elevation={3} className="login" >
-            
-             <SignUp handleSignUpClose={handleSignUpClose} handleModalOpen={handleModalOpen} />
+          <Paper elevation={3} className="login">
+            <SignUp
+              handleSignUpClose={handleSignUpClose}
+              handleModalOpen={handleModalOpen}
+            />
             {/* between sign up and log in containers */}
-            <h1 style={{textAlign: "center", fontSize: "1vw"}}>Or</h1>
+            <h1 style={{ textAlign: "center", fontSize: "1vw" }}>Or</h1>
             {/* login form */}
             <Login />
-         
           </Paper>
-          
           {/* check this out container with map and other content */}
-          <Card >
-            
-          
-           
-              <Map />
-              {/* <div id="other">OTHER CONTENT</div> */}
-          
+          <Card>
+            <Map />
+            {/* <div id="other">OTHER CONTENT</div> */}
           </Card>
         </div>
       </div>

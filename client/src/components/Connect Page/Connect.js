@@ -6,7 +6,6 @@ import Post from "./Post";
 import { FilterFeed } from "./FilterFeed";
 import { useState, useEffect } from "react";
 import { useAuth } from "../../context/AuthContext";
-import Paper from "@material-ui/core/Paper";
 import yesterLogo from "../../assets/Banner-2000X600.png";
 
 /**
@@ -48,12 +47,12 @@ const Connect = () => {
         ...doc.data(),
       }));
       if (currentState !== "") {
-        let filterdArr = updatedPosts.filter((post) => {
+        let filteredArr = updatedPosts.filter((post) => {
           return post.user.state === currentState;
         });
 
         // sort & update filtered posts
-        setPosts(sortPostsArray(filterdArr));
+        setPosts(sortPostsArray(filteredArr));
       } else {
         // sort & update posts
         setPosts(sortPostsArray(updatedPosts));

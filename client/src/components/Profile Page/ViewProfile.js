@@ -3,15 +3,8 @@ import { useAuth } from "../../context/AuthContext";
 import { db } from "../../firebase";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import firebase from "firebase";
 import yesterLogo from "../../assets/YM_Banner.jpg";
-import {
-  Avatar,
-  Button,
-  Card,
-  Divider,
-  Icon,
-} from "@material-ui/core";
+import { Avatar, Button, Card, Divider } from "@material-ui/core";
 
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 import EditIcon from "@material-ui/icons/Edit";
@@ -74,19 +67,21 @@ const ViewProfile = () => {
         console.log("Error getting documents: ", error);
       });
   };
-  
+
   useEffect(() => {
     getProfile();
   }, []);
 
-  const [locationDisplay, setLocationDisplay] = useState("block")
+  const [locationDisplay, setLocationDisplay] = useState("block");
 
-
-  
   return (
     <div>
       <div className="banner-wrapper">
-        <img className="profile-banner" src={profile.bannerImg ? profile.bannerImg : yesterLogo } alt="alt" />
+        <img
+          className="profile-banner"
+          src={profile.bannerImg ? profile.bannerImg : yesterLogo}
+          alt="alt"
+        />
       </div>
       <div className="profile-page-wrapper">
         <Link to="/connect">
@@ -101,7 +96,13 @@ const ViewProfile = () => {
         </Link>
         <div className="view-profile-page">
           <div>
-            {modal && <EditProfile locationDisplay={locationDisplay} setLocationDisplay={setLocationDisplay} handleModalClosed={handleModalClosed} />}
+            {modal && (
+              <EditProfile
+                locationDisplay={locationDisplay}
+                setLocationDisplay={setLocationDisplay}
+                handleModalClosed={handleModalClosed}
+              />
+            )}
           </div>
 
           {profile ? (
@@ -135,7 +136,10 @@ const ViewProfile = () => {
                     {profile.firstName} {profile.lastName}
                   </h3>
                   {profile.location && (
-                    <p className="user-location" style={{display: `${locationDisplay}`}}>
+                    <p
+                      className="user-location"
+                      style={{ display: `${locationDisplay}` }}
+                    >
                       {profile.location.city}, {profile.location.state},{" "}
                       {profile.location.country}
                     </p>

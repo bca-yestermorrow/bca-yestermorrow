@@ -1,7 +1,7 @@
 import React from "react";
 // import useAuth to get current user id
 import { useAuth } from "../../context/AuthContext";
-import { db, storage } from "../../firebase";
+import { db } from "../../firebase";
 import { useState, useEffect } from "react";
 import ProfilePicture from "../Profile Page/ProfilePicture";
 import firebase from "firebase/app";
@@ -195,7 +195,6 @@ const CreateProfile = ({ handleModalClosed }) => {
   };
 
   useEffect(() => {
-    let statesArr = [];
     db.collection("states")
       .doc("states")
       .get()

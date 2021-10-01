@@ -18,14 +18,11 @@ init("user_9X8kPJFZA4CtJoKGtOw8Y");
 const Post = ({ post, profile }) => {
   const { currentUser } = useAuth();
   const [comment, setComment] = useState([]);
-  const [firstName, setFirstName] = useState(null);
-  const [lastName, setLastName] = useState(null);
   const [docId, setDocId] = useState(null);
   const [commArr, setCommArr] = useState([]);
   const [error, setError] = useState("");
   const [editPost, setEditPost] = useState(false);
   const [editModal, setEditModal] = useState(false);
-  const [user, setUser] = useState("");
 
   const useStyles = makeStyles({
     large: {
@@ -99,7 +96,6 @@ const Post = ({ post, profile }) => {
     }
     sendEmail(e);
     e.target.comment.value = "";
-
     //awaits the db to get the post that has been commented on
     db.collection("posts")
       .where("body", "==", `${post.body}`)
@@ -108,9 +104,8 @@ const Post = ({ post, profile }) => {
         querySnapshot.forEach((doc) => {
           //sets the post doc id to state
           setDocId(doc.id);
-
-          setCommArr(doc.data().comments);
           // setCommArr(doc.comments)
+          setCommArr(doc.data().comments);
         });
       });
   }

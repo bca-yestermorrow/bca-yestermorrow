@@ -4,11 +4,11 @@ import {GoogleLoginButton} from "react-social-login-buttons"
 
 
 export const GoogleBtn = () => {
-    const {googlesignin} = useAuth()
+    const {googleSignIn} = useAuth()
 
     async function signInHandle() {
         try{
-            await googlesignin()
+            await googleSignIn()
         }catch{
             console.log('google sign in didnt work')
         }

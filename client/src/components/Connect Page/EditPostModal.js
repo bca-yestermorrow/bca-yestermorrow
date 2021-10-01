@@ -9,14 +9,21 @@ import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import Button from "@material-ui/core/Button";
+import { DeleteBtn } from "./DeleteBtn";
 
-const EditModal = ({ handleEditModalClose, post }) => {
+const EditPostModal = ({ handleEditModalClose, post }) => {
   const [categories, setCategories] = useState([]);
   const [editCatPost, setEditCatPost] = useState([]);
-  const [postId, setPostId] = useState("");
   const [editImageUrl, setEditImageUrl] = useState("");
   const [editType, setEditType] = useState("");
   const [newImage, setNewImage] = useState("");
+  const [disabled, setDisabled] = useState(false);
+  useEffect(() => {
+    post.category.forEach((cat) => {
+      editCatPost.push(cat);
+    });
+  }, []);
+
   //retrieves full list of categories
   useEffect(() => {
     if (categories.length === 0) {
@@ -34,18 +41,8 @@ const EditModal = ({ handleEditModalClose, post }) => {
   //sets categories selected from list on edit form
   function handleCatSelect(e) {
     setEditCatPost(e.target.value);
+    console.log(editCatPost);
   }
-  //retrieves current post and gets the post id and sets it to state
-  useEffect(() => {
-    db.collection("posts")
-      .where("body", "==", `${post.body}`)
-      .get()
-      .then((querySnapshot) => {
-        querySnapshot.forEach((doc) => {
-          setPostId(doc.id);
-        });
-      });
-  });
   //edited type of post set to state
   function handleEditType(e) {
     setEditType(e.target.value);
@@ -57,7 +54,9 @@ const EditModal = ({ handleEditModalClose, post }) => {
     }
   }
   //sends image to database and sets it's URL to state
-  function handleEditImage() {
+  function handleEditImage(e) {
+    setDisabled(true);
+    e.preventDefault();
     const uploadImage = storage.ref(`images/${newImage.name}`).put(newImage);
     uploadImage.on(
       "state_changed",
@@ -72,6 +71,7 @@ const EditModal = ({ handleEditModalClose, post }) => {
           .getDownloadURL()
           .then((url) => {
             setEditImageUrl(url);
+            setDisabled(false);
           });
       }
     );
@@ -79,14 +79,15 @@ const EditModal = ({ handleEditModalClose, post }) => {
 
   //edit post function
   async function handleEditSave(e) {
+    e.preventDefault();
     let title = e.target.title.value;
     let body = e.target.body.value;
     let imageUrl = editImageUrl;
     let type = editType;
-    let category = [editCatPost];
+    let category = editCatPost;
     let editPost = await db
       .collection("posts")
-      .doc(postId)
+      .doc(post.id)
       .get()
       .then((doc) => {
         if (doc.exists) {
@@ -110,47 +111,71 @@ const EditModal = ({ handleEditModalClose, post }) => {
               type: type,
             });
           }
-          if (category) {
+          if (category !== []) {
             doc.ref.update({
               category: category,
             });
           }
         }
       });
+    setEditCatPost([]);
+    handleEditModalClose();
   }
 
   return (
     <div id="editModal">
       <div id="postModal">
-        <CancelIcon onClick={handleEditModalClose} style={{ margin: ".5em" }} />
+        <div id="deleteButton">
+          <CancelIcon
+            onClick={handleEditModalClose}
+            style={{ margin: ".5em", cursor: "pointer" }}
+          />
+          <h1 className="editFormTitles" style={{marginTop: "1em"}}>EDIT POST</h1>
+          <DeleteBtn post={post} handleEditModalClose={handleEditModalClose} />
+        </div>
+
         <form id="editForm" onSubmit={handleEditSave}>
-          Current Title:
+          <div className="editFormTitles">Title:</div>
           <TextField
             label={post.title}
             variant="outlined"
             multiline
             type="text"
             name="title"
+            style={{ margin: "0em 3em 3em 3em" }}
           />
-          Current Body:
+          <div className="editFormTitles">Body:</div>
+
           <TextField
             label={post.body}
             variant="outlined"
             multiline
             type="text"
             name="body"
+            style={{ margin: "0em 3em 3em 3em" }}
           />
-          Current Image:
-          {post.imageUrl ? (
-            <h3>{post.imageUrl}</h3>
-          ) : (
-            " No Current Image On Post"
-          )}
-          <input type="file" onClick={handleInsertImage} />
-          <button onClick={handleEditImage}>Set Image</button>
+          <div className="editFormTitles">
+            Image:
+            {post.imageUrl ? (
+              <img style={{width: "20em", marginLeft: "1em"}} src={post.imageUrl} alt={post.imageUrl} />
+            ) : (
+              " No Image On Post"
+            )}
+          </div>
+
+          <input
+            type="file"
+            style={{ margin: "0em 3em 0em 3em" }}
+            onChange={handleInsertImage}
+          />
+          <button onClick={handleEditImage} style={{ margin: "1em 60em 1em 3em" }}>
+            Add Image
+          </button>
           <FormControl>
-            Current Type Of Post: {post.type}
+            <div className="editFormTitles" style={{marginTop: "2em"}}>Type Of Post: {post.type}</div>
+
             <Select
+              style={{ margin: "0em 3em 3em 3em" }}
               className="postSelect"
               name="type"
               input={<Input />}
@@ -163,8 +188,12 @@ const EditModal = ({ handleEditModalClose, post }) => {
             </Select>
           </FormControl>
           <FormControl>
-            Current Category/Categories: {post.category}
+            <div className="editFormTitles" style={{marginTop: "2em"}}>
+              Category/Categories: {post.category}
+            </div>
+
             <Select
+              style={{ margin: "0em 3em 3em 3em" }}
               className="postSelect"
               name="category"
               value={editCatPost}
@@ -180,6 +209,8 @@ const EditModal = ({ handleEditModalClose, post }) => {
             </Select>
           </FormControl>
           <Button
+            style={{ marginTop: "1em" }}
+            disabled={disabled}
             variant="contained"
             type="submit"
             color="secondary"
@@ -194,4 +225,4 @@ const EditModal = ({ handleEditModalClose, post }) => {
   );
 };
 
-export default EditModal;
+export default EditPostModal;

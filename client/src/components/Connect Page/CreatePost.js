@@ -10,6 +10,7 @@ import Input from "@material-ui/core/Input";
 import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
+import { CircularProgress } from '@material-ui/core'
 // import ListItemText from "@material-ui/core/ListItemText";
 import Select from "@material-ui/core/Select";
 // import Checkbox from "@material-ui/core/Checkbox";
@@ -22,6 +23,7 @@ const CreatePost = ({ profile }) => {
   const [imageUrl, setImageUrl] = useState("");
   const [typePost, setTypePost] = useState("");
   const [catPost, setCatPost] = useState([]);
+  const [dis, setDis] = useState(false)
   const { currentUser } = useAuth();
 
   useEffect(() => {
@@ -46,6 +48,7 @@ const CreatePost = ({ profile }) => {
   }
   //getting image url and setting the state of imageUrl to the image url (maybe working??)
   function handleSetImage() {
+    setDis(true)
     const uploadImage = storage.ref(`images/${image.name}`).put(image);
     uploadImage.on(
       "state_changed",
@@ -60,6 +63,7 @@ const CreatePost = ({ profile }) => {
           .getDownloadURL()
           .then((url) => {
             setImageUrl(url);
+            setDis(false)
           });
       }
     );
@@ -76,7 +80,6 @@ const CreatePost = ({ profile }) => {
 
   async function handlePostSubmit(e) {
     e.preventDefault();
-    
 
     let title = e.target.title.value;
 
@@ -115,7 +118,7 @@ const CreatePost = ({ profile }) => {
           category: options,
           type: type,
           imageUrl: imageUrl,
-          state: profile.location.state,
+          state: state,
           user: {
             email: currentUser.email,
             firstName: profile.firstName,
@@ -135,7 +138,7 @@ const CreatePost = ({ profile }) => {
           category: options,
           type: type,
           imageUrl: imageUrl,
-          state: profile.location.state,
+          state: state,
           user: {
             email: currentUser.email,
             firstName: profile.firstName,
@@ -240,6 +243,7 @@ const CreatePost = ({ profile }) => {
           </Select>
         </FormControl>
         <Button
+        disabled={dis}
           variant="contained"
           type="submit"
           color="secondary"
@@ -247,7 +251,7 @@ const CreatePost = ({ profile }) => {
           id="postButton"
           value="Create Post"
         >
-          POST
+          { dis ? <CircularProgress style={{zIndex: "5000"}} size="25px" thickness="5" color="secondary" /> : "POST"}
         </Button>
       </form>
       {error && error}

@@ -18,7 +18,7 @@ export const DeleteBtn = ({handleEditModalClose, post}) => {
     return (
         <div>
 
-           {currentUser.uid === post.userId && <button style={{ margin: "1em" }} onClick={clickHandler}>
+           {currentUser.uid === post.userId && <button style={{ margin: "1.5em" }} onClick={clickHandler}>
                 DELETE
             </button>}
         </div>

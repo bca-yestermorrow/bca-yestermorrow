@@ -150,12 +150,7 @@ const Post = ({ post, profile }) => {
           <EditIcon
             color="secondary"
             variant="contained"
-            style={{ 
-              position: "relative",
-              right: "10px",
-              top: "10px",
-              cursor: "pointer"
-            }}
+            id="editPostButton" 
             onClick={handleEditModal}
           />
         )}

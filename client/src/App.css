@@ -211,6 +211,7 @@ a:active {
   padding: 1em;
   background-color: #e9eaeb;
   border-radius: 2vh;
+  position: relative;
 }
 
 #editModal {
@@ -242,11 +243,18 @@ a:active {
 }
 
 .editFormTitles {
-  margin-left: 1em;
+  margin-left: 2.5em;
   color: #67a641;
   font-family: "Raleway", sans-serif;
   font-size: 1.2em;
   font-weight: 700;
+}
+
+#editPostButton {
+  right: 0;
+  position: absolute;
+  margin: 0px 10px 0 0;
+  cursor: pointer
 }
 
 #deleteButton {

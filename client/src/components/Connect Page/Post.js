@@ -1,13 +1,13 @@
 import React from "react";
-import "../App.css";
+import "../../App.css";
 import EditModal from "./EditPostModal";
 import { useState, useEffect } from "react";
 import Button from "@material-ui/core/Button";
 import EditIcon from "@material-ui/icons/Edit";
 import TextField from "@material-ui/core/TextField";
 import { Link } from "react-router-dom";
-import { db } from "../firebase";
-import { useAuth } from "../context/AuthContext";
+import { db } from "../../firebase";
+import { useAuth } from "../../context/AuthContext";
 import firebase from "firebase";
 import emailjs from "emailjs-com";
 import { init } from "emailjs-com";

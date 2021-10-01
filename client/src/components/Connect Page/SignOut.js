@@ -1,6 +1,6 @@
 
 import React from 'react'
-import { useAuth } from '../context/AuthContext'
+import { useAuth } from '../../context/AuthContext'
 import { useHistory } from 'react-router'
 import { Button } from '@material-ui/core'
 //sign out might need to be async and be in a handler function 

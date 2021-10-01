@@ -1,6 +1,6 @@
 import React from 'react'
-import { db } from "../firebase";
-import { useAuth } from '../context/AuthContext';
+import { db } from "../../firebase";
+import { useAuth } from '../../context/AuthContext';
 
 export const DeleteBtn = ({docId, post}) => {
     console.log(post.id)

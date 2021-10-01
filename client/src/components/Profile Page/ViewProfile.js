@@ -1,10 +1,10 @@
 import React from "react";
-import { useAuth } from "../context/AuthContext";
-import { db } from "../firebase";
+import { useAuth } from "../../context/AuthContext";
+import { db } from "../../firebase";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import firebase from "firebase";
-import yesterLogo from "../assets/YM_Banner.jpg";
+import yesterLogo from "../../assets/YM_Banner.jpg";
 import {
   Avatar,
   Button,
@@ -78,6 +78,10 @@ const ViewProfile = () => {
   useEffect(() => {
     getProfile();
   }, []);
+
+  const [locationDisplay, setLocationDisplay] = useState("block")
+
+
   
   return (
     <div>
@@ -97,7 +101,7 @@ const ViewProfile = () => {
         </Link>
         <div className="view-profile-page">
           <div>
-            {modal && <EditProfile handleModalClosed={handleModalClosed} />}
+            {modal && <EditProfile locationDisplay={locationDisplay} setLocationDisplay={setLocationDisplay} handleModalClosed={handleModalClosed} />}
           </div>
 
           {profile ? (
@@ -131,7 +135,7 @@ const ViewProfile = () => {
                     {profile.firstName} {profile.lastName}
                   </h3>
                   {profile.location && (
-                    <p className="user-location">
+                    <p className="user-location" style={{display: `${locationDisplay}`}}>
                       {profile.location.city}, {profile.location.state},{" "}
                       {profile.location.country}
                     </p>

@@ -1,9 +1,9 @@
 import React from "react";
 // import useAuth to get current user id
-import { useAuth } from "../context/AuthContext";
-import { db, storage } from "../firebase";
+import { useAuth } from "../../context/AuthContext";
+import { db, storage } from "../../firebase";
 import { useState, useEffect } from "react";
-import ProfilePicture from "./ProfilePicture";
+import ProfilePicture from "../Profile Page/ProfilePicture";
 import firebase from "firebase/app";
 import { Autocomplete } from "@material-ui/lab";
 // imports for material ui

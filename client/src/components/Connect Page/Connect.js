@@ -1,13 +1,13 @@
 import React from "react";
-import "../App.css";
-import { db } from "../firebase";
+import "../../App.css";
+import { db } from "../../firebase";
 import CreatePost from "./CreatePost";
 import Post from "./Post";
 import { FilterFeed } from "./FilterFeed";
 import { useState, useEffect } from "react";
-import { useAuth } from "../context/AuthContext";
+import { useAuth } from "../../context/AuthContext";
 import Paper from "@material-ui/core/Paper";
-import yesterLogo from "../assets/Banner-2000X600.png";
+import yesterLogo from "../../assets/Banner-2000X600.png";
 
 /**
  * Name: sortPostsArray

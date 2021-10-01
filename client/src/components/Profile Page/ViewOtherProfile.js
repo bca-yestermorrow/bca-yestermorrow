@@ -1,5 +1,5 @@
 import React from "react";
-import { db } from "../firebase";
+import { db } from "../../firebase";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom"
 import firebase from "firebase";
@@ -10,7 +10,7 @@ import {
   Divider,
   Icon
 } from "@material-ui/core";
-import yesterLogo from "../assets/YM_Banner.jpg";
+import yesterLogo from "../../assets/YM_Banner.jpg";
 import { makeStyles } from "@material-ui/core/styles";
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 

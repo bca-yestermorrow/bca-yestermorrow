@@ -14,7 +14,7 @@ import {
   FormControl,
 } from "@material-ui/core";
 import { useState, useEffect } from "react";
-import { db } from "../firebase";
+import { db } from "../../firebase";
 import { Autocomplete } from "@material-ui/lab";
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";

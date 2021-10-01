@@ -1,7 +1,7 @@
 import React from "react";
-import "../App.css";
+import "../../App.css";
 import { useRef, useState } from "react";
-import { useAuth } from "../context/AuthContext";
+import { useAuth } from "../../context/AuthContext";
 import { Link, useHistory } from "react-router-dom";
 import {Paper, Card, Button, TextField, Container, Box } from "@material-ui/core";
 import { GoogleBtn } from "./GoogleBtn";

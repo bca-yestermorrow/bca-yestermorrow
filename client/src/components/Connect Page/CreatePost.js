@@ -1,8 +1,8 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import { useAuth } from "../context/AuthContext";
-import { db } from "../firebase";
-import { storage } from "../firebase";
+import { useAuth } from "../../context/AuthContext";
+import { db } from "../../firebase";
+import { storage } from "../../firebase";
 import TextField from "@material-ui/core/TextField";
 import Paper from "@material-ui/core/Paper";
 import Button from "@material-ui/core/Button";

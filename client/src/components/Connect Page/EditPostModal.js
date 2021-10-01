@@ -1,7 +1,7 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import { db } from "../firebase";
-import { storage } from "../firebase";
+import { db } from "../../firebase";
+import { storage } from "../../firebase";
 import CancelIcon from "@material-ui/icons/Cancel";
 import TextField from "@material-ui/core/TextField";
 import Input from "@material-ui/core/Input";

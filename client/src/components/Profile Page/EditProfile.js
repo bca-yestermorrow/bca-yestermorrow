@@ -1,17 +1,17 @@
 import React from "react";
 // import useAuth to get current user id
-import { useAuth } from "../context/AuthContext";
-import { db, storage } from "../firebase";
+import { useAuth } from "../../context/AuthContext";
+import { db, storage } from "../../firebase";
 import { useState, useEffect } from "react";
 import ProfilePicture from "./ProfilePicture";
 import firebase from "firebase/app";
 import { Autocomplete } from "@material-ui/lab";
 // imports for material ui
-import { TextField, Button, Select, MenuItem, Input } from "@material-ui/core";
+import { TextField, Button, Select, MenuItem, Input, Checkbox } from "@material-ui/core";
 // import for material ui to customize styles
 import { makeStyles } from "@material-ui/core/styles";
 
-const EditProfile = ({ handleModalClosed }) => {
+const EditProfile = ({ handleModalClosed, locationDisplay, setLocationDisplay }) => {
   const [user, setUser] = useState("");
   const [categories, setCategories] = useState("");
   const [categoryName, setCategoryName] = useState([]);
@@ -221,6 +221,15 @@ const EditProfile = ({ handleModalClosed }) => {
       getCategories();
     }
   }, []);
+
+  const displayClickHandler = () => {
+    if(locationDisplay === "block"){
+      setLocationDisplay("none")
+    } else {
+      setLocationDisplay("block")
+    }
+    console.log(locationDisplay)
+  }
   return (
     <div className="edit-profile-container" onClick={handleClose}>
       <div className="form-container">
@@ -374,6 +383,7 @@ const EditProfile = ({ handleModalClosed }) => {
             setBool={setBool}
             id="profile-picture"
           />
+          Make my location private<Checkbox checked={locationDisplay === "none"} onClick={displayClickHandler} color="secondary" />
           <Button
             disabled={bool}
             id="profile-submit"
@@ -385,6 +395,7 @@ const EditProfile = ({ handleModalClosed }) => {
           </Button>
         </form>
       </div>
+
     </div>
   );
 };

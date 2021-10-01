@@ -1,8 +1,8 @@
 //importing React CSS and the yestermorrow logo
 import React from "react";
 import { useState } from "react";
-import "../App.css";
-import yesterLogo from "../assets/banner.svg";
+import "../../App.css";
+import yesterLogo from "../../assets/banner.svg";
 import Map from "./Map";
 import SignUp from "./SignUp";
 import Login from "./Login";

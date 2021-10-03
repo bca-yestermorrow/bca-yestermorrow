@@ -16,7 +16,6 @@ const EditProfile = ({ handleModalClosed }) => {
   const [user, setUser] = useState("");
   const [categories, setCategories] = useState("");
   const [categoryName, setCategoryName] = useState([]);
-  const [imageURL, setImageURL] = useState("");
   const [bool, setBool] = useState(false);
   const [bannerURL, setBannerURL] = useState("");
   const [states, setStates] = useState([]);
@@ -54,10 +53,6 @@ const EditProfile = ({ handleModalClosed }) => {
   });
   // allows use of classes.whatever on mui components
   const classes = useStyles();
-
-  const getImageURL = (url) => {
-    setImageURL(url);
-  };
 
   const getBannerURL = (url) => {
     setBannerURL(url);
@@ -166,9 +161,6 @@ const EditProfile = ({ handleModalClosed }) => {
               });
             });
           }
-          if (imageURL) {
-            doc.ref.update({ profilePic: imageURL });
-          }
           if (bannerURL) {
             doc.ref.update({ bannerImg: bannerURL });
           }
@@ -239,9 +231,9 @@ const EditProfile = ({ handleModalClosed }) => {
           onSubmit={handleSubmit}
           autoComplete="off"
         >
-          <button onClick={handleModalClosed} className="x-button">
+          {/* <button onClick={handleModalClosed} className="x-button">
             X
-          </button>
+          </button> */}
           <div className="fullname">
             <div className="name-label-field-pair">
               <label className="label" for="profile-firstName">
@@ -375,14 +367,6 @@ const EditProfile = ({ handleModalClosed }) => {
             label={user.portfolio}
             name="portfolio"
             variant="filled"
-          />
-          <label className="label" for="profile-picture">
-            Upload a profile picture
-          </label>
-          <ProfilePicture
-            getImageURL={getImageURL}
-            setBool={setBool}
-            id="profile-picture"
           />
           <label className="label" for="banner-picture">
             Change your banner image

@@ -1,12 +1,13 @@
 import { storage } from "../firebase";
 import { useState } from "react";
 
-const ProfilePicture = ({ getImageURL, setBool }) => {
+const ProfilePicture = ({ getImageURL, setBool}) => {
   const [image, setImage] = useState("");
   const [isTrue, setIsTrue] = useState(true)
   const handleImage = (evt) => {
     if (evt.target.files[0]) {
       setImage(evt.target.files[0]);
+
       setIsTrue(false)
     }
   };

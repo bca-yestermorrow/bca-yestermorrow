@@ -470,6 +470,33 @@ a:active {
   margin: 10px 0 0 10px;
 }
 
+.profile-pic-wrapper {
+  position: relative;
+  z-index: 10;
+}
+
+.profile-pic {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 200px;
+  height: 200px;
+  cursor: pointer;
+  border-radius: 50%;
+  box-shadow: inset 0 0 0 1000px rgba(0, 0, 0, .5);
+  transition: box-shadow 100ms;
+}
+
+.profile-pic-unhovered {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 200px;
+  height: 200px;
+  cursor: pointer;
+  border-radius: 50%;
+}
+
 .user-work {
   display: flex;
   margin-top: 20px;
@@ -610,4 +637,14 @@ a:active {
   background-repeat: no-repeat;
   background-position: center center;
   background-color: #000000;
+}
+
+/* ------------------- Profile Pic Modal ------------------- */
+
+.profile-pic-modal {
+  height: 100%;
+  display: flex;
+  flex-direction:column;
+  justify-content: space-around;
+  align-items: center;
 }

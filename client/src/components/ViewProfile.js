@@ -11,16 +11,21 @@ import {
   Card,
   Divider,
   Icon,
+  IconButton,
 } from "@material-ui/core";
 
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
+import AddPhotoAlternateIcon from '@material-ui/icons/AddPhotoAlternate';
 import EditIcon from "@material-ui/icons/Edit";
 import { makeStyles } from "@material-ui/core/styles";
 import EditProfile from "./EditProfile";
+import ProfilePicModal from "./ProfilePicModal"
 
 const ViewProfile = () => {
   const [profile, setProfile] = useState("");
   const [modal, setModal] = useState("");
+  const [isHovered, setIsHovered] = useState("");
+  const [imageModal, setImageModal] = useState("")
 
   const { currentUser } = useAuth();
 
@@ -29,6 +34,11 @@ const ViewProfile = () => {
       width: "200px",
       height: "200px",
       fontSize: "100px",
+    },
+    huge: {
+      width: "300px",
+      height: "300px",
+      fontSize: "150px",
     },
     small: {
       width: "50px",
@@ -45,6 +55,12 @@ const ViewProfile = () => {
     profileCard: {
       marginTop: "10px",
     },
+    imageIcon: {
+      position: "absolute",
+      margin: "0",
+      zIndex: "100",
+      color: "white"
+    }
   });
 
   const classes = useStyles();
@@ -57,6 +73,12 @@ const ViewProfile = () => {
     setModal("");
     setTimeout(getProfile, 500);
   };
+
+  const handleImageModalClosed = () => {
+    console.log("in imageclose")
+    setImageModal("");
+    setTimeout(getProfile, 500)
+  }
 
   const getProfile = async () => {
     let profileRef = await db
@@ -74,15 +96,19 @@ const ViewProfile = () => {
         console.log("Error getting documents: ", error);
       });
   };
-  
+
   useEffect(() => {
     getProfile();
   }, []);
-  
+
   return (
     <div>
       <div className="banner-wrapper">
-        <img className="profile-banner" src={profile.bannerImg ? profile.bannerImg : yesterLogo } alt="alt" />
+        <img
+          className="profile-banner"
+          src={profile.bannerImg ? profile.bannerImg : yesterLogo}
+          alt="alt"
+        />
       </div>
       <div className="profile-page-wrapper">
         <Link to="/connect">
@@ -98,17 +124,29 @@ const ViewProfile = () => {
         <div className="view-profile-page">
           <div>
             {modal && <EditProfile handleModalClosed={handleModalClosed} />}
+            {imageModal && <ProfilePicModal handleImageModalClosed={handleImageModalClosed} profile={profile} classes={classes} />}
           </div>
 
           {profile ? (
             <div className="view-profile-container">
-              <Avatar
-                src={profile.profilePic}
-                alt={profile.firstName}
-                className={classes.large}
-              >
-                {profile.firstName[0]}
-              </Avatar>
+              <div className="profile-pic-wrapper">
+                <div
+                  className={isHovered ? "profile-pic" : "profile-pic-unhovered"}
+                  onMouseEnter={() => setIsHovered(true)}
+                  onMouseLeave={() => setIsHovered(false)}
+                  onClick={() => setImageModal(true)}
+                >
+                  {isHovered ? (<AddPhotoAlternateIcon className={classes.imageIcon} fontSize="large"></AddPhotoAlternateIcon>) : (<p></p>)}
+                  <Avatar
+                    src={profile.profilePic}
+                    alt={profile.firstName}
+                    className={classes.large}
+                    style={{ zIndex: "-1" }}
+                  >
+                    {profile.firstName[0]}
+                  </Avatar>
+                </div>
+              </div>
               <Card
                 style={{
                   marginTop: "20px",

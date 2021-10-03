@@ -65,7 +65,7 @@ const Connect = () => {
 
     return () => unSub();
   }, [category, checked, currentState]);
-
+  console.log(posts)
   const getProfile = async () => {
     let profileRef = await db
       .collection("users")

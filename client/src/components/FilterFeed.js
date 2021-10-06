@@ -13,13 +13,12 @@ import {
   Box,
   FormControl,
 } from "@material-ui/core";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { db } from "../firebase";
 import { Autocomplete } from "@material-ui/lab";
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import { Link } from "react-router-dom";
-
 
 const useStyles = makeStyles({
   button: {
@@ -56,6 +55,7 @@ export const FilterFeed = ({
   currentState,
   checked,
   category,
+  sticky
 }) => {
   // const [category, setCategory] = useState(["General"]);
   // const [posts, setPosts] = useState([]);
@@ -97,7 +97,10 @@ export const FilterFeed = ({
   const classes = useStyles();
 
   return (
-    <Paper elevation={5} className="createPost">
+    <Paper
+      elevation={5}
+      className={sticky ? "createPost-sticky" : "createPost"}
+    >
       <h1 id="filterTitle">FILTER</h1>
 
       <Box className={classes.filterFlex}>
@@ -148,8 +151,6 @@ export const FilterFeed = ({
           />
         </FormControl>
 
-        
-
         <Link to="/profile">
           <Button
             style={{ width: "100%" }}
@@ -178,7 +179,7 @@ export const FilterFeed = ({
           <a href="https://yestermorrow.org/learn/courses"> Current Courses</a>{" "}
         </Button>
 
-        <div >
+        <div>
           <div id="footer">
             <h4 style={{ color: "#939598" }}>
               Address: 7865 Main Street, Waitsfield VT 05673

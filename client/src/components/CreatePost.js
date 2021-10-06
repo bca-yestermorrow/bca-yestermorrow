@@ -169,7 +169,7 @@ const CreatePost = ({ profile }) => {
   }
 
   return (
-    <Paper elevation={5} className="createPost">
+    <Paper elevation={5} className="createPost" style={{right: "0"}}>
       <h1 id="createPostTitle">CREATE A POST</h1>
       {profile.firstName && (
         <h3 className="createPostName">

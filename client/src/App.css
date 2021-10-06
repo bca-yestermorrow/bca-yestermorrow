@@ -82,12 +82,10 @@ body {
 }
 
 #connectContainer {
-  display: grid;
-  grid-template-columns: 20vw 55vw 20vw;
+  display: flex;
+  justify-content: space-between;
   padding-bottom: 2em;
   overflow: hidden;
-  
-  padding: 1vw;
   background-color: white;
 }
 
@@ -141,17 +139,36 @@ a:active {
   display: flex;
   /* flex-direction: column-reverse; */
   flex-direction: column;
-  margin: 2em;
-  height: 75vh;
+  margin: 1em;
+  height: 100%;
   overflow-y: scroll;
   background-color: #ffffff;
 }
 
 .createPost {
-  margin: 2em;
+  margin: 1em;
+  margin-top: 2em;
   background-color: #ffffff;
   border-radius: 1vw;
   padding: 10px;
+  width: 20vw;
+	height: 90vh;
+	position: absolute;
+	top: calc(63vh + 1em);
+  overflow-y:scroll;
+}
+
+.createPost-sticky {
+  margin: 1em;
+  margin-top: 2em;
+  background-color: #ffffff;
+  border-radius: 1vw;
+  padding: 10px;
+  width: 20vw;
+	height: 90vh;
+	position: fixed;
+	top: 0;
+  overflow-y:scroll;
 }
 
 #createPostTitle {

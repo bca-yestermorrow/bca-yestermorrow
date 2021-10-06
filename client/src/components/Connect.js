@@ -4,7 +4,7 @@ import { db } from "../firebase";
 import CreatePost from "./CreatePost";
 import Post from "./Post";
 import { FilterFeed } from "./FilterFeed";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useAuth } from "../context/AuthContext";
 import Paper from "@material-ui/core/Paper";
 import yesterLogo from "../assets/Banner-2000X600.png";
@@ -32,6 +32,21 @@ const Connect = () => {
   const [profile, setProfile] = useState("");
   const { currentUser } = useAuth();
   const [currentState, setCurrentState] = useState("");
+  const [sticky, setSticky] = useState("");
+  const connectWrapperRef = useRef(null)
+  
+  console.log(sticky+'yesyes')
+
+  const stickToTop = (evt) => {
+    console.log("XXX WE HITTIN")
+    if (connectWrapperRef.current) {
+      setSticky(connectWrapperRef.current.getBoundingClientRect().top <= 0);
+    }
+  };
+
+  const mainWindow = useRef(null);
+
+
 
   // loads & auto-updates Posts based on user filters
   useEffect(() => {
@@ -84,16 +99,20 @@ const Connect = () => {
   };
 
   useEffect(() => {
+    console.log("This should be hit once")
     getProfile();
+    window.addEventListener("scroll", stickToTop);
+
+    return(()=>{window.removeEventListener("scroll", stickToTop)})
   }, []);
 
   return (
-    <div>
-      <div className="banner-wrapper">
+    <div className="new" ref={mainWindow}>
+      <div  className="banner-wrapper">
         <img className="connect-banner" src={yesterLogo} alt="alt" />
       </div>
-      <div className="connect-wrapper">
-        <div elevation={5} id="connectContainer">
+      <div className="connect-wrapper"  >
+        <div elevation={5} id="connectContainer" ref={connectWrapperRef}>
           <FilterFeed
             setChecked={setChecked}
             checked={checked}
@@ -101,7 +120,11 @@ const Connect = () => {
             category={category}
             currentState={currentState}
             setCurrentState={setCurrentState}
+            sticky={sticky}
           />
+          <div
+            style={{ margin: "12vw" }}
+          ></div>
           <div id="mainFeed">
             {!posts && <p>Welcome Yestermorrow Alumni!</p>}
             {posts &&
@@ -109,6 +132,9 @@ const Connect = () => {
                 <Post post={post} profile={profile} key={index} />
               ))}
           </div>
+          <div
+            style={{ margin: "12vw" }}
+          ></div>
           <CreatePost profile={profile} />
         </div>
       </div>

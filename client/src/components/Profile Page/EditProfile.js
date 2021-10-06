@@ -377,18 +377,7 @@ const EditProfile = ({ handleModalClosed, locationDisplay, setLocationDisplay })
             name="portfolio"
             variant="filled"
           />
-<<<<<<< HEAD:client/src/components/EditProfile.js
-=======
-          <label className="label" for="profile-picture">
-            Upload a profile picture
-          </label>
-          <ProfilePicture
-            getImageURL={getImageURL}
-            setBool={setBool}
-            id="profile-picture"
-          />
           Make my location private<Checkbox checked={locationDisplay === "none"} onClick={displayClickHandler} color="secondary" />
->>>>>>> 4ea8c2cdc00f8031d14a8679a128fbc65b29edb8:client/src/components/Profile Page/EditProfile.js
           <label className="label" for="banner-picture">
             Change your banner image
           </label>

@@ -3,22 +3,8 @@ import { useAuth } from "../../context/AuthContext";
 import { db } from "../../firebase";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-<<<<<<< HEAD:client/src/components/ViewProfile.js
-import firebase from "firebase";
-import yesterLogo from "../assets/YM_Banner.jpg";
-import {
-  Avatar,
-  Button,
-  Card,
-  Divider,
-  Icon,
-  IconButton,
-} from "@material-ui/core";
-
-=======
 import yesterLogo from "../../assets/YM_Banner.jpg";
 import { Avatar, Button, Card, Divider } from "@material-ui/core";
->>>>>>> 4ea8c2cdc00f8031d14a8679a128fbc65b29edb8:client/src/components/Profile Page/ViewProfile.js
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 import AddPhotoAlternateIcon from '@material-ui/icons/AddPhotoAlternate';
 import EditIcon from "@material-ui/icons/Edit";
@@ -108,11 +94,8 @@ const ViewProfile = () => {
     getProfile();
   }, []);
 
-<<<<<<< HEAD:client/src/components/ViewProfile.js
-=======
   const [locationDisplay, setLocationDisplay] = useState("block");
 
->>>>>>> 4ea8c2cdc00f8031d14a8679a128fbc65b29edb8:client/src/components/Profile Page/ViewProfile.js
   return (
     <div>
       <div className="banner-wrapper">
@@ -121,8 +104,6 @@ const ViewProfile = () => {
           src={profile.bannerImg ? profile.bannerImg : yesterLogo}
           alt="alt"
         />
-<<<<<<< HEAD:client/src/components/ViewProfile.js
-=======
         <div class="banner-butt">
         <IconButton
         variant="outlined"
@@ -133,7 +114,6 @@ const ViewProfile = () => {
           <PanoramaIcon fontSize="large" />
         </IconButton>
         </div>
->>>>>>> 4ea8c2cdc00f8031d14a8679a128fbc65b29edb8:client/src/components/Profile Page/ViewProfile.js
       </div>
       <div className="profile-page-wrapper">
         <Link to="/connect">
@@ -148,10 +128,7 @@ const ViewProfile = () => {
         </Link>
         <div className="view-profile-page">
           <div>
-<<<<<<< HEAD:client/src/components/ViewProfile.js
-            {modal && <EditProfile handleModalClosed={handleModalClosed} />}
             {imageModal && <ProfilePicModal handleImageModalClosed={handleImageModalClosed} profile={profile} classes={classes} />}
-=======
             {modal && (
               <EditProfile
                 locationDisplay={locationDisplay}
@@ -159,7 +136,6 @@ const ViewProfile = () => {
                 handleModalClosed={handleModalClosed}
               />
             )}
->>>>>>> 4ea8c2cdc00f8031d14a8679a128fbc65b29edb8:client/src/components/Profile Page/ViewProfile.js
           </div>
 
           {profile ? (

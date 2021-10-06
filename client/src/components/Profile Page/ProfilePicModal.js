@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { Avatar, Button } from "@material-ui/core";
 import ProfilePicture from "./ProfilePicture";
-import { db } from "../firebase";
-import { useAuth } from "../context/AuthContext";
+import { db } from "../../firebase";
+import { useAuth } from "../../context/AuthContext";
 
 const ProfilePicModal = ({ handleImageModalClosed, profile, classes }) => {
   const [imageURL, setImageURL] = useState(profile.profilePic);

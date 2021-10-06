@@ -11,6 +11,7 @@ import Connect from "./components/Connect Page/Connect";
 import EditProfile from "./components/Profile Page/EditProfile"
 import ViewProfile from "./components/Profile Page/ViewProfile"
 import ViewOtherProfile from "./components/Profile Page/ViewOtherProfile";
+import ErrorPage from "./components/ErrorPage";
 
 const yesterTheme = createTheme({
   palette: {
@@ -33,9 +34,9 @@ function App() {
         <PrivateRoute path="/edit-profile" component={EditProfile}></PrivateRoute>
         <PrivateRoute path="/profile" component={ViewProfile}></PrivateRoute>
         <Route path="/other-profile/:userUid" render={({ match }) => ( <ViewOtherProfile userUid={match.params.userUid} />)}></Route>
+        <Route path="*" component={ErrorPage}></Route>
         </ThemeProvider>
       </Switch>
-      
     </BrowserRouter>
   </AuthProvider>
   );

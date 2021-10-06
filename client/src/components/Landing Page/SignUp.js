@@ -1,13 +1,11 @@
 import React from "react";
-import "../App.css";
+import "../../App.css";
 import { useRef, useState } from "react";
-import { useAuth } from "../context/AuthContext";
-import { Link, useHistory } from "react-router-dom";
-//importing db "database" from firebase js file
-import { db } from "../firebase";
-import { TextField, Button, Paper } from "@material-ui/core";
+import { useAuth } from "../../context/AuthContext";
+import { useHistory } from "react-router-dom";
+import { TextField, Button } from "@material-ui/core";
 
-const SignUp = ({ handleSignUpClose, handleModalOpen }) => {
+const SignUp = ({ handleModalOpen }) => {
   //Gives us a reference to the value of input
   const emailRef = useRef();
   const passwordRef = useRef();

@@ -14,12 +14,11 @@ import {
   FormControl,
 } from "@material-ui/core";
 import { useState, useEffect } from "react";
-import { db } from "../firebase";
+import { db } from "../../firebase";
 import { Autocomplete } from "@material-ui/lab";
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import { Link } from "react-router-dom";
-
 
 const useStyles = makeStyles({
   button: {
@@ -49,17 +48,11 @@ const useStyles = makeStyles({
   filterField: {},
 });
 
-export const FilterFeed = ({
-  setChecked,
-  setCategory,
-  setCurrentState,
-  currentState,
-  checked,
-  category,
-}) => {
+export const FilterFeed = ({ setCategory, setCurrentState }) => {
   // const [category, setCategory] = useState(["General"]);
   // const [posts, setPosts] = useState([]);
   const [categoryList, setCategoryList] = useState([]);
+  const [states, setStates] = useState([]);
   useEffect(() => {
     let updatedCatagories = [];
     db.collection("categories")
@@ -72,9 +65,7 @@ export const FilterFeed = ({
       });
   }, []);
 
-  const [states, setStates] = useState([]);
   useEffect(() => {
-    let statesArr = [];
     db.collection("states")
       .doc("states")
       .get()
@@ -87,12 +78,7 @@ export const FilterFeed = ({
     let newArr = [];
     value.forEach((cat) => newArr.push(cat.name));
     setCategory(newArr);
-    console.log("in");
-
-    console.log(value);
   }
-
-  //it will automatically update the value array
 
   const classes = useStyles();
 
@@ -148,8 +134,6 @@ export const FilterFeed = ({
           />
         </FormControl>
 
-        
-
         <Link to="/profile">
           <Button
             style={{ width: "100%" }}
@@ -178,7 +162,7 @@ export const FilterFeed = ({
           <a href="https://yestermorrow.org/learn/courses"> Current Courses</a>{" "}
         </Button>
 
-        <div >
+        <div>
           <div id="footer">
             <h4 style={{ color: "#939598" }}>
               Address: 7865 Main Street, Waitsfield VT 05673

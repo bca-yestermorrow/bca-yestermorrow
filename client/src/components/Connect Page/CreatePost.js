@@ -1,8 +1,8 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import { useAuth } from "../context/AuthContext";
-import { db } from "../firebase";
-import { storage } from "../firebase";
+import { useAuth } from "../../context/AuthContext";
+import { db } from "../../firebase";
+import { storage } from "../../firebase";
 import TextField from "@material-ui/core/TextField";
 import Paper from "@material-ui/core/Paper";
 import Button from "@material-ui/core/Button";
@@ -11,10 +11,8 @@ import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
 import { CircularProgress } from '@material-ui/core'
-// import ListItemText from "@material-ui/core/ListItemText";
 import Select from "@material-ui/core/Select";
-// import Checkbox from "@material-ui/core/Checkbox";
-// import Chip from "@material-ui/core/Chip";
+
 
 const CreatePost = ({ profile }) => {
   const [error, setError] = useState("");

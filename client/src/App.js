@@ -1,5 +1,5 @@
-import Landing from "./components/Landing";
-import Home from "./components/Home";
+import Landing from "./components/Landing Page/Landing";
+
 import "./App.css";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import { AuthProvider } from "./context/AuthContext";
@@ -7,10 +7,10 @@ import { PrivateRoute } from "./components/PrivateRoute";
 import { createTheme } from "@material-ui/core";
 import { ThemeProvider } from "@material-ui/styles";
 
-import Connect from "./components/Connect";
-import EditProfile from "./components/EditProfile"
-import ViewProfile from "./components/ViewProfile"
-import ViewOtherProfile from "./components/ViewOtherProfile";
+import Connect from "./components/Connect Page/Connect";
+import EditProfile from "./components/Profile Page/EditProfile"
+import ViewProfile from "./components/Profile Page/ViewProfile"
+import ViewOtherProfile from "./components/Profile Page/ViewOtherProfile";
 
 const yesterTheme = createTheme({
   palette: {

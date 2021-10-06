@@ -1,6 +1,6 @@
 import React from 'react'
-import { db } from "../firebase";
-import { useAuth } from '../context/AuthContext';
+import { db } from "../../firebase";
+import { useAuth } from '../../context/AuthContext';
 
 export const DeleteBtn = ({handleEditModalClose, post}) => {
     const postRef = db.collection("posts").doc(post.id)
@@ -17,8 +17,7 @@ export const DeleteBtn = ({handleEditModalClose, post}) => {
 
     return (
         <div>
-
-           {currentUser.uid === post.userId && <button style={{ margin: "1em" }} onClick={clickHandler}>
+           {currentUser.uid === post.userId && <button style={{ margin: "1.5em" }} onClick={clickHandler}>
                 DELETE
             </button>}
         </div>

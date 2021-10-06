@@ -1,22 +1,14 @@
 import React from "react";
-import { db } from "../firebase";
+import { db } from "../../firebase";
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom"
-import firebase from "firebase";
-import {
-  Avatar,
-  Button,
-  Card,
-  Divider,
-  Icon
-} from "@material-ui/core";
-import yesterLogo from "../assets/YM_Banner.jpg";
+import { Link } from "react-router-dom";
+import { Avatar, Button, Card, Divider } from "@material-ui/core";
+import yesterLogo from "../../assets/YM_Banner.jpg";
 import { makeStyles } from "@material-ui/core/styles";
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 
 const ViewOtherProfile = ({ userUid }) => {
   const [profile, setProfile] = useState("");
-  const [modal, setModal] = useState("");
 
   const useStyles = makeStyles({
     large: {
@@ -63,17 +55,23 @@ const ViewOtherProfile = ({ userUid }) => {
   return (
     <div>
       <div className="banner-wrapper">
-        <img className="profile-banner" src={profile.bannerImg ? profile.bannerImg : yesterLogo } alt="alt" />
+        <img
+          className="profile-banner"
+          src={profile.bannerImg ? profile.bannerImg : yesterLogo}
+          alt="alt"
+        />
       </div>
       <div className="profile-page-wrapper">
-      <Link to="/connect"><Button
-          variant="contained"
-          color="secondary"
-          startIcon={<ArrowBackIcon />}
-          id="back-button2"
-        >
-          Back
-        </Button></Link>
+        <Link to="/connect">
+          <Button
+            variant="contained"
+            color="secondary"
+            startIcon={<ArrowBackIcon />}
+            id="back-button2"
+          >
+            Back
+          </Button>
+        </Link>
         <div className="view-profile-page">
           {profile ? (
             <div className="view-profile-container">
@@ -84,7 +82,10 @@ const ViewOtherProfile = ({ userUid }) => {
               >
                 {profile.firstName[0]}
               </Avatar>
-              <Card style={{ marginTop: "20px", marginBottom: "20px"}} id="profile-card2">
+              <Card
+                style={{ marginTop: "20px", marginBottom: "20px" }}
+                id="profile-card2"
+              >
                 <div className="user-info">
                   <h3>
                     {profile.firstName} {profile.lastName}

@@ -1,31 +1,25 @@
 import React from "react";
 // import useAuth to get current user id
-import { useAuth } from "../context/AuthContext";
-import { db, storage } from "../firebase";
+import { useAuth } from "../../context/AuthContext";
+import { db } from "../../firebase";
 import { useState, useEffect } from "react";
 import ProfilePicture from "./ProfilePicture";
+import BannerPicture from "./BannerPicture";
 import firebase from "firebase/app";
 import { Autocomplete } from "@material-ui/lab";
 // imports for material ui
-import {
-  TextField,
-  Button,
-  Select,
-  MenuItem,
-  Input,
-} from "@material-ui/core";
+import { TextField, Button, Select, MenuItem, Input, Checkbox } from "@material-ui/core";
 // import for material ui to customize styles
 import { makeStyles } from "@material-ui/core/styles";
 
-const CreateProfile = ({ handleModalClosed }) => {
+const EditProfile = ({ handleModalClosed, locationDisplay, setLocationDisplay }) => {
   const [user, setUser] = useState("");
   const [categories, setCategories] = useState("");
   const [categoryName, setCategoryName] = useState([]);
-  const [imageURL, setImageURL] = useState("");
   const [bool, setBool] = useState(false);
+  const [bannerURL, setBannerURL] = useState("");
   const [states, setStates] = useState([]);
   const [currentState, setCurrentState] = useState("");
-  // const [image, setImage] = useState("");
 
   const { currentUser } = useAuth();
   let categoryArray = [];
@@ -60,9 +54,10 @@ const CreateProfile = ({ handleModalClosed }) => {
   // allows use of classes.whatever on mui components
   const classes = useStyles();
 
-  const getImageURL = (url) => {
-    setImageURL(url);
+  const getBannerURL = (url) => {
+    setBannerURL(url);
   };
+
   // function to get the user document of the current user from the database
   const getCurrentUser = async () => {
     // from the users collection, get the doc with the id of currentuser.uid
@@ -74,8 +69,10 @@ const CreateProfile = ({ handleModalClosed }) => {
         // if there is a doc with this id
         if (doc.exists) {
           // doc.data() is never undefined for query doc snapshots
-
           setUser(doc.data());
+          doc.data().interests.forEach((interest) => {
+            categoryName.push(interest);
+          });
         } else {
           console.log("No document");
         }
@@ -101,8 +98,6 @@ const CreateProfile = ({ handleModalClosed }) => {
   // function to handle form submit. updates user doc with new information
   const handleSubmit = async (evt) => {
     evt.preventDefault();
-    // let userCity = evt.target.city.value;
-    // let userState = evt.target.state.value;
     let userFirstName = evt.target.firstName.value;
     let userLastName = evt.target.lastName.value;
     let userBio = evt.target.bio.value;
@@ -112,6 +107,13 @@ const CreateProfile = ({ handleModalClosed }) => {
     let userState = evt.target.state.value;
     let userCountry = evt.target.country.value;
     let categoryLength = categoryName.length;
+    let removeInterestArray = [];
+
+    categories.forEach((category) => {
+      if (!categoryName.includes(category.name)) {
+        removeInterestArray.push(category.name);
+      }
+    });
 
     let userProfile = await db
       .collection("users")
@@ -119,6 +121,7 @@ const CreateProfile = ({ handleModalClosed }) => {
       .get()
       .then((doc) => {
         // doc.data() is never undefined for query doc snapshots
+        //we are doing this twice, here and getCurrentUser
         // each if statement is separate so the database isnt updated with empty values
         if (doc.exists) {
           // if userFirstName, the user input value, is true, update the user doc
@@ -152,9 +155,14 @@ const CreateProfile = ({ handleModalClosed }) => {
               });
               categoryLength -= 1;
             }
+            removeInterestArray.forEach((category) => {
+              doc.ref.update({
+                interests: firebase.firestore.FieldValue.arrayRemove(category),
+              });
+            });
           }
-          if (imageURL) {
-            doc.ref.update({ profilePic: imageURL });
+          if (bannerURL) {
+            doc.ref.update({ bannerImg: bannerURL });
           }
           if (userCity) {
             doc.ref.update({
@@ -187,12 +195,17 @@ const CreateProfile = ({ handleModalClosed }) => {
     handleModalClosed();
   };
 
+  const handleClose = (evt) => {
+    if (evt.target.className === "edit-profile-container") {
+      handleModalClosed();
+    }
+  };
+
   const handleChange = (evt) => {
     setCategoryName(evt.target.value);
   };
 
   useEffect(() => {
-    let statesArr = [];
     db.collection("states")
       .doc("states")
       .get()
@@ -211,15 +224,25 @@ const CreateProfile = ({ handleModalClosed }) => {
     }
   }, []);
 
+  const displayClickHandler = () => {
+    if(locationDisplay === "block"){
+      setLocationDisplay("none")
+    } else {
+      setLocationDisplay("block")
+    }
+    console.log(locationDisplay)
+  }
   return (
-    <div className="edit-profile-container">
+    <div className="edit-profile-container" onClick={handleClose}>
       <div className="form-container">
         <form
           className="edit-profile-form"
           onSubmit={handleSubmit}
           autoComplete="off"
         >
-          <h1>Create Your Profile</h1>
+          {/* <button onClick={handleModalClosed} className="x-button">
+            X
+          </button> */}
           <div className="fullname">
             <div className="name-label-field-pair">
               <label className="label" for="profile-firstName">
@@ -249,53 +272,52 @@ const CreateProfile = ({ handleModalClosed }) => {
             </div>
           </div>
           <div className="full-location">
-          <div className="location-label-field-pair">
-            <label for="profile-city">City:</label>
-            <TextField
-              className="input-field"
-              style={{width: "96%"}}
-              id="profile-city"
-              label={user.location ? user.location.city : "city"}
-              name="city"
-              variant="filled"
-            />
-          </div>
-          
-          <div className="location-label-field-pair">
-            <label className="label" for="profile-state">
-              State:
-            </label>
-            <Autocomplete
-            
-            onChange={(e) => setCurrentState(e.currentTarget.textContent)}
-            options={states}
-            getOptionLabel={(state) => state.name}
-            style={{ width: "100%" }}
-            renderInput={(params) => (
+            <div className="location-label-field-pair">
+              <label for="profile-city">City:</label>
               <TextField
-                className={classes.filterField}
-                style={{width: "96%"}}
-                {...params}
-                label={user.location ? user.location.state : "State"}
-                name="state"
+                className="input-field"
+                style={{ width: "96%" }}
+                id="profile-city"
+                label={user.location ? user.location.city : "city"}
+                name="city"
                 variant="filled"
               />
-            )}
-          />
-          </div>
-          <div className="location-label-field-pair">
-            <label className="label" for="profile-country">
-              Country:
-            </label>
-            <TextField
-              className="input-field"
-              style={{width: "96%"}}
-              id="profile-country"
-              label={user.location ? user.location.country : "country"}
-              name="country"
-              variant="filled"
-            />
-          </div>
+            </div>
+
+            <div className="location-label-field-pair">
+              <label className="label" for="profile-state">
+                State:
+              </label>
+              <Autocomplete
+                onChange={(e) => setCurrentState(e.currentTarget.textContent)}
+                options={states}
+                getOptionLabel={(state) => state.name}
+                style={{ width: "100%" }}
+                renderInput={(params) => (
+                  <TextField
+                    className={classes.filterField}
+                    style={{ width: "96%" }}
+                    {...params}
+                    label={user.location ? user.location.state : "State"}
+                    name="state"
+                    variant="filled"
+                  />
+                )}
+              />
+            </div>
+            <div className="location-label-field-pair">
+              <label className="label" for="profile-country">
+                Country:
+              </label>
+              <TextField
+                className="input-field"
+                style={{ width: "96%" }}
+                id="profile-country"
+                label={user.location ? user.location.country : "country"}
+                name="country"
+                variant="filled"
+              />
+            </div>
           </div>
           <label className="label" for="profile-interests">
             Interests:
@@ -331,6 +353,7 @@ const CreateProfile = ({ handleModalClosed }) => {
             id="profile-bio"
             label={user.bio}
             name="bio"
+            inputProps={{ maxLength: 500 }}
             variant="filled"
           />
 
@@ -354,6 +377,8 @@ const CreateProfile = ({ handleModalClosed }) => {
             name="portfolio"
             variant="filled"
           />
+<<<<<<< HEAD:client/src/components/EditProfile.js
+=======
           <label className="label" for="profile-picture">
             Upload a profile picture
           </label>
@@ -361,6 +386,16 @@ const CreateProfile = ({ handleModalClosed }) => {
             getImageURL={getImageURL}
             setBool={setBool}
             id="profile-picture"
+          />
+          Make my location private<Checkbox checked={locationDisplay === "none"} onClick={displayClickHandler} color="secondary" />
+>>>>>>> 4ea8c2cdc00f8031d14a8679a128fbc65b29edb8:client/src/components/Profile Page/EditProfile.js
+          <label className="label" for="banner-picture">
+            Change your banner image
+          </label>
+          <BannerPicture
+            getBannerURL={getBannerURL}
+            setBool={setBool}
+            id="banner-picture"
           />
           <Button
             disabled={bool}
@@ -373,8 +408,9 @@ const CreateProfile = ({ handleModalClosed }) => {
           </Button>
         </form>
       </div>
+
     </div>
   );
 };
 
-export default CreateProfile;
+export default EditProfile;

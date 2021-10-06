@@ -1,13 +1,13 @@
 import React from "react";
-import "../App.css";
+import "../../App.css";
 import EditPostModal from "./EditPostModal";
 import { useState, useEffect } from "react";
 import Button from "@material-ui/core/Button";
 import EditIcon from "@material-ui/icons/Edit";
 import TextField from "@material-ui/core/TextField";
 import { Link } from "react-router-dom";
-import { db } from "../firebase";
-import { useAuth } from "../context/AuthContext";
+import { db } from "../../firebase";
+import { useAuth } from "../../context/AuthContext";
 import firebase from "firebase";
 import emailjs from "emailjs-com";
 import { init } from "emailjs-com";
@@ -18,14 +18,11 @@ init("user_9X8kPJFZA4CtJoKGtOw8Y");
 const Post = ({ post, profile }) => {
   const { currentUser } = useAuth();
   const [comment, setComment] = useState([]);
-  const [firstName, setFirstName] = useState(null);
-  const [lastName, setLastName] = useState(null);
   const [docId, setDocId] = useState(null);
   const [commArr, setCommArr] = useState([]);
   const [error, setError] = useState("");
   const [editPost, setEditPost] = useState(false);
   const [editModal, setEditModal] = useState(false);
-  const [user, setUser] = useState("");
 
   const useStyles = makeStyles({
     large: {
@@ -99,7 +96,6 @@ const Post = ({ post, profile }) => {
     }
     sendEmail(e);
     e.target.comment.value = "";
-
     //awaits the db to get the post that has been commented on
     db.collection("posts")
       .where("body", "==", `${post.body}`)
@@ -108,9 +104,8 @@ const Post = ({ post, profile }) => {
         querySnapshot.forEach((doc) => {
           //sets the post doc id to state
           setDocId(doc.id);
-
-          setCommArr(doc.data().comments);
           // setCommArr(doc.comments)
+          setCommArr(doc.data().comments);
         });
       });
   }
@@ -150,12 +145,7 @@ const Post = ({ post, profile }) => {
           <EditIcon
             color="secondary"
             variant="contained"
-            style={{ 
-              position: "relative",
-              right: "10px",
-              top: "10px",
-              cursor: "pointer"
-            }}
+            id="editPostButton" 
             onClick={handleEditModal}
           />
         )}

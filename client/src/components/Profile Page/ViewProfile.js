@@ -8,6 +8,8 @@ import { Avatar, Button, Card, Divider } from "@material-ui/core";
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 import EditIcon from "@material-ui/icons/Edit";
 import { makeStyles } from "@material-ui/core/styles";
+import { IconButton } from "@material-ui/core";
+import PanoramaIcon from '@material-ui/icons/Panorama';
 import EditProfile from "./EditProfile";
 
 const ViewProfile = () => {
@@ -81,6 +83,16 @@ const ViewProfile = () => {
           src={profile.bannerImg ? profile.bannerImg : yesterLogo}
           alt="alt"
         />
+        <div class="banner-butt">
+        <IconButton
+        variant="outlined"
+        color="secondary"
+        className="edit-banner-button"
+        aria-label="Change Cover Photo"
+        >
+          <PanoramaIcon fontSize="large" />
+        </IconButton>
+        </div>
       </div>
       <div className="profile-page-wrapper">
         <Link to="/connect">

@@ -6,20 +6,23 @@ import { Link } from "react-router-dom";
 import yesterLogo from "../../assets/YM_Banner.jpg";
 import { Avatar, Button, Card, Divider } from "@material-ui/core";
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
-import AddPhotoAlternateIcon from '@material-ui/icons/AddPhotoAlternate';
+import AddPhotoAlternateIcon from "@material-ui/icons/AddPhotoAlternate";
 import EditIcon from "@material-ui/icons/Edit";
 import { makeStyles } from "@material-ui/core/styles";
 import { IconButton } from "@material-ui/core";
-import PanoramaIcon from '@material-ui/icons/Panorama';
+import PanoramaIcon from "@material-ui/icons/Panorama";
 import EditProfile from "./EditProfile";
-import ProfilePicModal from "./ProfilePicModal"
+import ProfilePicModal from "./ProfilePicModal";
+import BannerModal from "./BannerModal";
 
 const ViewProfile = () => {
   const [profile, setProfile] = useState("");
   const [modal, setModal] = useState("");
   const [isHovered, setIsHovered] = useState("");
-  const [imageModal, setImageModal] = useState("")
   const [roles, setRoles] = useState("")
+  const [isBanHovered, setIsBanHovered] = useState("");
+  const [imageModal, setImageModal] = useState("");
+  const [bannerModal, setBannerModal] = useState("");
 
   const { currentUser } = useAuth();
 
@@ -54,6 +57,13 @@ const ViewProfile = () => {
       margin: "0",
       zIndex: "100",
       color: "white",
+    },
+    bannerIcon: {
+      position: "absolute",
+      margin: "0",
+      zIndex: "100",
+      color: "white",
+      fontSize: "72px"
     }
   });
 
@@ -69,10 +79,15 @@ const ViewProfile = () => {
   };
 
   const handleImageModalClosed = () => {
-    console.log("in imageclose")
+    console.log("in imageclose");
     setImageModal("");
-    setTimeout(getProfile, 500)
-  }
+    setTimeout(getProfile, 500);
+  };
+
+  const handleBannerModalClosed = () => {
+    setBannerModal("");
+    setTimeout(getProfile, 500);
+  };
 
   const getProfile = async () => {
     let profileRef = await db
@@ -112,15 +127,20 @@ const ViewProfile = () => {
           src={profile.bannerImg ? profile.bannerImg : yesterLogo}
           alt="alt"
         />
-        <div className="banner-butt">
-        <IconButton
-        variant="outlined"
-        color="secondary"
-        className="edit-banner-button"
-        aria-label="Change Cover Photo"
+        <div
+          className={isBanHovered ? "banner-butt" : "banner-butt-unhovered"}
+          onMouseEnter={() => setIsBanHovered(true)}
+          onMouseLeave={() => setIsBanHovered(false)}
+          onClick={() => setBannerModal(true)}
         >
-          <PanoramaIcon fontSize="large" />
-        </IconButton>
+          {isBanHovered ? (
+            <AddPhotoAlternateIcon
+              className={classes.bannerIcon}
+              fontSize="large"
+            ></AddPhotoAlternateIcon>
+          ) : (
+            <p></p>
+          )}
         </div>
       </div>
       <div className="profile-page-wrapper">
@@ -136,7 +156,20 @@ const ViewProfile = () => {
         </Link>
         <div className="view-profile-page">
           <div>
-            {imageModal && <ProfilePicModal handleImageModalClosed={handleImageModalClosed} profile={profile} classes={classes} />}
+            {bannerModal && (
+              <BannerModal
+              handleBannerModalClosed={handleBannerModalClosed}
+              profile={profile}
+              yesterLogo={yesterLogo}
+              />
+            )}
+            {imageModal && (
+              <ProfilePicModal
+                handleImageModalClosed={handleImageModalClosed}
+                profile={profile}
+                classes={classes}
+              />
+            )}
             {modal && (
               <EditProfile
                 locationDisplay={locationDisplay}
@@ -150,12 +183,21 @@ const ViewProfile = () => {
             <div className="view-profile-container">
               <div className="profile-pic-wrapper">
                 <div
-                  className={isHovered ? "profile-pic" : "profile-pic-unhovered"}
+                  className={
+                    isHovered ? "profile-pic" : "profile-pic-unhovered"
+                  }
                   onMouseEnter={() => setIsHovered(true)}
                   onMouseLeave={() => setIsHovered(false)}
                   onClick={() => setImageModal(true)}
                 >
-                  {isHovered ? (<AddPhotoAlternateIcon className={classes.imageIcon} fontSize="large"></AddPhotoAlternateIcon>) : (<p></p>)}
+                  {isHovered ? (
+                    <AddPhotoAlternateIcon
+                      className={classes.imageIcon}
+                      fontSize="large"
+                    ></AddPhotoAlternateIcon>
+                  ) : (
+                    <p></p>
+                  )}
                   <Avatar
                     src={profile.profilePic}
                     alt={profile.firstName}

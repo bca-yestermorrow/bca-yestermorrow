@@ -3,8 +3,6 @@ import React from "react";
 import { useAuth } from "../../context/AuthContext";
 import { db } from "../../firebase";
 import { useState, useEffect } from "react";
-import ProfilePicture from "./ProfilePicture";
-import BannerPicture from "./BannerPicture";
 import firebase from "firebase/app";
 import { Autocomplete } from "@material-ui/lab";
 // imports for material ui
@@ -30,7 +28,7 @@ const EditProfile = ({
   const [roles, setRoles] = useState([]);
   const [userRoles, setUserRoles] = useState([])
   const [bool, setBool] = useState(false);
-  const [bannerURL, setBannerURL] = useState("");
+
   const [states, setStates] = useState([]);
   const [currentState, setCurrentState] = useState("");
 
@@ -66,10 +64,6 @@ const EditProfile = ({
   });
   // allows use of classes.whatever on mui components
   const classes = useStyles();
-
-  const getBannerURL = (url) => {
-    setBannerURL(url);
-  };
 
   // function to get the user document of the current user from the database
   const getCurrentUser = async () => {
@@ -202,10 +196,6 @@ const EditProfile = ({
                 roles: firebase.firestore.FieldValue.arrayRemove(role),
               });
             });
-          }
-
-          if (bannerURL) {
-            doc.ref.update({ bannerImg: bannerURL });
           }
           if (userCity) {
             doc.ref.update({
@@ -391,7 +381,6 @@ const EditProfile = ({
                 );
               })}
           </Select>
-
           <label className="label" for="profile-bio">
             Bio:
           </label>
@@ -403,7 +392,6 @@ const EditProfile = ({
             inputProps={{ maxLength: 500 }}
             variant="filled"
           />
-
           <label className="label" for="profile-projects">
             Projects:
           </label>
@@ -450,19 +438,6 @@ const EditProfile = ({
             checked={locationDisplay === "none"}
             onClick={displayClickHandler}
             color="secondary"
-          />
-          <label
-            style={{ display: "block" }}
-            className="label"
-            for="banner-picture"
-          >
-            Change your banner image
-          </label>
-          <BannerPicture
-            getBannerURL={getBannerURL}
-            setBool={setBool}
-            id="banner-picture"
-            className="input-field"
           />
           <Button
             disabled={bool}

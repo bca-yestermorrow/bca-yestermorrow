@@ -35,7 +35,6 @@ function App() {
         <Route path="/other-profile/:userUid" render={({ match }) => ( <ViewOtherProfile userUid={match.params.userUid} />)}></Route>
         </ThemeProvider>
       </Switch>
-      
     </BrowserRouter>
   </AuthProvider>
   );

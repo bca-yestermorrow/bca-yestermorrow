@@ -8,14 +8,27 @@ import BannerPicture from "./BannerPicture";
 import firebase from "firebase/app";
 import { Autocomplete } from "@material-ui/lab";
 // imports for material ui
-import { TextField, Button, Select, MenuItem, Input, Checkbox } from "@material-ui/core";
+import {
+  TextField,
+  Button,
+  Select,
+  MenuItem,
+  Input,
+  Checkbox,
+} from "@material-ui/core";
 // import for material ui to customize styles
 import { makeStyles } from "@material-ui/core/styles";
 
-const EditProfile = ({ handleModalClosed, locationDisplay, setLocationDisplay }) => {
+const EditProfile = ({
+  handleModalClosed,
+  locationDisplay,
+  setLocationDisplay,
+}) => {
   const [user, setUser] = useState("");
   const [categories, setCategories] = useState("");
   const [categoryName, setCategoryName] = useState([]);
+  const [roles, setRoles] = useState([]);
+  const [userRoles, setUserRoles] = useState([])
   const [bool, setBool] = useState(false);
   const [bannerURL, setBannerURL] = useState("");
   const [states, setStates] = useState([]);
@@ -73,6 +86,9 @@ const EditProfile = ({ handleModalClosed, locationDisplay, setLocationDisplay })
           doc.data().interests.forEach((interest) => {
             categoryName.push(interest);
           });
+          doc.data().roles.forEach((role) => {
+            userRoles.push(role)
+          })
         } else {
           console.log("No document");
         }
@@ -94,6 +110,7 @@ const EditProfile = ({ handleModalClosed, locationDisplay, setLocationDisplay })
       });
     // setCategories to the array of docs to be used in the form dropdown
     setCategories(categoryArray);
+    setRoles(["Student", "Intern", "Staff/Instructor"])
   };
   // function to handle form submit. updates user doc with new information
   const handleSubmit = async (evt) => {
@@ -107,13 +124,21 @@ const EditProfile = ({ handleModalClosed, locationDisplay, setLocationDisplay })
     let userState = evt.target.state.value;
     let userCountry = evt.target.country.value;
     let categoryLength = categoryName.length;
+    let rolesLength = userRoles.length;
     let removeInterestArray = [];
+    let removeRoleArray = []
 
     categories.forEach((category) => {
       if (!categoryName.includes(category.name)) {
         removeInterestArray.push(category.name);
       }
     });
+
+    roles.forEach((role) => {
+      if (!userRoles.includes(role)) {
+        removeRoleArray.push(role)
+      }
+    })
 
     let userProfile = await db
       .collection("users")
@@ -161,6 +186,24 @@ const EditProfile = ({ handleModalClosed, locationDisplay, setLocationDisplay })
               });
             });
           }
+
+          if (rolesLength > 0) {
+            rolesLength = rolesLength - 1;
+            while (rolesLength >= 0) {
+              doc.ref.update({
+                roles: firebase.firestore.FieldValue.arrayUnion(
+                  userRoles[rolesLength]
+                ),
+              });
+              rolesLength -= 1;
+            }
+            removeRoleArray.forEach((role) => {
+              doc.ref.update({
+                roles: firebase.firestore.FieldValue.arrayRemove(role),
+              });
+            });
+          }
+
           if (bannerURL) {
             doc.ref.update({ bannerImg: bannerURL });
           }
@@ -205,6 +248,10 @@ const EditProfile = ({ handleModalClosed, locationDisplay, setLocationDisplay })
     setCategoryName(evt.target.value);
   };
 
+  const handleRoleChange = (evt) => {
+    setUserRoles(evt.target.value)
+  }
+
   useEffect(() => {
     db.collection("states")
       .doc("states")
@@ -225,13 +272,13 @@ const EditProfile = ({ handleModalClosed, locationDisplay, setLocationDisplay })
   }, []);
 
   const displayClickHandler = () => {
-    if(locationDisplay === "block"){
-      setLocationDisplay("none")
+    if (locationDisplay === "block") {
+      setLocationDisplay("none");
     } else {
-      setLocationDisplay("block")
+      setLocationDisplay("block");
     }
-    console.log(locationDisplay)
-  }
+    console.log(locationDisplay);
+  };
   return (
     <div className="edit-profile-container" onClick={handleClose}>
       <div className="form-container">
@@ -377,25 +424,45 @@ const EditProfile = ({ handleModalClosed, locationDisplay, setLocationDisplay })
             name="portfolio"
             variant="filled"
           />
-<<<<<<< HEAD:client/src/components/EditProfile.js
-=======
-          <label className="label" for="profile-picture">
-            Upload a profile picture
+          <label className="label" for="select-role">
+            Role:
           </label>
-          <ProfilePicture
-            getImageURL={getImageURL}
-            setBool={setBool}
-            id="profile-picture"
+          <Select
+            id="select-role"
+            className="input-field"
+            onChange={handleRoleChange}
+            input={<Input />}
+            value={userRoles}
+            multiple
+          >
+            <MenuItem className={classes.selectedGreen} value="Student">Student</MenuItem>
+            <MenuItem className={classes.selectedGreen} value="Intern">Intern</MenuItem>
+            <MenuItem className={classes.selectedGreen} value="Staff/Instructor">
+              Staff/Instructor
+            </MenuItem>
+          </Select>
+
+          <label className="label" for="private-check">
+            Make my location private
+          </label>
+          <Checkbox
+            id="private-check"
+            checked={locationDisplay === "none"}
+            onClick={displayClickHandler}
+            color="secondary"
           />
-          Make my location private<Checkbox checked={locationDisplay === "none"} onClick={displayClickHandler} color="secondary" />
->>>>>>> 4ea8c2cdc00f8031d14a8679a128fbc65b29edb8:client/src/components/Profile Page/EditProfile.js
-          <label className="label" for="banner-picture">
+          <label
+            style={{ display: "block" }}
+            className="label"
+            for="banner-picture"
+          >
             Change your banner image
           </label>
           <BannerPicture
             getBannerURL={getBannerURL}
             setBool={setBool}
             id="banner-picture"
+            className="input-field"
           />
           <Button
             disabled={bool}
@@ -408,7 +475,6 @@ const EditProfile = ({ handleModalClosed, locationDisplay, setLocationDisplay })
           </Button>
         </form>
       </div>
-
     </div>
   );
 };

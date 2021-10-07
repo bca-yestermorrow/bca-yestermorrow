@@ -86,7 +86,7 @@ body {
   grid-template-columns: 20vw 55vw 20vw;
   padding-bottom: 2em;
   overflow: hidden;
-  
+
   padding: 1vw;
   background-color: white;
 }
@@ -254,7 +254,7 @@ a:active {
   right: 0;
   position: absolute;
   margin: 0px 10px 0 0;
-  cursor: pointer
+  cursor: pointer;
 }
 
 #deleteButton {
@@ -481,6 +481,7 @@ a:active {
 .profile-pic-wrapper {
   position: relative;
   z-index: 10;
+  border-radius: 50%;
 }
 
 .profile-pic {
@@ -491,7 +492,7 @@ a:active {
   height: 200px;
   cursor: pointer;
   border-radius: 50%;
-  box-shadow: inset 0 0 0 1000px rgba(0, 0, 0, .5);
+  box-shadow: inset 0 0 0 1000px rgba(0, 0, 0, 0.5);
   transition: box-shadow 100ms;
 }
 
@@ -606,10 +607,9 @@ a:active {
   height: 100%;
 }
 
-.embed{
+.embed {
   width: 100%;
   height: 100%;
- 
 }
 
 #mainLanding {
@@ -636,6 +636,34 @@ a:active {
   padding-left: 10px;
 }
 
+/* ------------------- Profile Pic Modal ------------------- */
+
+.profile-pic-modal {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.banner-butt-unhovered {
+  position: absolute;
+  width: 100%;
+  height: 55vh;
+}
+
+.banner-butt {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  width: 100%;
+  height: 55vh;
+  cursor: pointer;
+  box-shadow: inset 0 0 0 1000px rgba(0, 0, 0, 0.5);
+  transition: box-shadow 100ms;
+}
+
 .profile-banner {
   position: fixed;
   display: block;
@@ -646,27 +674,6 @@ a:active {
   background-repeat: no-repeat;
   background-position: center center;
   background-color: #000000;
-}
-
-/* ------------------- Profile Pic Modal ------------------- */
-
-.profile-pic-modal {
-  height: 100%;
-  display: flex;
-  flex-direction:column;
-  justify-content: space-around;
-  align-items: center;
-}
-
-.edit-banner-button{
-  position: absolute;
-  opacity: 0;
-  width: 100%;
-  height: 55vh;
-}
-
-.edit-banner-button:hover {
-  opacity: .5
 }
 
 /* ------------------- ERROR PAGE ------------------- */
@@ -685,10 +692,10 @@ a:active {
 #errorTitle {
   font-size: 7em;
   text-align: center;
-  margin-bottom: .5em;
+  margin-bottom: 0.5em;
 }
 
-.errorMessage{
+.errorMessage {
   text-align: center;
   margin-top: 2em;
   margin-bottom: 2em;

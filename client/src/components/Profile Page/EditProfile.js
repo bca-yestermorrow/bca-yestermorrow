@@ -8,16 +8,27 @@ import BannerPicture from "./BannerPicture";
 import firebase from "firebase/app";
 import { Autocomplete } from "@material-ui/lab";
 // imports for material ui
-import { TextField, Button, Select, MenuItem, Input, Checkbox } from "@material-ui/core";
+import {
+  TextField,
+  Button,
+  Select,
+  MenuItem,
+  Input,
+  Checkbox,
+} from "@material-ui/core";
 // import for material ui to customize styles
 import { makeStyles } from "@material-ui/core/styles";
 
-const EditProfile = ({ handleModalClosed, locationDisplay, setLocationDisplay }) => {
+const EditProfile = ({
+  handleModalClosed,
+  locationDisplay,
+  setLocationDisplay,
+}) => {
   const [user, setUser] = useState("");
   const [categories, setCategories] = useState("");
   const [categoryName, setCategoryName] = useState([]);
   const [bool, setBool] = useState(false);
-  const [bannerURL, setBannerURL] = useState("");
+
   const [states, setStates] = useState([]);
   const [currentState, setCurrentState] = useState("");
 
@@ -53,10 +64,6 @@ const EditProfile = ({ handleModalClosed, locationDisplay, setLocationDisplay })
   });
   // allows use of classes.whatever on mui components
   const classes = useStyles();
-
-  const getBannerURL = (url) => {
-    setBannerURL(url);
-  };
 
   // function to get the user document of the current user from the database
   const getCurrentUser = async () => {
@@ -161,9 +168,7 @@ const EditProfile = ({ handleModalClosed, locationDisplay, setLocationDisplay })
               });
             });
           }
-          if (bannerURL) {
-            doc.ref.update({ bannerImg: bannerURL });
-          }
+
           if (userCity) {
             doc.ref.update({
               "location.city": userCity,
@@ -225,13 +230,13 @@ const EditProfile = ({ handleModalClosed, locationDisplay, setLocationDisplay })
   }, []);
 
   const displayClickHandler = () => {
-    if(locationDisplay === "block"){
-      setLocationDisplay("none")
+    if (locationDisplay === "block") {
+      setLocationDisplay("none");
     } else {
-      setLocationDisplay("block")
+      setLocationDisplay("block");
     }
-    console.log(locationDisplay)
-  }
+    console.log(locationDisplay);
+  };
   return (
     <div className="edit-profile-container" onClick={handleClose}>
       <div className="form-container">
@@ -344,7 +349,6 @@ const EditProfile = ({ handleModalClosed, locationDisplay, setLocationDisplay })
                 );
               })}
           </Select>
-
           <label className="label" for="profile-bio">
             Bio:
           </label>
@@ -356,7 +360,6 @@ const EditProfile = ({ handleModalClosed, locationDisplay, setLocationDisplay })
             inputProps={{ maxLength: 500 }}
             variant="filled"
           />
-
           <label className="label" for="profile-projects">
             Projects:
           </label>
@@ -377,14 +380,11 @@ const EditProfile = ({ handleModalClosed, locationDisplay, setLocationDisplay })
             name="portfolio"
             variant="filled"
           />
-          Make my location private<Checkbox checked={locationDisplay === "none"} onClick={displayClickHandler} color="secondary" />
-          <label className="label" for="banner-picture">
-            Change your banner image
-          </label>
-          <BannerPicture
-            getBannerURL={getBannerURL}
-            setBool={setBool}
-            id="banner-picture"
+          Make my location private
+          <Checkbox
+            checked={locationDisplay === "none"}
+            onClick={displayClickHandler}
+            color="secondary"
           />
           <Button
             disabled={bool}
@@ -397,7 +397,6 @@ const EditProfile = ({ handleModalClosed, locationDisplay, setLocationDisplay })
           </Button>
         </form>
       </div>
-
     </div>
   );
 };

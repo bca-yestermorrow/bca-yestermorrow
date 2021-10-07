@@ -93,13 +93,15 @@ const ViewProfile = () => {
   };
 
   const displayRoles = () => {
+    console.log(profile)
+    console.log(profile.roles)
     setRoles(profile.roles.join(", "))
   }
 
   useEffect(() => {
     getProfile();
   }, []);
-
+  console.log(profile)
   const [locationDisplay, setLocationDisplay] = useState("block");
 
   return (
@@ -110,7 +112,7 @@ const ViewProfile = () => {
           src={profile.bannerImg ? profile.bannerImg : yesterLogo}
           alt="alt"
         />
-        <div class="banner-butt">
+        <div className="banner-butt">
         <IconButton
         variant="outlined"
         color="secondary"
@@ -195,7 +197,17 @@ const ViewProfile = () => {
                     </p>
                   )}
                   <p className="user-links">{profile.portfolio}</p>
-                  <p className="user-roles">{roles}</p>
+                  {profile.roles ? (
+                      profile.roles.map((role, index) => {
+                        return (
+                          <p className="user-roles" key={index}>
+                            {role}
+                          </p>
+                        );
+                      })
+                    ) : (
+                      <p></p>
+                    )}
                 </div>
                 <Divider variant="middle" />
                 <div className="bio-div">

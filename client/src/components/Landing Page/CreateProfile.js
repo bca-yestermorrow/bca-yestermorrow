@@ -15,6 +15,8 @@ const CreateProfile = ({ handleModalClosed }) => {
   const [user, setUser] = useState("");
   const [categories, setCategories] = useState("");
   const [categoryName, setCategoryName] = useState([]);
+  const [roles, setRoles] = useState([]);
+  const [userRoles, setUserRoles] = useState([])
   const [imageURL, setImageURL] = useState("");
   const [bool, setBool] = useState(false);
   const [states, setStates] = useState([]);
@@ -92,6 +94,7 @@ const CreateProfile = ({ handleModalClosed }) => {
       });
     // setCategories to the array of docs to be used in the form dropdown
     setCategories(categoryArray);
+    setRoles(["Student", "Intern", "Staff/Instructor"])
   };
   // function to handle form submit. updates user doc with new information
   const handleSubmit = async (evt) => {
@@ -107,6 +110,7 @@ const CreateProfile = ({ handleModalClosed }) => {
     let userState = evt.target.state.value;
     let userCountry = evt.target.country.value;
     let categoryLength = categoryName.length;
+    let rolesLength = userRoles.length;
 
     if (userState === "") {
       return setError("Please select a state.");
@@ -156,6 +160,17 @@ const CreateProfile = ({ handleModalClosed }) => {
               categoryLength -= 1;
             }
           }
+          if (rolesLength > 0) {
+            rolesLength = rolesLength - 1;
+            while (rolesLength >= 0) {
+              doc.ref.update({
+                roles: firebase.firestore.FieldValue.arrayUnion(
+                  userRoles[rolesLength]
+                ),
+              });
+              rolesLength -= 1;
+            }
+          }
           if (imageURL) {
             doc.ref.update({ profilePic: imageURL });
           }
@@ -193,6 +208,10 @@ const CreateProfile = ({ handleModalClosed }) => {
   const handleChange = (evt) => {
     setCategoryName(evt.target.value);
   };
+
+  const handleRoleChange = (evt) => {
+    setUserRoles(evt.target.value)
+  }
 
   useEffect(() => {
     db.collection("states")
@@ -356,6 +375,23 @@ const CreateProfile = ({ handleModalClosed }) => {
             name="portfolio"
             variant="filled"
           />
+          <label className="label" for="select-role">
+            Role:
+          </label>
+          <Select
+            id="select-role"
+            className="input-field"
+            onChange={handleRoleChange}
+            input={<Input />}
+            value={userRoles}
+            multiple
+          >
+            <MenuItem className={classes.selectedGreen} value="Student">Student</MenuItem>
+            <MenuItem className={classes.selectedGreen} value="Intern">Intern</MenuItem>
+            <MenuItem className={classes.selectedGreen} value="Staff/Instructor">
+              Staff/Instructor
+            </MenuItem>
+          </Select>
           <label className="label" for="profile-picture">
             Upload a profile picture
           </label>

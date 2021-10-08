@@ -16,7 +16,7 @@ import Select from "@material-ui/core/Select";
 // import Checkbox from "@material-ui/core/Checkbox";
 // import Chip from "@material-ui/core/Chip";
 
-const CreatePost = ({ profile }) => {
+const CreatePost = ({ profile, sticky }) => {
   const [error, setError] = useState("");
   const [categories, setCategories] = useState([]);
   const [image, setImage] = useState("");
@@ -169,7 +169,7 @@ const CreatePost = ({ profile }) => {
   }
 
   return (
-    <Paper elevation={5} className="createPost" style={{right: "0"}}>
+    <Paper elevation={5} className={sticky ? "createPost-sticky" : "createPost"} style={{right: "0"}}>
       <h1 id="createPostTitle">CREATE A POST</h1>
       {profile.firstName && (
         <h3 className="createPostName">

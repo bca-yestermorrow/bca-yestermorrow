@@ -100,6 +100,7 @@ export const FilterFeed = ({
     <Paper
       elevation={5}
       className={sticky ? "createPost-sticky" : "createPost"}
+      style={{ overflowY: "hidden" }}
     >
       <h1 id="filterTitle">FILTER</h1>
 

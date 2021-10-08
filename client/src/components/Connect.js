@@ -46,7 +46,9 @@ const Connect = () => {
 
   const mainWindow = useRef(null);
 
-
+  const scrolling = (evt) => {
+    console.log(evt.target + " here")
+  }
 
   // loads & auto-updates Posts based on user filters
   useEffect(() => {
@@ -57,6 +59,8 @@ const Connect = () => {
     }
 
     const unSub = query.onSnapshot((querySnap) => {
+      console.log(querySnap)
+      console.log(querySnap.docs)
       const updatedPosts = querySnap.docs.map((doc) => ({
         id: doc.id,
 
@@ -106,13 +110,15 @@ const Connect = () => {
     return(()=>{window.removeEventListener("scroll", stickToTop)})
   }, []);
 
+  console.log(posts)
+
   return (
-    <div className="new" ref={mainWindow}>
-      <div  className="banner-wrapper">
+    <div className="new" ref={mainWindow} onScroll={scrolling}>
+      <div  className="banner-wrapper" onScroll={scrolling}>
         <img className="connect-banner" src={yesterLogo} alt="alt" />
       </div>
-      <div className="connect-wrapper"  >
-        <div elevation={5} id="connectContainer" ref={connectWrapperRef}>
+      <div className="connect-wrapper" onScroll={scrolling} >
+        <div elevation={5} id="connectContainer" ref={connectWrapperRef} onScroll={scrolling}>
           <FilterFeed
             setChecked={setChecked}
             checked={checked}
@@ -125,17 +131,17 @@ const Connect = () => {
           <div
             style={{ margin: "12vw" }}
           ></div>
-          <div id="mainFeed">
+          <div id="mainFeed" onScroll={scrolling}>
             {!posts && <p>Welcome Yestermorrow Alumni!</p>}
             {posts &&
               posts.map((post, index) => (
                 <Post post={post} profile={profile} key={index} />
               ))}
           </div>
-          <div
+          <div onScroll={scrolling}
             style={{ margin: "12vw" }}
           ></div>
-          <CreatePost profile={profile} />
+          <CreatePost profile={profile} sticky={sticky} />
         </div>
       </div>
     </div>

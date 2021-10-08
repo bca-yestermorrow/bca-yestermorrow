@@ -23,13 +23,16 @@ const yesterTheme = createTheme({
   }
 })
 function App() {
+
+  
+
   return (
     <AuthProvider>
     <BrowserRouter>
       <Switch>
         <ThemeProvider theme={yesterTheme}>
         <Route exact path="/" component={Landing}></Route>
-        <PrivateRoute path="/connect" component={Connect} onScroll={()=>{console.log("heyooo")}}></PrivateRoute>
+        <PrivateRoute path="/connect" component={Connect}></PrivateRoute>
         <PrivateRoute path="/edit-profile" component={EditProfile}></PrivateRoute>
         <PrivateRoute path="/profile" component={ViewProfile}></PrivateRoute>
         <Route path="/other-profile/:userUid" render={({ match }) => ( <ViewOtherProfile userUid={match.params.userUid} />)}></Route>

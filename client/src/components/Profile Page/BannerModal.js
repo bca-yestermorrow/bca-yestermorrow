@@ -3,8 +3,14 @@ import { Button } from "@material-ui/core";
 import BannerPicture from "./BannerPicture";
 import { db } from "../../firebase";
 import { useAuth } from "../../context/AuthContext";
+import { LoadingButton } from "@mui/lab";
 
-const BannerModal = ({ handleBannerModalClosed, profile, yesterLogo }) => {
+const BannerModal = ({
+  handleBannerModalClosed,
+  profile,
+  yesterLogo,
+  classes,
+}) => {
   const [bannerURL, setBannerURL] = useState(profile.bannerImg);
   const [bool, setBool] = useState(false);
   const { currentUser } = useAuth();
@@ -47,7 +53,7 @@ const BannerModal = ({ handleBannerModalClosed, profile, yesterLogo }) => {
           <img
             src={bannerURL ? bannerURL : yesterLogo}
             alt={profile.firstName}
-            style={{ maxWidth: "100%", maxHeight: "80%"}}
+            style={{ maxWidth: "100%", maxHeight: "80%" }}
           />
 
           <form onSubmit={handleSubmit}>
@@ -56,15 +62,15 @@ const BannerModal = ({ handleBannerModalClosed, profile, yesterLogo }) => {
               setBool={setBool}
               id="profile-picture"
             />
-            <Button
+            <LoadingButton
               disabled={bool}
               id="profile-submit"
-              color="secondary"
               variant="contained"
               type="submit"
+              color="primary"
             >
               Submit
-            </Button>
+            </LoadingButton>
           </form>
         </div>
       </div>

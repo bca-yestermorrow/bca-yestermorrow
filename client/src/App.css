@@ -572,6 +572,7 @@ a:active {
 
 #profile-submit {
   margin-top: 15px;
+  background-color: #59833b;
 }
 
 @media screen and (max-width: 1050px) {
@@ -675,6 +676,7 @@ a:active {
   background-position: center center;
   background-color: #000000;
 }
+
 
 /* ------------------- ERROR PAGE ------------------- */
 

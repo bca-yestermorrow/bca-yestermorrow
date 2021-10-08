@@ -9,8 +9,6 @@ import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 import AddPhotoAlternateIcon from "@material-ui/icons/AddPhotoAlternate";
 import EditIcon from "@material-ui/icons/Edit";
 import { makeStyles } from "@material-ui/core/styles";
-import { IconButton } from "@material-ui/core";
-import PanoramaIcon from "@material-ui/icons/Panorama";
 import EditProfile from "./EditProfile";
 import ProfilePicModal from "./ProfilePicModal";
 import BannerModal from "./BannerModal";
@@ -65,6 +63,7 @@ const ViewProfile = () => {
       color: "white",
       fontSize: "72px"
     }
+   
   });
 
   const classes = useStyles();
@@ -161,6 +160,7 @@ const ViewProfile = () => {
               handleBannerModalClosed={handleBannerModalClosed}
               profile={profile}
               yesterLogo={yesterLogo}
+              classes={classes}
               />
             )}
             {imageModal && (

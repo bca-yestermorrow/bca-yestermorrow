@@ -8,11 +8,22 @@ import BannerPicture from "./BannerPicture";
 import firebase from "firebase/app";
 import { Autocomplete } from "@material-ui/lab";
 // imports for material ui
-import { TextField, Button, Select, MenuItem, Input, Checkbox } from "@material-ui/core";
+import {
+  TextField,
+  Button,
+  Select,
+  MenuItem,
+  Input,
+  Checkbox,
+} from "@material-ui/core";
 // import for material ui to customize styles
 import { makeStyles } from "@material-ui/core/styles";
 
-const EditProfile = ({ handleModalClosed, locationDisplay, setLocationDisplay }) => {
+const EditProfile = ({
+  handleModalClosed,
+  locationDisplay,
+  setLocationDisplay,
+}) => {
   const [user, setUser] = useState("");
   const [categories, setCategories] = useState("");
   const [categoryName, setCategoryName] = useState([]);
@@ -103,6 +114,17 @@ const EditProfile = ({ handleModalClosed, locationDisplay, setLocationDisplay })
   // function to handle form submit. updates user doc with new information
   const handleSubmit = async (evt) => {
     evt.preventDefault();
+    const formVals = {
+      firstName: evt.target.firstName.value,
+      lastName: evt.target.lastName.value,
+      bio: evt.target.bio.value,
+      projects :evt.target.projects.value,
+      portfolio : evt.target.portfolio.value,
+     "location.city" : evt.target.city.value,
+     "location.state" : evt.target.state.value,
+     "location.country": evt.target.country.value,
+     
+    }
     let userFirstName = evt.target.firstName.value;
     let userLastName = evt.target.lastName.value;
     let userBio = evt.target.bio.value;
@@ -113,13 +135,25 @@ const EditProfile = ({ handleModalClosed, locationDisplay, setLocationDisplay })
     let userCountry = evt.target.country.value;
     let categoryLength = categoryName.length;
     let removeInterestArray = [];
-
+    // console.log(formVals)
+    
     categories.forEach((category) => {
       if (!categoryName.includes(category.name)) {
         removeInterestArray.push(category.name);
       }
     });
 
+    // let result = Object.entries(formVals).reduce((a, [k, v]) => (v == "" ? a : (a[k]=v, a)), {})
+  
+
+    function removeEmptyVal(obj) {
+      for (let property in obj){
+        if(obj[property] === '') {
+          delete obj[property]
+        }
+      }
+      return obj 
+    }
     let userProfile = await db
       .collection("users")
       .doc(currentUser.uid)
@@ -129,29 +163,14 @@ const EditProfile = ({ handleModalClosed, locationDisplay, setLocationDisplay })
         //we are doing this twice, here and getCurrentUser
         // each if statement is separate so the database isnt updated with empty values
         if (doc.exists) {
-          // if userFirstName, the user input value, is true, update the user doc
-          if (userFirstName) {
-            doc.ref.update({ firstName: userFirstName });
-          }
-          if (userLastName) {
-            doc.ref.update({
-              lastName: userLastName,
-            });
-          }
-          if (userBio) {
-            doc.ref.update({
-              bio: userBio,
-            });
-          }
-          if (userProjects) {
-            doc.ref.update({ projects: userProjects });
-          }
-          if (userPortfolio) {
-            doc.ref.update({ portfolio: userPortfolio });
-          }
-
+          
+          doc.ref.update(removeEmptyVal(formVals))
           if (categoryLength > 0) {
+            //if cat is selected
+
             categoryLength = categoryLength - 1;
+
+            //update each catagorey in array
             while (categoryLength >= 0) {
               doc.ref.update({
                 interests: firebase.firestore.FieldValue.arrayUnion(
@@ -160,33 +179,15 @@ const EditProfile = ({ handleModalClosed, locationDisplay, setLocationDisplay })
               });
               categoryLength -= 1;
             }
+
+            //if catagorey was already in catagories it would add cat again 
             removeInterestArray.forEach((category) => {
               doc.ref.update({
                 interests: firebase.firestore.FieldValue.arrayRemove(category),
               });
             });
           }
-          if (imageURL) {
-            doc.ref.update({ profilePic: imageURL });
-          }
-          if (bannerURL) {
-            doc.ref.update({ bannerImg: bannerURL });
-          }
-          if (userCity) {
-            doc.ref.update({
-              "location.city": userCity,
-            });
-          }
-          if (userState) {
-            doc.ref.update({
-              "location.state": userState,
-            });
-          }
-          if (userCountry) {
-            doc.ref.update({
-              "location.country": userCountry,
-            });
-          }
+         
 
           setUser(doc.data());
         } else {
@@ -233,13 +234,13 @@ const EditProfile = ({ handleModalClosed, locationDisplay, setLocationDisplay })
   }, []);
 
   const displayClickHandler = () => {
-    if(locationDisplay === "block"){
-      setLocationDisplay("none")
+    if (locationDisplay === "block") {
+      setLocationDisplay("none");
     } else {
-      setLocationDisplay("block")
+      setLocationDisplay("block");
     }
-    console.log(locationDisplay)
-  }
+    console.log(locationDisplay);
+  };
   return (
     <div className="edit-profile-container" onClick={handleClose}>
       <div className="form-container">
@@ -352,7 +353,6 @@ const EditProfile = ({ handleModalClosed, locationDisplay, setLocationDisplay })
                 );
               })}
           </Select>
-
           <label className="label" for="profile-bio">
             Bio:
           </label>
@@ -364,7 +364,6 @@ const EditProfile = ({ handleModalClosed, locationDisplay, setLocationDisplay })
             inputProps={{ maxLength: 500 }}
             variant="filled"
           />
-
           <label className="label" for="profile-projects">
             Projects:
           </label>
@@ -393,7 +392,12 @@ const EditProfile = ({ handleModalClosed, locationDisplay, setLocationDisplay })
             setBool={setBool}
             id="profile-picture"
           />
-          Make my location private<Checkbox checked={locationDisplay === "none"} onClick={displayClickHandler} color="secondary" />
+          Make my location private
+          <Checkbox
+            checked={locationDisplay === "none"}
+            onClick={displayClickHandler}
+            color="secondary"
+          />
           <label className="label" for="banner-picture">
             Change your banner image
           </label>
@@ -413,7 +417,6 @@ const EditProfile = ({ handleModalClosed, locationDisplay, setLocationDisplay })
           </Button>
         </form>
       </div>
-
     </div>
   );
 };

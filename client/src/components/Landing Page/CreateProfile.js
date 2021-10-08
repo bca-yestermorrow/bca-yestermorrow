@@ -159,6 +159,7 @@ const CreateProfile = ({ handleModalClosed }) => {
           if (imageURL) {
             doc.ref.update({ profilePic: imageURL });
           }
+        
           if (userCity) {
             doc.ref.update({
               "location.city": userCity,

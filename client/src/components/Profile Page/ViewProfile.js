@@ -72,8 +72,9 @@ const ViewProfile = () => {
   useEffect(() => {
     getProfile();
   }, []);
-
-  const [locationDisplay, setLocationDisplay] = useState("block");
+  
+console.log(profile.location)
+  const [locationDisplay, setLocationDisplay] = useState(profile.location);
 
   return (
     <div>

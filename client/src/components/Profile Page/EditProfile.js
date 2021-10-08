@@ -31,7 +31,7 @@ const EditProfile = ({
   const [bool, setBool] = useState(false);
   const [bannerURL, setBannerURL] = useState("");
   const [states, setStates] = useState([]);
-  const [currentState, setCurrentState] = useState("");
+
 
   const { currentUser } = useAuth();
   let categoryArray = [];
@@ -114,47 +114,38 @@ const EditProfile = ({
   // function to handle form submit. updates user doc with new information
   const handleSubmit = async (evt) => {
     evt.preventDefault();
-    const formVals = {
+    let formVals = {
       firstName: evt.target.firstName.value,
       lastName: evt.target.lastName.value,
       bio: evt.target.bio.value,
-      projects :evt.target.projects.value,
-      portfolio : evt.target.portfolio.value,
-     "location.city" : evt.target.city.value,
-     "location.state" : evt.target.state.value,
-     "location.country": evt.target.country.value,
-     
-    }
-    let userFirstName = evt.target.firstName.value;
-    let userLastName = evt.target.lastName.value;
-    let userBio = evt.target.bio.value;
-    let userProjects = evt.target.projects.value;
-    let userPortfolio = evt.target.portfolio.value;
-    let userCity = evt.target.city.value;
-    let userState = evt.target.state.value;
-    let userCountry = evt.target.country.value;
+      projects: evt.target.projects.value,
+      portfolio: evt.target.portfolio.value,
+      "location.city": evt.target.city.value,
+      "location.state": evt.target.state.value,
+      "location.country": evt.target.country.value,
+      profilePic: imageURL,
+      bannerImg: bannerURL,
+    };
+
     let categoryLength = categoryName.length;
     let removeInterestArray = [];
     // console.log(formVals)
-    
+
     categories.forEach((category) => {
       if (!categoryName.includes(category.name)) {
         removeInterestArray.push(category.name);
       }
     });
 
-    // let result = Object.entries(formVals).reduce((a, [k, v]) => (v == "" ? a : (a[k]=v, a)), {})
-  
-
     function removeEmptyVal(obj) {
-      for (let property in obj){
-        if(obj[property] === '') {
-          delete obj[property]
+      for (let property in obj) {
+        if (obj[property] === "") {
+          delete obj[property];
         }
       }
-      return obj 
+      return obj;
     }
-    let userProfile = await db
+    await db
       .collection("users")
       .doc(currentUser.uid)
       .get()
@@ -163,8 +154,7 @@ const EditProfile = ({
         //we are doing this twice, here and getCurrentUser
         // each if statement is separate so the database isnt updated with empty values
         if (doc.exists) {
-          
-          doc.ref.update(removeEmptyVal(formVals))
+          doc.ref.update(removeEmptyVal(formVals));
           if (categoryLength > 0) {
             //if cat is selected
 
@@ -180,14 +170,13 @@ const EditProfile = ({
               categoryLength -= 1;
             }
 
-            //if catagorey was already in catagories it would add cat again 
+            //if catagorey was already in catagories it would add cat again
             removeInterestArray.forEach((category) => {
               doc.ref.update({
                 interests: firebase.firestore.FieldValue.arrayRemove(category),
               });
             });
           }
-         
 
           setUser(doc.data());
         } else {

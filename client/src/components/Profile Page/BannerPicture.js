@@ -1,7 +1,7 @@
 import { storage } from "../../firebase";
 import { useState } from "react";
 
-const BannerPicture = ({ getBannerURL, setBool }) => {
+const BannerPicture = ({ setBannerURL, setBool }) => {
   const [banner, setBanner] = useState("");
   const [isTrue, setIsTrue] = useState(true)
   const handleBanner = (evt) => {
@@ -27,7 +27,7 @@ const BannerPicture = ({ getBannerURL, setBool }) => {
           .getDownloadURL()
           .then((url) => {
             console.log(url);
-            getBannerURL(url);
+            setBannerURL(url);
             setBool(false)
           });
       }

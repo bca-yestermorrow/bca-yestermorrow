@@ -60,6 +60,7 @@ const ViewProfile = () => {
       .then((doc) => {
         if (doc.exists) {
           setProfile(doc.data());
+          
         } else {
           console.log("No doc found");
         }
@@ -69,6 +70,7 @@ const ViewProfile = () => {
       });
   };
 
+  console.log(profile)
   useEffect(() => {
     getProfile();
   }, []);
@@ -110,6 +112,7 @@ console.log(profile.location)
           <div>
             {modal && (
               <EditProfile
+                profile={profile}
                 locationDisplay={locationDisplay}
                 setLocationDisplay={setLocationDisplay}
                 handleModalClosed={handleModalClosed}

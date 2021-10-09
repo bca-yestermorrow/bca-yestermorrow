@@ -23,6 +23,7 @@ const EditProfile = ({
   handleModalClosed,
   locationDisplay,
   setLocationDisplay,
+  profile,
 }) => {
   const [user, setUser] = useState("");
   const [categories, setCategories] = useState("");
@@ -31,8 +32,6 @@ const EditProfile = ({
   const [bool, setBool] = useState(false);
   const [bannerURL, setBannerURL] = useState("");
   const [states, setStates] = useState([]);
-
-
   const { currentUser } = useAuth();
   let categoryArray = [];
   // allows use of various customized styles on material ui components
@@ -66,37 +65,13 @@ const EditProfile = ({
   // allows use of classes.whatever on mui components
   const classes = useStyles();
 
-  const getImageURL = (url) => {
-    setImageURL(url);
-  };
-
-  const getBannerURL = (url) => {
-    setBannerURL(url);
-  };
-
-  // function to get the user document of the current user from the database
   const getCurrentUser = async () => {
-    // from the users collection, get the doc with the id of currentuser.uid
-    await db
-      .collection("users")
-      .doc(currentUser.uid)
-      .get()
-      .then((doc) => {
-        // if there is a doc with this id
-        if (doc.exists) {
-          // doc.data() is never undefined for query doc snapshots
-          setUser(doc.data());
-          doc.data().interests.forEach((interest) => {
-            categoryName.push(interest);
-          });
-        } else {
-          console.log("No document");
-        }
-      })
-      .catch((error) => {
-        console.log("Error getting documents: ", error);
-      });
+    setUser(profile);
+    profile.interests.forEach((interest) => {
+      categoryName.push(interest);
+    });
   };
+
   // function to get the list of categories from the database
   const getCategories = async () => {
     await db
@@ -127,10 +102,8 @@ const EditProfile = ({
       bannerImg: bannerURL,
     };
 
-    let categoryLength = categoryName.length;
     let removeInterestArray = [];
-    // console.log(formVals)
-
+   
     categories.forEach((category) => {
       if (!categoryName.includes(category.name)) {
         removeInterestArray.push(category.name);
@@ -145,6 +118,7 @@ const EditProfile = ({
       }
       return obj;
     }
+
     await db
       .collection("users")
       .doc(currentUser.uid)
@@ -155,30 +129,19 @@ const EditProfile = ({
         // each if statement is separate so the database isnt updated with empty values
         if (doc.exists) {
           doc.ref.update(removeEmptyVal(formVals));
-          if (categoryLength > 0) {
-            //if cat is selected
 
-            categoryLength = categoryLength - 1;
-
-            //update each catagorey in array
-            while (categoryLength >= 0) {
-              doc.ref.update({
-                interests: firebase.firestore.FieldValue.arrayUnion(
-                  categoryName[categoryLength]
-                ),
-              });
-              categoryLength -= 1;
-            }
-
-            //if catagorey was already in catagories it would add cat again
-            removeInterestArray.forEach((category) => {
-              doc.ref.update({
-                interests: firebase.firestore.FieldValue.arrayRemove(category),
-              });
+          categoryName.forEach((category) => {
+            doc.ref.update({
+              interests: firebase.firestore.FieldValue.arrayUnion(category),
             });
-          }
+          });
 
-          setUser(doc.data());
+          //if catagorey was already in catagories it would add cat again
+          removeInterestArray.forEach((category) => {
+            doc.ref.update({
+              interests: firebase.firestore.FieldValue.arrayRemove(category),
+            });
+          });
         } else {
           console.log("no document");
         }
@@ -203,6 +166,8 @@ const EditProfile = ({
     setCategoryName(evt.target.value);
   };
 
+  console.log(categoryName);
+
   useEffect(() => {
     db.collection("states")
       .doc("states")
@@ -214,22 +179,12 @@ const EditProfile = ({
 
   useEffect(() => {
     getCurrentUser();
-  }, []);
 
-  useEffect(() => {
     if (!categories) {
       getCategories();
     }
   }, []);
 
-  const displayClickHandler = () => {
-    if (locationDisplay === "block") {
-      setLocationDisplay("none");
-    } else {
-      setLocationDisplay("block");
-    }
-    console.log(locationDisplay);
-  };
   return (
     <div className="edit-profile-container" onClick={handleClose}>
       <div className="form-container">
@@ -287,7 +242,6 @@ const EditProfile = ({
                 State:
               </label>
               <Autocomplete
-                onChange={(e) => setCurrentState(e.currentTarget.textContent)}
                 options={states}
                 getOptionLabel={(state) => state.name}
                 style={{ width: "100%" }}
@@ -325,7 +279,6 @@ const EditProfile = ({
             id="profile-interests"
             onChange={handleChange}
             value={categoryName}
-            input={<Input />}
             name="classes"
             multiple
           >
@@ -377,21 +330,15 @@ const EditProfile = ({
             Upload a profile picture
           </label>
           <ProfilePicture
-            getImageURL={getImageURL}
+            setImageURL={setImageURL}
             setBool={setBool}
             id="profile-picture"
-          />
-          Make my location private
-          <Checkbox
-            checked={locationDisplay === "none"}
-            onClick={displayClickHandler}
-            color="secondary"
           />
           <label className="label" for="banner-picture">
             Change your banner image
           </label>
           <BannerPicture
-            getBannerURL={getBannerURL}
+            setBannerURL={setBannerURL}
             setBool={setBool}
             id="banner-picture"
           />

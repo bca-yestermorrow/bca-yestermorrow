@@ -1,7 +1,7 @@
 import { storage } from "../../firebase";
 import { useState } from "react";
 
-const ProfilePicture = ({ getImageURL, setBool }) => {
+const ProfilePicture = ({ setImageURL, setBool }) => {
   const [image, setImage] = useState("");
   const [isTrue, setIsTrue] = useState(true)
   const handleImage = (evt) => {
@@ -27,7 +27,7 @@ const ProfilePicture = ({ getImageURL, setBool }) => {
           .getDownloadURL()
           .then((url) => {
             console.log(url);
-            getImageURL(url);
+            setImageURL(url);
             setBool(false)
           });
       }

@@ -32,8 +32,9 @@ const EditProfile = ({
   const [bool, setBool] = useState(false);
   const [bannerURL, setBannerURL] = useState("");
   const [states, setStates] = useState([]);
+  const [locationPrivate, setLocationPrivate] = useState(false);
   const { currentUser } = useAuth();
-  let categoryArray = [];
+
   // allows use of various customized styles on material ui components
   const useStyles = makeStyles({
     // to be used for larger profile pics/avatars
@@ -74,6 +75,7 @@ const EditProfile = ({
 
   // function to get the list of categories from the database
   const getCategories = async () => {
+    let categoryArray = [];
     await db
       .collection("categories")
       .get()
@@ -83,6 +85,7 @@ const EditProfile = ({
           categoryArray.push(doc.data());
         });
       });
+
     // setCategories to the array of docs to be used in the form dropdown
     setCategories(categoryArray);
   };
@@ -98,12 +101,13 @@ const EditProfile = ({
       "location.city": evt.target.city.value,
       "location.state": evt.target.state.value,
       "location.country": evt.target.country.value,
+      "location.private": locationPrivate,
       profilePic: imageURL,
       bannerImg: bannerURL,
     };
 
     let removeInterestArray = [];
-   
+
     categories.forEach((category) => {
       if (!categoryName.includes(category.name)) {
         removeInterestArray.push(category.name);
@@ -152,6 +156,7 @@ const EditProfile = ({
       });
     // after updating, call getcurrentuser to get updated info, reset categoryname and close modal
     getCurrentUser();
+    setLocationPrivate(profile.location.private);
     setCategoryName([]);
     handleModalClosed();
   };
@@ -351,6 +356,16 @@ const EditProfile = ({
           >
             Submit
           </Button>
+          <div>
+            <h3>Allow other users to see my location</h3>
+            <Select
+              value={locationPrivate}
+              onChange={(e) => setLocationPrivate(e.target.value)}
+            >
+              <MenuItem value={true}>Yes</MenuItem>
+              <MenuItem value={false}>No</MenuItem>
+            </Select>
+          </div>
         </form>
       </div>
     </div>

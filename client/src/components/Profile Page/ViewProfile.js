@@ -116,8 +116,8 @@ const ViewProfile = () => {
   useEffect(() => {
     getProfile();
   }, []);
-  console.log(profile)
-  const [locationDisplay, setLocationDisplay] = useState("block");
+
+  const [locationDisplay, setLocationDisplay] = useState(profile.location);
 
   return (
     <div>
@@ -172,6 +172,7 @@ const ViewProfile = () => {
             )}
             {modal && (
               <EditProfile
+                profile={profile}
                 locationDisplay={locationDisplay}
                 setLocationDisplay={setLocationDisplay}
                 handleModalClosed={handleModalClosed}

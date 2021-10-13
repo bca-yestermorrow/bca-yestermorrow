@@ -4,16 +4,9 @@ import { db } from "../../firebase";
 import CreatePost from "./CreatePost";
 import Post from "./Post";
 import { FilterFeed } from "./FilterFeed";
-<<<<<<< HEAD:client/src/components/Connect.js
 import { useState, useEffect, useRef } from "react";
-import { useAuth } from "../context/AuthContext";
-import Paper from "@material-ui/core/Paper";
-import yesterLogo from "../assets/Banner-2000X600.png";
-=======
-import { useState, useEffect } from "react";
 import { useAuth } from "../../context/AuthContext";
 import yesterLogo from "../../assets/Banner-2000X600.png";
->>>>>>> development:client/src/components/Connect Page/Connect.js
 
 /**
  * Name: sortPostsArray

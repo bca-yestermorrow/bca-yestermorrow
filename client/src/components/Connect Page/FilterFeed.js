@@ -13,13 +13,8 @@ import {
   Box,
   FormControl,
 } from "@material-ui/core";
-<<<<<<< HEAD:client/src/components/FilterFeed.js
-import { useState, useEffect, useRef } from "react";
-import { db } from "../firebase";
-=======
 import { useState, useEffect } from "react";
 import { db } from "../../firebase";
->>>>>>> development:client/src/components/Connect Page/FilterFeed.js
 import { Autocomplete } from "@material-ui/lab";
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
@@ -53,7 +48,6 @@ const useStyles = makeStyles({
   filterField: {},
 });
 
-<<<<<<< HEAD:client/src/components/FilterFeed.js
 export const FilterFeed = ({
   setChecked,
   setCategory,
@@ -63,9 +57,6 @@ export const FilterFeed = ({
   category,
   sticky
 }) => {
-=======
-export const FilterFeed = ({ setCategory, setCurrentState }) => {
->>>>>>> development:client/src/components/Connect Page/FilterFeed.js
   // const [category, setCategory] = useState(["General"]);
   // const [posts, setPosts] = useState([]);
   const [categoryList, setCategoryList] = useState([]);

@@ -13,8 +13,13 @@ import {
   Box,
   FormControl,
 } from "@material-ui/core";
+<<<<<<< HEAD:client/src/components/FilterFeed.js
 import { useState, useEffect, useRef } from "react";
 import { db } from "../firebase";
+=======
+import { useState, useEffect } from "react";
+import { db } from "../../firebase";
+>>>>>>> development:client/src/components/Connect Page/FilterFeed.js
 import { Autocomplete } from "@material-ui/lab";
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
@@ -48,6 +53,7 @@ const useStyles = makeStyles({
   filterField: {},
 });
 
+<<<<<<< HEAD:client/src/components/FilterFeed.js
 export const FilterFeed = ({
   setChecked,
   setCategory,
@@ -57,9 +63,13 @@ export const FilterFeed = ({
   category,
   sticky
 }) => {
+=======
+export const FilterFeed = ({ setCategory, setCurrentState }) => {
+>>>>>>> development:client/src/components/Connect Page/FilterFeed.js
   // const [category, setCategory] = useState(["General"]);
   // const [posts, setPosts] = useState([]);
   const [categoryList, setCategoryList] = useState([]);
+  const [states, setStates] = useState([]);
   useEffect(() => {
     let updatedCatagories = [];
     db.collection("categories")
@@ -72,9 +82,7 @@ export const FilterFeed = ({
       });
   }, []);
 
-  const [states, setStates] = useState([]);
   useEffect(() => {
-    let statesArr = [];
     db.collection("states")
       .doc("states")
       .get()
@@ -87,12 +95,7 @@ export const FilterFeed = ({
     let newArr = [];
     value.forEach((cat) => newArr.push(cat.name));
     setCategory(newArr);
-    console.log("in");
-
-    console.log(value);
   }
-
-  //it will automatically update the value array
 
   const classes = useStyles();
 

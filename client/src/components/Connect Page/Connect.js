@@ -1,13 +1,19 @@
 import React from "react";
-import "../App.css";
-import { db } from "../firebase";
+import "../../App.css";
+import { db } from "../../firebase";
 import CreatePost from "./CreatePost";
 import Post from "./Post";
 import { FilterFeed } from "./FilterFeed";
+<<<<<<< HEAD:client/src/components/Connect.js
 import { useState, useEffect, useRef } from "react";
 import { useAuth } from "../context/AuthContext";
 import Paper from "@material-ui/core/Paper";
 import yesterLogo from "../assets/Banner-2000X600.png";
+=======
+import { useState, useEffect } from "react";
+import { useAuth } from "../../context/AuthContext";
+import yesterLogo from "../../assets/Banner-2000X600.png";
+>>>>>>> development:client/src/components/Connect Page/Connect.js
 
 /**
  * Name: sortPostsArray
@@ -67,12 +73,12 @@ const Connect = () => {
         ...doc.data(),
       }));
       if (currentState !== "") {
-        let filterdArr = updatedPosts.filter((post) => {
+        let filteredArr = updatedPosts.filter((post) => {
           return post.user.state === currentState;
         });
 
         // sort & update filtered posts
-        setPosts(sortPostsArray(filterdArr));
+        setPosts(sortPostsArray(filteredArr));
       } else {
         // sort & update posts
         setPosts(sortPostsArray(updatedPosts));
@@ -84,7 +90,7 @@ const Connect = () => {
 
     return () => unSub();
   }, [category, checked, currentState]);
-
+  console.log(posts)
   const getProfile = async () => {
     let profileRef = await db
       .collection("users")

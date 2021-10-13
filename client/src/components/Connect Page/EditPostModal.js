@@ -1,7 +1,7 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import { db } from "../firebase";
-import { storage } from "../firebase";
+import { db } from "../../firebase";
+import { storage } from "../../firebase";
 import CancelIcon from "@material-ui/icons/Cancel";
 import TextField from "@material-ui/core/TextField";
 import Input from "@material-ui/core/Input";
@@ -18,7 +18,6 @@ const EditPostModal = ({ handleEditModalClose, post }) => {
   const [editType, setEditType] = useState("");
   const [newImage, setNewImage] = useState("");
   const [disabled, setDisabled] = useState(false);
-  console.log(post.category);
   useEffect(() => {
     post.category.forEach((cat) => {
       editCatPost.push(cat);
@@ -42,7 +41,7 @@ const EditPostModal = ({ handleEditModalClose, post }) => {
   //sets categories selected from list on edit form
   function handleCatSelect(e) {
     setEditCatPost(e.target.value);
-    console.log(editCatPost)
+    console.log(editCatPost);
   }
   //edited type of post set to state
   function handleEditType(e) {
@@ -131,21 +130,21 @@ const EditPostModal = ({ handleEditModalClose, post }) => {
             onClick={handleEditModalClose}
             style={{ margin: ".5em", cursor: "pointer" }}
           />
-          <h1 className="editFormTitles">EDIT POST</h1>
+          <h1 className="editFormTitles" style={{marginTop: "1em"}}>EDIT POST</h1>
           <DeleteBtn post={post} handleEditModalClose={handleEditModalClose} />
         </div>
 
         <form id="editForm" onSubmit={handleEditSave}>
-          <div className="editFormTitles">Current Title:</div>
+          <div className="editFormTitles">Title:</div>
           <TextField
             label={post.title}
             variant="outlined"
             multiline
             type="text"
             name="title"
-            style={{ margin: "1em" }}
+            style={{ margin: "0em 3em 3em 3em" }}
           />
-          <div className="editFormTitles">Current Body:</div>
+          <div className="editFormTitles">Body:</div>
 
           <TextField
             label={post.body}
@@ -153,30 +152,30 @@ const EditPostModal = ({ handleEditModalClose, post }) => {
             multiline
             type="text"
             name="body"
-            style={{ margin: "1em" }}
+            style={{ margin: "0em 3em 3em 3em" }}
           />
-          <div className="editFormTitles">Current Image:</div>
+          <div className="editFormTitles">
+            Image:
+            {post.imageUrl ? (
+              <img style={{width: "20em", marginLeft: "1em"}} src={post.imageUrl} alt={post.imageUrl} />
+            ) : (
+              " No Image On Post"
+            )}
+          </div>
 
-          {post.imageUrl ? (
-            <h3>{post.imageUrl}</h3>
-          ) : (
-            " No Current Image On Post"
-          )}
           <input
             type="file"
-            style={{ margin: "1em" }}
+            style={{ margin: "0em 3em 0em 3em" }}
             onChange={handleInsertImage}
           />
-          <button onClick={handleEditImage} style={{ margin: "1em" }}>
-            Set Image
+          <button onClick={handleEditImage} style={{ margin: "1em 60em 1em 3em" }}>
+            Add Image
           </button>
           <FormControl>
-            <div className="editFormTitles">
-              Current Type Of Post: {post.type}
-            </div>
+            <div className="editFormTitles" style={{marginTop: "2em"}}>Type Of Post: {post.type}</div>
 
             <Select
-              style={{ margin: "1em" }}
+              style={{ margin: "0em 3em 3em 3em" }}
               className="postSelect"
               name="type"
               input={<Input />}
@@ -189,12 +188,12 @@ const EditPostModal = ({ handleEditModalClose, post }) => {
             </Select>
           </FormControl>
           <FormControl>
-            <div className="editFormTitles">
-              Current Category/Categories: {post.category}
+            <div className="editFormTitles" style={{marginTop: "2em"}}>
+              Category/Categories: {post.category}
             </div>
 
             <Select
-              style={{ margin: "1em" }}
+              style={{ margin: "0em 3em 3em 3em" }}
               className="postSelect"
               name="category"
               value={editCatPost}

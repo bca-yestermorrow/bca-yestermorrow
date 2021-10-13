@@ -228,6 +228,7 @@ a:active {
   padding: 1em;
   background-color: #e9eaeb;
   border-radius: 2vh;
+  position: relative;
 }
 
 #editModal {
@@ -259,11 +260,18 @@ a:active {
 }
 
 .editFormTitles {
-  margin-left: 1em;
+  margin-left: 2.5em;
   color: #67a641;
   font-family: "Raleway", sans-serif;
   font-size: 1.2em;
   font-weight: 700;
+}
+
+#editPostButton {
+  right: 0;
+  position: absolute;
+  margin: 0px 10px 0 0;
+  cursor: pointer;
 }
 
 #deleteButton {
@@ -487,6 +495,34 @@ a:active {
   margin: 10px 0 0 10px;
 }
 
+.profile-pic-wrapper {
+  position: relative;
+  z-index: 10;
+  border-radius: 50%;
+}
+
+.profile-pic {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 200px;
+  height: 200px;
+  cursor: pointer;
+  border-radius: 50%;
+  box-shadow: inset 0 0 0 1000px rgba(0, 0, 0, 0.5);
+  transition: box-shadow 100ms;
+}
+
+.profile-pic-unhovered {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 200px;
+  height: 200px;
+  cursor: pointer;
+  border-radius: 50%;
+}
+
 .user-work {
   display: flex;
   margin-top: 20px;
@@ -588,10 +624,9 @@ a:active {
   height: 100%;
 }
 
-.embed{
+.embed {
   width: 100%;
   height: 100%;
- 
 }
 
 #mainLanding {
@@ -618,13 +653,72 @@ a:active {
   padding-left: 10px;
 }
 
+/* ------------------- Profile Pic Modal ------------------- */
+
+.profile-pic-modal {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.banner-butt-unhovered {
+  position: absolute;
+  width: 100%;
+  height: 55vh;
+}
+
+.banner-butt {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  width: 100%;
+  height: 55vh;
+  cursor: pointer;
+  box-shadow: inset 0 0 0 1000px rgba(0, 0, 0, 0.5);
+  transition: box-shadow 100ms;
+}
+
 .profile-banner {
   position: fixed;
   display: block;
   z-index: -1;
   width: 100%;
+  height: 60vh;
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center center;
   background-color: #000000;
+}
+
+/* ------------------- ERROR PAGE ------------------- */
+
+#errorPage {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  /* position: absolute;
+  z-index: -5;
+  top: 0; */
+}
+
+#errorTitle {
+  font-size: 7em;
+  text-align: center;
+  margin-bottom: 0.5em;
+}
+
+.errorMessage {
+  text-align: center;
+  margin-top: 2em;
+  margin-bottom: 2em;
+}
+
+#errorButton {
+  margin-top: 3em;
+  margin-left: 47vw;
 }

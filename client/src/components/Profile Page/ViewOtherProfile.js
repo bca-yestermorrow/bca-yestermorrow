@@ -1,28 +1,14 @@
 import React from "react";
-import { useAuth } from "../context/AuthContext";
-import { db } from "../firebase";
+import { db } from "../../firebase";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import firebase from "firebase";
-import yesterLogo from "../assets/YM_Banner.jpg";
-import {
-  Avatar,
-  Button,
-  Card,
-  Divider,
-  Icon,
-} from "@material-ui/core";
-
-import ArrowBackIcon from "@material-ui/icons/ArrowBack";
-import EditIcon from "@material-ui/icons/Edit";
+import { Avatar, Button, Card, Divider } from "@material-ui/core";
+import yesterLogo from "../../assets/YM_Banner.jpg";
 import { makeStyles } from "@material-ui/core/styles";
-import EditProfile from "./EditProfile";
+import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 
-const ViewProfile = () => {
+const ViewOtherProfile = ({ userUid }) => {
   const [profile, setProfile] = useState("");
-  const [modal, setModal] = useState("");
-
-  const { currentUser } = useAuth();
 
   const useStyles = makeStyles({
     large: {
@@ -36,32 +22,20 @@ const ViewProfile = () => {
       fontSize: "25px",
     },
     green: {
-      backgroundColor: "#59833b",
+      backgroundColor: "#E0E0E0",
       "&:hover": {
         backgroundColor: "#59833b",
         color: "#fff",
       },
     },
-    profileCard: {
-      marginTop: "10px",
-    },
   });
 
   const classes = useStyles();
 
-  const handleModalOpen = () => {
-    setModal(true);
-  };
-
-  const handleModalClosed = () => {
-    setModal("");
-    setTimeout(getProfile, 500);
-  };
-
   const getProfile = async () => {
     let profileRef = await db
       .collection("users")
-      .doc(currentUser.uid)
+      .doc(userUid)
       .get()
       .then((doc) => {
         if (doc.exists) {
@@ -74,15 +48,18 @@ const ViewProfile = () => {
         console.log("Error getting documents: ", error);
       });
   };
-  
   useEffect(() => {
     getProfile();
   }, []);
-  
+
   return (
     <div>
       <div className="banner-wrapper">
-        <img className="profile-banner" src={profile.bannerImg ? profile.bannerImg : yesterLogo } alt="alt" />
+        <img
+          className="profile-banner"
+          src={profile.bannerImg ? profile.bannerImg : yesterLogo}
+          alt="alt"
+        />
       </div>
       <div className="profile-page-wrapper">
         <Link to="/connect">
@@ -90,16 +67,12 @@ const ViewProfile = () => {
             variant="contained"
             color="secondary"
             startIcon={<ArrowBackIcon />}
-            id="back-button"
+            id="back-button2"
           >
             Back
           </Button>
         </Link>
         <div className="view-profile-page">
-          <div>
-            {modal && <EditProfile handleModalClosed={handleModalClosed} />}
-          </div>
-
           {profile ? (
             <div className="view-profile-container">
               <Avatar
@@ -110,22 +83,9 @@ const ViewProfile = () => {
                 {profile.firstName[0]}
               </Avatar>
               <Card
-                style={{
-                  marginTop: "20px",
-                  marginBottom: "20px",
-                  position: "relative",
-                }}
-                id="profile-card"
+                style={{ marginTop: "20px", marginBottom: "20px" }}
+                id="profile-card2"
               >
-                <Button
-                  color="secondary"
-                  variant="contained"
-                  id="edit-button"
-                  startIcon={<EditIcon />}
-                  onClick={handleModalOpen}
-                >
-                  Edit
-                </Button>
                 <div className="user-info">
                   <h3>
                     {profile.firstName} {profile.lastName}
@@ -137,6 +97,17 @@ const ViewProfile = () => {
                     </p>
                   )}
                   <p className="user-links">{profile.portfolio}</p>
+                  {profile.roles ? (
+                      profile.roles.map((role, index) => {
+                        return (
+                          <p className="user-roles" key={index}>
+                            {role}
+                          </p>
+                        );
+                      })
+                    ) : (
+                      <p></p>
+                    )}
                 </div>
                 <Divider variant="middle" />
                 <div className="bio-div">
@@ -179,4 +150,4 @@ const ViewProfile = () => {
   );
 };
 
-export default ViewProfile;
+export default ViewOtherProfile;

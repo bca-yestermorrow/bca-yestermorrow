@@ -1,10 +1,9 @@
 import React from "react";
 // import useAuth to get current user id
-import { useAuth } from "../context/AuthContext";
-import { db, storage } from "../firebase";
+import { useAuth } from "../../context/AuthContext";
+import { db } from "../../firebase";
 import { useState, useEffect } from "react";
-import ProfilePicture from "./ProfilePicture";
-import BannerPicture from "./BannerPicture";
+import ProfilePicture from "../Profile Page/ProfilePicture";
 import firebase from "firebase/app";
 import { Autocomplete } from "@material-ui/lab";
 // imports for material ui
@@ -12,15 +11,18 @@ import { TextField, Button, Select, MenuItem, Input } from "@material-ui/core";
 // import for material ui to customize styles
 import { makeStyles } from "@material-ui/core/styles";
 
-const EditProfile = ({ handleModalClosed }) => {
+const CreateProfile = ({ handleModalClosed }) => {
   const [user, setUser] = useState("");
   const [categories, setCategories] = useState("");
   const [categoryName, setCategoryName] = useState([]);
+  const [roles, setRoles] = useState([]);
+  const [userRoles, setUserRoles] = useState([])
   const [imageURL, setImageURL] = useState("");
-  const [bool, setBool] = useState(false);
-  const [bannerURL, setBannerURL] = useState("");
+  const [disabled, setDisabled] = useState(false);
   const [states, setStates] = useState([]);
   const [currentState, setCurrentState] = useState("");
+  const [error, setError] = useState("");
+  // const [image, setImage] = useState("");
 
   const { currentUser } = useAuth();
   let categoryArray = [];
@@ -58,11 +60,6 @@ const EditProfile = ({ handleModalClosed }) => {
   const getImageURL = (url) => {
     setImageURL(url);
   };
-
-  const getBannerURL = (url) => {
-    setBannerURL(url);
-  };
-
   // function to get the user document of the current user from the database
   const getCurrentUser = async () => {
     // from the users collection, get the doc with the id of currentuser.uid
@@ -74,10 +71,8 @@ const EditProfile = ({ handleModalClosed }) => {
         // if there is a doc with this id
         if (doc.exists) {
           // doc.data() is never undefined for query doc snapshots
+
           setUser(doc.data());
-          doc.data().interests.forEach((interest) => {
-            categoryName.push(interest);
-          });
         } else {
           console.log("No document");
         }
@@ -99,10 +94,13 @@ const EditProfile = ({ handleModalClosed }) => {
       });
     // setCategories to the array of docs to be used in the form dropdown
     setCategories(categoryArray);
+    setRoles(["Student", "Intern", "Staff/Instructor"])
   };
   // function to handle form submit. updates user doc with new information
   const handleSubmit = async (evt) => {
     evt.preventDefault();
+    // let userCity = evt.target.city.value;
+    // let userState = evt.target.state.value;
     let userFirstName = evt.target.firstName.value;
     let userLastName = evt.target.lastName.value;
     let userBio = evt.target.bio.value;
@@ -112,13 +110,15 @@ const EditProfile = ({ handleModalClosed }) => {
     let userState = evt.target.state.value;
     let userCountry = evt.target.country.value;
     let categoryLength = categoryName.length;
-    let removeInterestArray = [];
+    let rolesLength = userRoles.length;
 
-    categories.forEach((category) => {
-      if (!categoryName.includes(category.name)) {
-        removeInterestArray.push(category.name);
-      }
-    });
+    if (userState === "") {
+      return setError("Please select a state.");
+    }
+
+    if (userCountry === "") {
+      return setError("Please input a country.");
+    }
 
     let userProfile = await db
       .collection("users")
@@ -126,7 +126,6 @@ const EditProfile = ({ handleModalClosed }) => {
       .get()
       .then((doc) => {
         // doc.data() is never undefined for query doc snapshots
-        //we are doing this twice, here and getCurrentUser
         // each if statement is separate so the database isnt updated with empty values
         if (doc.exists) {
           // if userFirstName, the user input value, is true, update the user doc
@@ -160,17 +159,20 @@ const EditProfile = ({ handleModalClosed }) => {
               });
               categoryLength -= 1;
             }
-            removeInterestArray.forEach((category) => {
+          }
+          if (rolesLength > 0) {
+            rolesLength = rolesLength - 1;
+            while (rolesLength >= 0) {
               doc.ref.update({
-                interests: firebase.firestore.FieldValue.arrayRemove(category),
+                roles: firebase.firestore.FieldValue.arrayUnion(
+                  userRoles[rolesLength]
+                ),
               });
-            });
+              rolesLength -= 1;
+            }
           }
           if (imageURL) {
             doc.ref.update({ profilePic: imageURL });
-          }
-          if (bannerURL) {
-            doc.ref.update({ bannerImg: bannerURL });
           }
           if (userCity) {
             doc.ref.update({
@@ -203,15 +205,13 @@ const EditProfile = ({ handleModalClosed }) => {
     handleModalClosed();
   };
 
-  const handleClose = (evt) => {
-    if (evt.target.className === "edit-profile-container") {
-      handleModalClosed();
-    }
-  };
-
   const handleChange = (evt) => {
     setCategoryName(evt.target.value);
   };
+
+  const handleRoleChange = (evt) => {
+    setUserRoles(evt.target.value)
+  }
 
   useEffect(() => {
     db.collection("states")
@@ -231,17 +231,16 @@ const EditProfile = ({ handleModalClosed }) => {
       getCategories();
     }
   }, []);
+
   return (
-    <div className="edit-profile-container" onClick={handleClose}>
+    <div className="edit-profile-container">
       <div className="form-container">
         <form
           className="edit-profile-form"
           onSubmit={handleSubmit}
           autoComplete="off"
         >
-          <button onClick={handleModalClosed} className="x-button">
-            X
-          </button>
+          <h1>Create Your Profile</h1>
           <div className="fullname">
             <div className="name-label-field-pair">
               <label className="label" for="profile-firstName">
@@ -284,9 +283,10 @@ const EditProfile = ({ handleModalClosed }) => {
             </div>
 
             <div className="location-label-field-pair">
-              <label className="label" for="profile-state">
+              <label style={{ color: "red" }} className="label" for="profile-state">
                 State:
               </label>
+              
               <Autocomplete
                 onChange={(e) => setCurrentState(e.currentTarget.textContent)}
                 options={states}
@@ -305,7 +305,7 @@ const EditProfile = ({ handleModalClosed }) => {
               />
             </div>
             <div className="location-label-field-pair">
-              <label className="label" for="profile-country">
+              <label style={{ color: "red" }} className="label" for="profile-country">
                 Country:
               </label>
               <TextField
@@ -352,7 +352,6 @@ const EditProfile = ({ handleModalClosed }) => {
             id="profile-bio"
             label={user.bio}
             name="bio"
-            inputProps={{ maxLength: 500 }}
             variant="filled"
           />
 
@@ -376,24 +375,34 @@ const EditProfile = ({ handleModalClosed }) => {
             name="portfolio"
             variant="filled"
           />
+          <label className="label" for="select-role">
+            Role:
+          </label>
+          <Select
+            id="select-role"
+            className="input-field"
+            onChange={handleRoleChange}
+            input={<Input />}
+            value={userRoles}
+            multiple
+          >
+            <MenuItem className={classes.selectedGreen} value="Student">Student</MenuItem>
+            <MenuItem className={classes.selectedGreen} value="Intern">Intern</MenuItem>
+            <MenuItem className={classes.selectedGreen} value="Staff/Instructor">
+              Staff/Instructor
+            </MenuItem>
+          </Select>
           <label className="label" for="profile-picture">
             Upload a profile picture
           </label>
           <ProfilePicture
             getImageURL={getImageURL}
-            setBool={setBool}
+            setDisabled={setDisabled}
             id="profile-picture"
           />
-          <label className="label" for="banner-picture">
-            Change your banner image
-          </label>
-          <BannerPicture
-            getBannerURL={getBannerURL}
-            setBool={setBool}
-            id="banner-picture"
-          />
+
           <Button
-            disabled={bool}
+            disabled={disabled}
             id="profile-submit"
             color="secondary"
             variant="contained"
@@ -401,10 +410,11 @@ const EditProfile = ({ handleModalClosed }) => {
           >
             Submit
           </Button>
+          <h4 style={{ color: "red" }}>{error ? error : "Required fields in red."}</h4>
         </form>
       </div>
     </div>
   );
 };
 
-export default EditProfile;
+export default CreateProfile;

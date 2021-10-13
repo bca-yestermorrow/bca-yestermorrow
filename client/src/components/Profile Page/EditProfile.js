@@ -116,7 +116,7 @@ const EditProfile = ({
 
     function removeEmptyVal(obj) {
       for (let property in obj) {
-        if (obj[property] === "") {
+        if (obj[property] === "" || obj[property] === false) {
           delete obj[property];
         }
       }
@@ -150,13 +150,11 @@ const EditProfile = ({
           console.log("no document");
         }
       })
-
       .catch((error) => {
         console.log("Error getting documents: ", error);
       });
     // after updating, call getcurrentuser to get updated info, reset categoryname and close modal
     getCurrentUser();
-    setLocationPrivate(profile.location.private);
     setCategoryName([]);
     handleModalClosed();
   };
@@ -357,13 +355,13 @@ const EditProfile = ({
             Submit
           </Button>
           <div>
-            <h3>Allow other users to see my location</h3>
+            <h3>Allow other users to see my location {profile.location.private}</h3>
             <Select
               value={locationPrivate}
               onChange={(e) => setLocationPrivate(e.target.value)}
             >
-              <MenuItem value={true}>Yes</MenuItem>
-              <MenuItem value={false}>No</MenuItem>
+              <MenuItem  value="yes">Yes</MenuItem>
+              <MenuItem  value="no">No</MenuItem>
             </Select>
           </div>
         </form>

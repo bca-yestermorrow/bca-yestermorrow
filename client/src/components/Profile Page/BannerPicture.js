@@ -1,7 +1,7 @@
 import { storage } from "../../firebase";
 import { useState } from "react";
 
-const BannerPicture = ({ getBannerURL, setBool }) => {
+const BannerPicture = ({ getBannerURL, setDisabled }) => {
   const [banner, setBanner] = useState("");
   const [isTrue, setIsTrue] = useState(true);
   const handleBanner = (evt) => {
@@ -12,7 +12,7 @@ const BannerPicture = ({ getBannerURL, setBool }) => {
   };
 
   const handleUpload = () => {
-    setBool(true);
+    setDisabled(true);
     const upload = storage.ref(`banners/${banner.name}`).put(banner);
     upload.on(
       "state_changed",
@@ -28,7 +28,7 @@ const BannerPicture = ({ getBannerURL, setBool }) => {
           .then((url) => {
             console.log(url);
             getBannerURL(url);
-            setBool(false);
+            setDisabled(false);
           });
       }
     );

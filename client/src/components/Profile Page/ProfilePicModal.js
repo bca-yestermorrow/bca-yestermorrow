@@ -4,14 +4,14 @@ import ProfilePicture from "./ProfilePicture";
 import { db } from "../../firebase";
 import { useAuth } from "../../context/AuthContext";
 
-const ProfilePicModal = ({ handleImageModalClosed, profile, classes }) => {
+const ProfilePicModal = ({ handleModalClosed, profile, classes }) => {
   const [imageURL, setImageURL] = useState(profile.profilePic);
-  const [bool, setBool] = useState(false);
+  const [disabled, setDisabled] = useState(false);
   const { currentUser } = useAuth()
-  
+  let target = "image"
   const handleClose = (evt) => {
     if (evt.target.className === "edit-profile-container") {
-      handleImageModalClosed();
+      handleModalClosed(target);
     }
   };
 
@@ -39,7 +39,7 @@ const ProfilePicModal = ({ handleImageModalClosed, profile, classes }) => {
     .catch((error) => {
       console.log("Error getting documents: ", error);
     });
-    handleImageModalClosed()
+    handleModalClosed(target)
   }
 
   return (
@@ -59,11 +59,11 @@ const ProfilePicModal = ({ handleImageModalClosed, profile, classes }) => {
 
             <ProfilePicture
               getImageURL={getImageURL}
-              setBool={setBool}
+              setDisabled={setDisabled}
               id="profile-picture"
             />
             <Button
-            disabled={bool}
+            disabled={disabled}
             id="profile-submit"
             color="secondary"
             variant="contained"

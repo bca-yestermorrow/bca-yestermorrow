@@ -9,8 +9,6 @@ import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 import AddPhotoAlternateIcon from "@material-ui/icons/AddPhotoAlternate";
 import EditIcon from "@material-ui/icons/Edit";
 import { makeStyles } from "@material-ui/core/styles";
-import { IconButton } from "@material-ui/core";
-import PanoramaIcon from "@material-ui/icons/Panorama";
 import EditProfile from "./EditProfile";
 import ProfilePicModal from "./ProfilePicModal";
 import BannerModal from "./BannerModal";
@@ -19,7 +17,7 @@ const ViewProfile = () => {
   const [profile, setProfile] = useState("");
   const [modal, setModal] = useState("");
   const [isHovered, setIsHovered] = useState("");
-  const [roles, setRoles] = useState("")
+  const [roles, setRoles] = useState("");
   const [isBanHovered, setIsBanHovered] = useState("");
   const [imageModal, setImageModal] = useState("");
   const [bannerModal, setBannerModal] = useState("");
@@ -63,8 +61,8 @@ const ViewProfile = () => {
       margin: "0",
       zIndex: "100",
       color: "white",
-      fontSize: "72px"
-    }
+      fontSize: "72px",
+    },
   });
 
   const classes = useStyles();
@@ -73,20 +71,17 @@ const ViewProfile = () => {
     setModal(true);
   };
 
-  const handleModalClosed = () => {
-    setModal("");
-    setTimeout(getProfile, 500);
-  };
-
-  const handleImageModalClosed = () => {
-    console.log("in imageclose");
-    setImageModal("");
-    setTimeout(getProfile, 500);
-  };
-
-  const handleBannerModalClosed = () => {
-    setBannerModal("");
-    setTimeout(getProfile, 500);
+  const handleModalClosed = (target) => {
+    if (target === "edit") {
+      setModal("");
+      setTimeout(getProfile, 500);
+    } else if (target === "image") {
+      setImageModal("");
+      setTimeout(getProfile, 500);
+    } else if (target === "banner") {
+      setBannerModal("");
+      setTimeout(getProfile, 500);
+    }
   };
 
   const getProfile = async () => {
@@ -97,7 +92,7 @@ const ViewProfile = () => {
       .then((doc) => {
         if (doc.exists) {
           setProfile(doc.data());
-          displayRoles()
+          displayRoles();
         } else {
           console.log("No doc found");
         }
@@ -108,15 +103,15 @@ const ViewProfile = () => {
   };
 
   const displayRoles = () => {
-    console.log(profile)
-    console.log(profile.roles)
-    setRoles(profile.roles.join(", "))
-  }
+    console.log(profile);
+    console.log(profile.roles);
+    setRoles(profile.roles.join(", "));
+  };
 
   useEffect(() => {
     getProfile();
   }, []);
-  console.log(profile)
+  console.log(profile);
   const [locationDisplay, setLocationDisplay] = useState("block");
 
   return (
@@ -158,14 +153,14 @@ const ViewProfile = () => {
           <div>
             {bannerModal && (
               <BannerModal
-              handleBannerModalClosed={handleBannerModalClosed}
-              profile={profile}
-              yesterLogo={yesterLogo}
+                handleModalClosed={handleModalClosed}
+                profile={profile}
+                yesterLogo={yesterLogo}
               />
             )}
             {imageModal && (
               <ProfilePicModal
-                handleImageModalClosed={handleImageModalClosed}
+                handleModalClosed={handleModalClosed}
                 profile={profile}
                 classes={classes}
               />
@@ -240,16 +235,16 @@ const ViewProfile = () => {
                   )}
                   <p className="user-links">{profile.portfolio}</p>
                   {profile.roles ? (
-                      profile.roles.map((role, index) => {
-                        return (
-                          <p className="user-roles" key={index}>
-                            {role}
-                          </p>
-                        );
-                      })
-                    ) : (
-                      <p></p>
-                    )}
+                    profile.roles.map((role, index) => {
+                      return (
+                        <p className="user-roles" key={index}>
+                          {role}
+                        </p>
+                      );
+                    })
+                  ) : (
+                    <p></p>
+                  )}
                 </div>
                 <Divider variant="middle" />
                 <div className="bio-div">

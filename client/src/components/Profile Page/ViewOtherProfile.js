@@ -97,6 +97,17 @@ const ViewOtherProfile = ({ userUid }) => {
                     </p>
                   )}
                   <p className="user-links">{profile.portfolio}</p>
+                  {profile.roles ? (
+                      profile.roles.map((role, index) => {
+                        return (
+                          <p className="user-roles" key={index}>
+                            {role}
+                          </p>
+                        );
+                      })
+                    ) : (
+                      <p></p>
+                    )}
                 </div>
                 <Divider variant="middle" />
                 <div className="bio-div">

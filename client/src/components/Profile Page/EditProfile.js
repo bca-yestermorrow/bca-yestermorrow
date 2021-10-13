@@ -27,10 +27,9 @@ const EditProfile = ({
   const [categoryName, setCategoryName] = useState([]);
   const [roles, setRoles] = useState([]);
   const [userRoles, setUserRoles] = useState([])
-  const [bool, setBool] = useState(false);
-
   const [states, setStates] = useState([]);
   const [currentState, setCurrentState] = useState("");
+  let target = "edit"
 
   const { currentUser } = useAuth();
   let categoryArray = [];
@@ -225,12 +224,12 @@ const EditProfile = ({
     // after updating, call getcurrentuser to get updated info, reset categoryname and close modal
     getCurrentUser();
     setCategoryName([]);
-    handleModalClosed();
+    handleModalClosed(target);
   };
 
   const handleClose = (evt) => {
     if (evt.target.className === "edit-profile-container") {
-      handleModalClosed();
+      handleModalClosed(target);
     }
   };
 
@@ -440,7 +439,6 @@ const EditProfile = ({
             color="secondary"
           />
           <Button
-            disabled={bool}
             id="profile-submit"
             color="secondary"
             variant="contained"

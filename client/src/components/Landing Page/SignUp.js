@@ -56,7 +56,7 @@ const SignUp = ({ handleModalOpen }) => {
     <>
       <form action="/signUp" id="Login" className="login-flex" method="POST" onSubmit={handleSubmit}>
         <h1 className="login-header">Create Your Account</h1>
-       
+        <p>Your password must contain a capital letter, number, symbol, and be 6 characters long</p>
         <TextField required  size="small" id="filled-basic" label="First Name" type="text" inputRef={firstNameRef} variant="filled" />
         <TextField required  size="small" id="filled-basic" label="Last Name" type="text" inputRef={lastNameRef} variant="filled" />
         <TextField required  size="small" id="filled-basic" label="Email" type="Email" inputRef={emailRef} variant="filled" />

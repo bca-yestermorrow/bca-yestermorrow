@@ -10,9 +10,8 @@ import Input from "@material-ui/core/Input";
 import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
-import { CircularProgress } from '@material-ui/core'
+import { CircularProgress } from "@material-ui/core";
 import Select from "@material-ui/core/Select";
-
 
 const CreatePost = ({ profile }) => {
   const [error, setError] = useState("");
@@ -21,7 +20,7 @@ const CreatePost = ({ profile }) => {
   const [imageUrl, setImageUrl] = useState("");
   const [typePost, setTypePost] = useState("");
   const [catPost, setCatPost] = useState([]);
-  const [dis, setDis] = useState(false)
+  const [dis, setDis] = useState(false);
   const { currentUser } = useAuth();
 
   useEffect(() => {
@@ -46,7 +45,7 @@ const CreatePost = ({ profile }) => {
   }
   //getting image url and setting the state of imageUrl to the image url (maybe working??)
   function handleSetImage() {
-    setDis(true)
+    setDis(true);
     const uploadImage = storage.ref(`images/${image.name}`).put(image);
     uploadImage.on(
       "state_changed",
@@ -61,7 +60,7 @@ const CreatePost = ({ profile }) => {
           .getDownloadURL()
           .then((url) => {
             setImageUrl(url);
-            setDis(false)
+            setDis(false);
           });
       }
     );
@@ -69,11 +68,11 @@ const CreatePost = ({ profile }) => {
 
   let state;
   if (!profile.location) {
-    state = "Vermont"
+    state = "Vermont";
   } else if (!profile.location.state) {
-    state = "Vermont"
+    state = "Vermont";
   } else {
-    state = profile.location.state
+    state = profile.location.state;
   }
 
   async function handlePostSubmit(e) {
@@ -124,7 +123,7 @@ const CreatePost = ({ profile }) => {
             profilePic: profilePic,
             state: state,
           },
-          
+
           createdAt: Date(),
         });
       } else {
@@ -143,7 +142,7 @@ const CreatePost = ({ profile }) => {
             lastName: profile.lastName,
             state: state,
           },
-          
+
           createdAt: Date(),
         });
       }
@@ -166,6 +165,78 @@ const CreatePost = ({ profile }) => {
     setCatPost(e.target.value);
   }
 
+  //function to create and add to user sub collection of posts
+  // async function handleUserPost(e) {
+  //   e.preventDefault();
+  //   let userTitle = e.target.title.value;
+
+  //   // grab body message
+  //   let userBody = e.target.body.value;
+
+  //   // create tags array
+  //   let userOptions = catPost;
+
+  //   let userType = e.target.type.value;
+
+  //   let userProfilePic = profile.profilePic;
+
+  //   try {
+  //     // reset error
+  //     setError("");
+  //     if (userProfilePic) {
+  //       const userPostsRef = await db
+  //         .collection("users")
+  //         .doc(currentUser.uid)
+  //         .collection("userPosts")
+  //         .add({
+  //           userId: currentUser.uid,
+  //           title: userTitle,
+  //           body: userBody,
+  //           comments: [],
+  //           category: userOptions,
+  //           type: userType,
+  //           imageUrl: imageUrl,
+  //           state: state,
+  //           user: {
+  //             email: currentUser.email,
+  //             firstName: profile.firstName,
+  //             lastName: profile.lastName,
+  //             profilePic: userProfilePic,
+  //             state: state,
+  //           },
+
+  //           createdAt: Date(),
+  //         });
+  //     } else {
+  //       const UserPPicPostsRef = await db
+  //         .collection("users")
+  //         .doc(currentUser.uid)
+  //         .collection("userPosts")
+  //         .add({
+  //           userId: currentUser.uid,
+  //           title: userTitle,
+  //           body: userBody,
+  //           comments: [],
+  //           category: userOptions,
+  //           type: userType,
+  //           imageUrl: imageUrl,
+  //           state: state,
+  //           user: {
+  //             email: currentUser.email,
+  //             firstName: profile.firstName,
+  //             lastName: profile.lastName,
+  //             state: state,
+  //           },
+
+  //           createdAt: Date(),
+  //         });
+  //     }
+  //   } catch (err) {
+  //     setError("Sorry, please try again.");
+  //     console.log(err);
+  //   }
+  // }
+
   return (
     <Paper elevation={5} className="createPost">
       <h1 id="createPostTitle">CREATE A POST</h1>
@@ -174,7 +245,10 @@ const CreatePost = ({ profile }) => {
           {profile.firstName} {profile.lastName}
         </h3>
       )}
-      <form className="createPostForm" onSubmit={handlePostSubmit}>
+      <form
+        className="createPostForm"
+        onSubmit={handlePostSubmit}
+      >
         <h4 className="createPostSections">Type Here:</h4>
         <TextField
           label="TITLE"
@@ -241,7 +315,7 @@ const CreatePost = ({ profile }) => {
           </Select>
         </FormControl>
         <Button
-        disabled={dis}
+          disabled={dis}
           variant="contained"
           type="submit"
           color="secondary"
@@ -249,7 +323,16 @@ const CreatePost = ({ profile }) => {
           id="postButton"
           value="Create Post"
         >
-          { dis ? <CircularProgress style={{zIndex: "5000"}} size="25px" thickness="5" color="secondary" /> : "POST"}
+          {dis ? (
+            <CircularProgress
+              style={{ zIndex: "5000" }}
+              size="25px"
+              thickness="5"
+              color="secondary"
+            />
+          ) : (
+            "POST"
+          )}
         </Button>
       </form>
       {error && error}

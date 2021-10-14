@@ -90,7 +90,7 @@ const ViewOtherProfile = ({ userUid }) => {
                   <h3>
                     {profile.firstName} {profile.lastName}
                   </h3>
-                  {profile.location && (
+                  {profile.location.private === "yes" && (
                     <p className="user-location">
                       {profile.location.city}, {profile.location.state},{" "}
                       {profile.location.country}

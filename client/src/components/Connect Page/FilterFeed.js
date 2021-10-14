@@ -1,11 +1,5 @@
 import React from "react";
 import { SignOut } from "./SignOut";
-import IconButton from "@material-ui/core/IconButton";
-import Facebook from "@material-ui/icons/Facebook";
-import Twitter from "@material-ui/icons/Twitter";
-import LinkedIn from "@material-ui/icons/LinkedIn";
-import YouTube from "@material-ui/icons/YouTube";
-import Instagram from "@material-ui/icons/Instagram";
 import {
   Checkbox,
   TextField,
@@ -19,6 +13,7 @@ import { Autocomplete } from "@material-ui/lab";
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import { Link } from "react-router-dom";
+import Footer from "./Footer"
 
 const useStyles = makeStyles({
   button: {
@@ -161,51 +156,7 @@ export const FilterFeed = ({ setCategory, setCurrentState }) => {
         >
           <a href="https://yestermorrow.org/learn/courses"> Current Courses</a>{" "}
         </Button>
-
-        <div>
-          <div id="footer">
-            <h4 style={{ color: "#939598" }}>
-              Address: 7865 Main Street, Waitsfield VT 05673
-            </h4>
-            <h4 style={{ color: "#939598" }}>
-              Phone:{" "}
-              <a href="tel:802-496-5545" className="footerLinks">
-                802-496-5545
-              </a>
-            </h4>
-            <h4 style={{ color: "#939598" }}>
-              Website:{" "}
-              <a href="https://yestermorrow.org" className="footerLinks">
-                www.yestermorrow.org
-              </a>
-            </h4>
-            <div id="social">
-              <IconButton aria-label="facebook" className={classes.social}>
-                <a href="https://www.facebook.com/YestermorrowDesignBuildSchool/?ref=ts">
-                  {<Facebook />}
-                </a>
-              </IconButton>
-              <IconButton aria-label="twitter" className={classes.social}>
-                <a href="https://twitter.com/yestermorrow">{<Twitter />}</a>
-              </IconButton>
-              <IconButton aria-label="LinkedIn" className={classes.social}>
-                <a href="https://www.linkedin.com/company/yestermorrow-design-build-school/">
-                  {<LinkedIn />}
-                </a>
-              </IconButton>
-              <IconButton aria-label="YouTube" className={classes.social}>
-                <a href="https://www.youtube.com/user/yestermorrowdb">
-                  {<YouTube />}
-                </a>
-              </IconButton>
-              <IconButton aria-label="Instagram" className={classes.social}>
-                <a href="https://www.instagram.com/yestermorrow/">
-                  {<Instagram />}
-                </a>
-              </IconButton>
-            </div>
-          </div>
-        </div>
+        <Footer/>
       </Box>
     </Paper>
   );

@@ -100,6 +100,7 @@ const Connect = () => {
             category={category}
             currentState={currentState}
             setCurrentState={setCurrentState}
+            posts={posts}
           />
           <div id="mainFeed">
             {!posts && <p>Welcome Yestermorrow Alumni!</p>}

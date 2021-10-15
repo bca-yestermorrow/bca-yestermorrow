@@ -43,7 +43,7 @@ const useStyles = makeStyles({
   filterField: {},
 });
 
-export const FilterFeed = ({ setCategory, setCurrentState }) => {
+export const FilterFeed = ({ setCategory, setCurrentState, posts }) => {
   // const [category, setCategory] = useState(["General"]);
   // const [posts, setPosts] = useState([]);
   const [categoryList, setCategoryList] = useState([]);
@@ -129,7 +129,7 @@ export const FilterFeed = ({ setCategory, setCurrentState }) => {
           />
         </FormControl>
 
-        <Link to="/profile">
+        <Link to={{pathname: "/profile", state:{ posts: {posts} }}}>
           <Button
             style={{ width: "100%" }}
             color="secondary"

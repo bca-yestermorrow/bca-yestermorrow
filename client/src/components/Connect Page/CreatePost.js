@@ -75,6 +75,12 @@ const CreatePost = ({ profile }) => {
     state = profile.location.state;
   }
 
+  function handlePostValidation(e) {
+    e.preventDefault()
+    handlePostSubmit(e)
+    handleUserPostSubmit(e)
+  }
+
   async function handlePostSubmit(e) {
     e.preventDefault();
 
@@ -165,77 +171,66 @@ const CreatePost = ({ profile }) => {
     setCatPost(e.target.value);
   }
 
-  //function to create and add to user sub collection of posts
-  // async function handleUserPost(e) {
-  //   e.preventDefault();
-  //   let userTitle = e.target.title.value;
+  async function handleUserPostSubmit(e) {
+    e.preventDefault();
+    let userPostTitle = e.target.title.value;
+    let userPostBody = e.target.body.value;
+    let userPostOptions = catPost;
+    let userPostType = e.target.type.value;
+    let userPostProfilePic = profile.profilePic;
 
-  //   // grab body message
-  //   let userBody = e.target.body.value;
-
-  //   // create tags array
-  //   let userOptions = catPost;
-
-  //   let userType = e.target.type.value;
-
-  //   let userProfilePic = profile.profilePic;
-
-  //   try {
-  //     // reset error
-  //     setError("");
-  //     if (userProfilePic) {
-  //       const userPostsRef = await db
-  //         .collection("users")
-  //         .doc(currentUser.uid)
-  //         .collection("userPosts")
-  //         .add({
-  //           userId: currentUser.uid,
-  //           title: userTitle,
-  //           body: userBody,
-  //           comments: [],
-  //           category: userOptions,
-  //           type: userType,
-  //           imageUrl: imageUrl,
-  //           state: state,
-  //           user: {
-  //             email: currentUser.email,
-  //             firstName: profile.firstName,
-  //             lastName: profile.lastName,
-  //             profilePic: userProfilePic,
-  //             state: state,
-  //           },
-
-  //           createdAt: Date(),
-  //         });
-  //     } else {
-  //       const UserPPicPostsRef = await db
-  //         .collection("users")
-  //         .doc(currentUser.uid)
-  //         .collection("userPosts")
-  //         .add({
-  //           userId: currentUser.uid,
-  //           title: userTitle,
-  //           body: userBody,
-  //           comments: [],
-  //           category: userOptions,
-  //           type: userType,
-  //           imageUrl: imageUrl,
-  //           state: state,
-  //           user: {
-  //             email: currentUser.email,
-  //             firstName: profile.firstName,
-  //             lastName: profile.lastName,
-  //             state: state,
-  //           },
-
-  //           createdAt: Date(),
-  //         });
-  //     }
-  //   } catch (err) {
-  //     setError("Sorry, please try again.");
-  //     console.log(err);
-  //   }
-  // }
+    try {
+      if (userPostProfilePic) {
+           const userPostCollRef = await db
+        .collection("users")
+        .doc(currentUser.uid)
+        .collection("userPosts")
+        .add({
+          userId: currentUser.uid,
+          title: userPostTitle,
+          body: userPostBody,
+          comments: [],
+          category: userPostOptions,
+          type: userPostType,
+          imageUrl: imageUrl,
+          state: state,
+          user: {
+            email: currentUser.email,
+            firstName: profile.firstName,
+            lastName: profile.lastName,
+            profilePic: userPostProfilePic,
+            state: state,
+          }
+        });
+      } else {
+        const userPostCollRef = await db
+        .collection("users")
+        .doc(currentUser.uid)
+        .collection("userPosts")
+        .add({
+          userId: currentUser.uid,
+          title: userPostTitle,
+          body: userPostBody,
+          comments: [],
+          category: userPostOptions,
+          type: userPostType,
+          imageUrl: imageUrl,
+          state: state,
+          user: {
+            email: currentUser.email,
+            firstName: profile.firstName,
+            lastName: profile.lastName,
+            profilePic: "N/A",
+            state: state,
+          }
+        });
+      }
+   
+    } catch (error) {
+      setError("Sorry, please try again.");
+      console.log(error);
+    }
+  }
 
   return (
     <Paper elevation={5} className="createPost">
@@ -247,7 +242,7 @@ const CreatePost = ({ profile }) => {
       )}
       <form
         className="createPostForm"
-        onSubmit={handlePostSubmit}
+        onSubmit={handlePostValidation}
       >
         <h4 className="createPostSections">Type Here:</h4>
         <TextField

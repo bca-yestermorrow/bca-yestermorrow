@@ -5,6 +5,7 @@ import { db } from "../../firebase";
 import { useState, useEffect } from "react";
 import firebase from "firebase/app";
 import { Autocomplete } from "@material-ui/lab";
+// import { useLocation } from "react-router-dom";
 // imports for material ui
 import {
   TextField,
@@ -26,11 +27,14 @@ const EditProfile = ({
   const [categories, setCategories] = useState("");
   const [categoryName, setCategoryName] = useState([]);
   const [roles, setRoles] = useState([]);
-  const [userRoles, setUserRoles] = useState([])
+  const [userRoles, setUserRoles] = useState([]);
   const [bool, setBool] = useState(false);
-
   const [states, setStates] = useState([]);
   const [currentState, setCurrentState] = useState("");
+  // const location = useLocation();
+  // const { posts } = location.state;
+  // const [postsArr, setPostsArr] = useState([]);
+  // const [updated, setUpdated] = useState(false);
 
   const { currentUser } = useAuth();
   let categoryArray = [];
@@ -81,8 +85,8 @@ const EditProfile = ({
             categoryName.push(interest);
           });
           doc.data().roles.forEach((role) => {
-            userRoles.push(role)
-          })
+            userRoles.push(role);
+          });
         } else {
           console.log("No document");
         }
@@ -104,10 +108,69 @@ const EditProfile = ({
       });
     // setCategories to the array of docs to be used in the form dropdown
     setCategories(categoryArray);
-    setRoles(["Student", "Intern", "Staff/Instructor"])
+    setRoles(["Student", "Intern", "Staff/Instructor"]);
   };
+
+  //sets postsArr to specific posts made by the current user
+  // useEffect(() => {
+  //   if (postsArr.length === 0) {
+  //     db.collection("posts")
+  //       .where("userId", "==", currentUser.uid)
+  //       .get()
+  //       .then((querySnapshot) => {
+  //         let arrayPosts = [];
+  //         querySnapshot.forEach((doc) => {
+  //           arrayPosts.push(doc.data());
+  //           setPostsArr(arrayPosts);
+  //         });
+  //       });
+  //   } else {
+  //     console.log("no posts by this user");
+  //   }
+  // });
+  // console.log(postsArr);
   // function to handle form submit. updates user doc with new information
-  const handleSubmit = async (evt) => {
+
+  function handleSubmit(evt) {
+    handleUpdateProfile(evt);
+    handleUpdateUserInfo(evt);
+  }
+
+  async function handleUpdateUserInfo(evt) {
+    evt.preventDefault();
+    let userFirstName = evt.target.firstName.value;
+    let userLastName = evt.target.lastName.value;
+    let userState = evt.target.state.value;
+
+    const userInfo = await db
+      .collection("posts")
+      .where("userId", "==", currentUser.uid)
+      .get()
+      .then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          console.log(doc.data());
+          if (doc.exists) {
+            if (userFirstName) {
+              doc.ref.update({ user: { firstName: userFirstName } });
+            }
+            if (userLastName) {
+              doc.ref.update({
+                user: { lastName: userLastName }
+              });
+            }
+            if (userState) {
+              doc.ref.update({
+                user: { state: userState }
+              });
+            }
+          } else {
+            console.log("no documents to be updated");
+          }
+        });
+      });
+  }
+
+  const handleUpdateProfile = async (evt) => {
     evt.preventDefault();
     let userFirstName = evt.target.firstName.value;
     let userLastName = evt.target.lastName.value;
@@ -120,7 +183,7 @@ const EditProfile = ({
     let categoryLength = categoryName.length;
     let rolesLength = userRoles.length;
     let removeInterestArray = [];
-    let removeRoleArray = []
+    let removeRoleArray = [];
 
     categories.forEach((category) => {
       if (!categoryName.includes(category.name)) {
@@ -130,9 +193,9 @@ const EditProfile = ({
 
     roles.forEach((role) => {
       if (!userRoles.includes(role)) {
-        removeRoleArray.push(role)
+        removeRoleArray.push(role);
       }
-    })
+    });
 
     let userProfile = await db
       .collection("users")
@@ -212,7 +275,6 @@ const EditProfile = ({
               "location.country": userCountry,
             });
           }
-
           setUser(doc.data());
         } else {
           console.log("no document");
@@ -222,6 +284,7 @@ const EditProfile = ({
       .catch((error) => {
         console.log("Error getting documents: ", error);
       });
+
     // after updating, call getcurrentuser to get updated info, reset categoryname and close modal
     getCurrentUser();
     setCategoryName([]);
@@ -239,8 +302,8 @@ const EditProfile = ({
   };
 
   const handleRoleChange = (evt) => {
-    setUserRoles(evt.target.value)
-  }
+    setUserRoles(evt.target.value);
+  };
 
   useEffect(() => {
     db.collection("states")
@@ -423,9 +486,16 @@ const EditProfile = ({
             value={userRoles}
             multiple
           >
-            <MenuItem className={classes.selectedGreen} value="Student">Student</MenuItem>
-            <MenuItem className={classes.selectedGreen} value="Intern">Intern</MenuItem>
-            <MenuItem className={classes.selectedGreen} value="Staff/Instructor">
+            <MenuItem className={classes.selectedGreen} value="Student">
+              Student
+            </MenuItem>
+            <MenuItem className={classes.selectedGreen} value="Intern">
+              Intern
+            </MenuItem>
+            <MenuItem
+              className={classes.selectedGreen}
+              value="Staff/Instructor"
+            >
               Staff/Instructor
             </MenuItem>
           </Select>

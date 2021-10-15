@@ -169,9 +169,9 @@ const Post = ({ post, profile }) => {
         </h4>
         <p className="postBody">{post.body}</p>
         <img
-          style={{ width: "25vw" }}
+          style={{ width: "100%" }}
           src={post.imageUrl}
-          alt={post.imageUrl}
+          alt={"Image not found"}
         />
       </div>
       <div id="postInfo">
@@ -206,12 +206,13 @@ const Post = ({ post, profile }) => {
         <Button id="commentButton" className="buttons" type="submit">
           Comment
         </Button>
+        {error && error}
         {/* email button needs to be linked to posters email */}
         <Button id="emailButton" className="buttons">
           <a href={`mailto:${post.user.email}`}> Email Me </a>
         </Button>
       </form>
-      {error && error}
+      
     </div>
   );
 };

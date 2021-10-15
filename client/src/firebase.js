@@ -3,6 +3,7 @@ import "firebase/auth";
 import "firebase/firestore";
 import "firebase/storage";
 
+
 console.log(process.env.REACT_APP_API);
 
 const firebaseApp = firebase.initializeApp({
@@ -15,7 +16,6 @@ const firebaseApp = firebase.initializeApp({
 });
 
 export const provider = new firebase.auth.GoogleAuthProvider();
-
 
 export const db = firebase.firestore()
 export const auth = firebaseApp.auth()

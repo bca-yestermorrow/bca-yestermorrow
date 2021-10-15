@@ -1,5 +1,5 @@
 import React from 'react'
-
+import { db } from '../firebase'
 
 const DataContext = React.createContext()
 
@@ -15,6 +15,8 @@ export const DataContext = () => {
         categories,
         states
     }
+
+    
 
     
 

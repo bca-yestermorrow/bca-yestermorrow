@@ -7,6 +7,7 @@ import { FilterFeed } from "./FilterFeed";
 import { useState, useEffect, useRef } from "react";
 import { useAuth } from "../../context/AuthContext";
 import yesterLogo from "../../assets/Banner-2000X600.png";
+import fetchPosts from "../../hooks/fetchPosts";
 
 /**
  * Name: sortPostsArray
@@ -34,10 +35,8 @@ const Connect = () => {
   const [sticky, setSticky] = useState("");
   const connectWrapperRef = useRef(null)
   
-  console.log(sticky+'yesyes')
 
   const stickToTop = (evt) => {
-    console.log("XXX WE HITTIN")
     if (connectWrapperRef.current) {
       setSticky(connectWrapperRef.current.getBoundingClientRect().top <= 0);
     }
@@ -108,8 +107,6 @@ const Connect = () => {
 
     return(()=>{window.removeEventListener("scroll", stickToTop)})
   }, []);
-
-  console.log(posts)
 
   return (
     <div className="new" ref={mainWindow} onScroll={scrolling}>

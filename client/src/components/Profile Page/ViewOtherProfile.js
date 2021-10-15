@@ -90,13 +90,24 @@ const ViewOtherProfile = ({ userUid }) => {
                   <h3>
                     {profile.firstName} {profile.lastName}
                   </h3>
-                  {profile.location && (
+                  {profile.location.private === "yes" && (
                     <p className="user-location">
                       {profile.location.city}, {profile.location.state},{" "}
                       {profile.location.country}
                     </p>
                   )}
                   <p className="user-links">{profile.portfolio}</p>
+                  {profile.roles ? (
+                      profile.roles.map((role, index) => {
+                        return (
+                          <p className="user-roles" key={index}>
+                            {role}
+                          </p>
+                        );
+                      })
+                    ) : (
+                      <p></p>
+                    )}
                 </div>
                 <Divider variant="middle" />
                 <div className="bio-div">

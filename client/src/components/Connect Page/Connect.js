@@ -4,9 +4,10 @@ import { db } from "../../firebase";
 import CreatePost from "./CreatePost";
 import Post from "./Post";
 import { FilterFeed } from "./FilterFeed";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useAuth } from "../../context/AuthContext";
 import yesterLogo from "../../assets/Banner-2000X600.png";
+// import fetchPosts from "../../hooks/fetchPosts";
 
 /**
  * Name: sortPostsArray
@@ -31,6 +32,21 @@ const Connect = () => {
   const [profile, setProfile] = useState("");
   const { currentUser } = useAuth();
   const [currentState, setCurrentState] = useState("");
+  const [sticky, setSticky] = useState("");
+  const connectWrapperRef = useRef(null)
+  
+
+  const stickToTop = (evt) => {
+    if (connectWrapperRef.current) {
+      setSticky(connectWrapperRef.current.getBoundingClientRect().top <= 0);
+    }
+  };
+
+  const mainWindow = useRef(null);
+
+  const scrolling = (evt) => {
+    console.log(evt.target + " here")
+  }
 
   // loads & auto-updates Posts based on user filters
   useEffect(() => {
@@ -41,6 +57,8 @@ const Connect = () => {
     }
 
     const unSub = query.onSnapshot((querySnap) => {
+      console.log(querySnap)
+      console.log(querySnap.docs)
       const updatedPosts = querySnap.docs.map((doc) => ({
         id: doc.id,
 
@@ -83,16 +101,20 @@ const Connect = () => {
   };
 
   useEffect(() => {
+    console.log("This should be hit once")
     getProfile();
+    window.addEventListener("scroll", stickToTop);
+
+    return(()=>{window.removeEventListener("scroll", stickToTop)})
   }, []);
 
   return (
-    <div>
-      <div className="banner-wrapper">
+    <div className="new" ref={mainWindow} onScroll={scrolling}>
+      <div  className="banner-wrapper" onScroll={scrolling}>
         <img className="connect-banner" src={yesterLogo} alt="alt" />
       </div>
-      <div className="connect-wrapper">
-        <div elevation={5} id="connectContainer">
+      <div className="connect-wrapper" onScroll={scrolling} >
+        <div elevation={5} id="connectContainer" ref={connectWrapperRef} onScroll={scrolling}>
           <FilterFeed
             setChecked={setChecked}
             checked={checked}
@@ -101,15 +123,22 @@ const Connect = () => {
             currentState={currentState}
             setCurrentState={setCurrentState}
             posts={posts}
+            sticky={sticky}
           />
-          <div id="mainFeed">
+          <div
+            style={{ margin: "12vw" }}
+          ></div>
+          <div id="mainFeed" onScroll={scrolling}>
             {!posts && <p>Welcome Yestermorrow Alumni!</p>}
             {posts &&
               posts.map((post, index) => (
                 <Post post={post} profile={profile} key={index} />
               ))}
           </div>
-          <CreatePost profile={profile} />
+          <div onScroll={scrolling}
+            style={{ margin: "12vw" }}
+          ></div>
+          <CreatePost profile={profile} sticky={sticky} />
         </div>
       </div>
     </div>

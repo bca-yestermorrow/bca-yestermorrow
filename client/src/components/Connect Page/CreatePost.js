@@ -13,7 +13,8 @@ import FormControl from "@material-ui/core/FormControl";
 import { CircularProgress } from "@material-ui/core";
 import Select from "@material-ui/core/Select";
 
-const CreatePost = ({ profile }) => {
+
+const CreatePost = ({ profile, sticky }) => {
   const [error, setError] = useState("");
   const [categories, setCategories] = useState([]);
   const [image, setImage] = useState("");
@@ -73,12 +74,6 @@ const CreatePost = ({ profile }) => {
     state = "Vermont";
   } else {
     state = profile.location.state;
-  }
-
-  function handlePostValidation(e) {
-    e.preventDefault()
-    handlePostSubmit(e)
-    handleUserPostSubmit(e)
   }
 
   async function handlePostSubmit(e) {
@@ -171,69 +166,8 @@ const CreatePost = ({ profile }) => {
     setCatPost(e.target.value);
   }
 
-  async function handleUserPostSubmit(e) {
-    e.preventDefault();
-    let userPostTitle = e.target.title.value;
-    let userPostBody = e.target.body.value;
-    let userPostOptions = catPost;
-    let userPostType = e.target.type.value;
-    let userPostProfilePic = profile.profilePic;
-
-    try {
-      if (userPostProfilePic) {
-           const userPostCollRef = await db
-        .collection("users")
-        .doc(currentUser.uid)
-        .collection("userPosts")
-        .add({
-          userId: currentUser.uid,
-          title: userPostTitle,
-          body: userPostBody,
-          comments: [],
-          category: userPostOptions,
-          type: userPostType,
-          imageUrl: imageUrl,
-          state: state,
-          user: {
-            email: currentUser.email,
-            firstName: profile.firstName,
-            lastName: profile.lastName,
-            profilePic: userPostProfilePic,
-            state: state,
-          }
-        });
-      } else {
-        const userPostCollRef = await db
-        .collection("users")
-        .doc(currentUser.uid)
-        .collection("userPosts")
-        .add({
-          userId: currentUser.uid,
-          title: userPostTitle,
-          body: userPostBody,
-          comments: [],
-          category: userPostOptions,
-          type: userPostType,
-          imageUrl: imageUrl,
-          state: state,
-          user: {
-            email: currentUser.email,
-            firstName: profile.firstName,
-            lastName: profile.lastName,
-            profilePic: "N/A",
-            state: state,
-          }
-        });
-      }
-   
-    } catch (error) {
-      setError("Sorry, please try again.");
-      console.log(error);
-    }
-  }
-
   return (
-    <Paper elevation={5} className="createPost">
+    <Paper elevation={5} className={sticky ? "createPost-sticky" : "createPost"} style={{right: "0"}}>
       <h1 id="createPostTitle">CREATE A POST</h1>
       {profile.firstName && (
         <h3 className="createPostName">
@@ -242,7 +176,7 @@ const CreatePost = ({ profile }) => {
       )}
       <form
         className="createPostForm"
-        onSubmit={handlePostValidation}
+        onSubmit={handlePostSubmit}
       >
         <h4 className="createPostSections">Type Here:</h4>
         <TextField

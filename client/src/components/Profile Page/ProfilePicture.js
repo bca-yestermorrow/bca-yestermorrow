@@ -1,7 +1,7 @@
 import { storage } from "../../firebase";
 import { useState } from "react";
 
-const ProfilePicture = ({ getImageURL, setBool }) => {
+const ProfilePicture = ({ getImageURL, setDisabled }) => {
   const [image, setImage] = useState("");
   const [isTrue, setIsTrue] = useState(true);
   const handleImage = (evt) => {
@@ -13,7 +13,7 @@ const ProfilePicture = ({ getImageURL, setBool }) => {
   };
 
   const handleUpload = () => {
-    setBool(true);
+    setDisabled(true);
     const upload = storage.ref(`images/${image.name}`).put(image);
     upload.on(
       "state_changed",
@@ -29,7 +29,7 @@ const ProfilePicture = ({ getImageURL, setBool }) => {
           .then((url) => {
             console.log(url);
             getImageURL(url);
-            setBool(false);
+            setDisabled(false);
           });
       }
     );

@@ -18,7 +18,7 @@ const CreateProfile = ({ handleModalClosed }) => {
   const [roles, setRoles] = useState([]);
   const [userRoles, setUserRoles] = useState([])
   const [imageURL, setImageURL] = useState("");
-  const [bool, setBool] = useState(false);
+  const [disabled, setDisabled] = useState(false);
   const [states, setStates] = useState([]);
   const [currentState, setCurrentState] = useState("");
   const [error, setError] = useState("");
@@ -174,6 +174,7 @@ const CreateProfile = ({ handleModalClosed }) => {
           if (imageURL) {
             doc.ref.update({ profilePic: imageURL });
           }
+        
           if (userCity) {
             doc.ref.update({
               "location.city": userCity,
@@ -397,12 +398,12 @@ const CreateProfile = ({ handleModalClosed }) => {
           </label>
           <ProfilePicture
             getImageURL={getImageURL}
-            setBool={setBool}
+            setDisabled={setDisabled}
             id="profile-picture"
           />
 
           <Button
-            disabled={bool}
+            disabled={disabled}
             id="profile-submit"
             color="secondary"
             variant="contained"

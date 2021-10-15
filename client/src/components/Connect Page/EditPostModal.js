@@ -21,29 +21,13 @@ const EditPostModal = ({ handleEditModalClose, post }) => {
   const [disabled, setDisabled] = useState(false);
   const { currentUser } = useAuth();
   const [userPosts, setUserPosts] = useState([]);
+
+
   useEffect(() => {
     post.category.forEach((cat) => {
       editCatPost.push(cat);
     });
   }, []);
-
-  //retrieves all specific user posts in sub collection
-
-  useEffect(() => {
-    if (userPosts.length === 0) {
-      db.collection("users")
-        .doc(currentUser.uid)
-        .collection("userPosts")
-        .get()
-        .then((querySnapshot) => {
-          let postsArr = [];
-          querySnapshot.forEach((doc) => {
-            postsArr.push(doc.data().user);
-          });
-          console.log(postsArr);
-        });
-    }
-  });
 
   console.log(userPosts);
   //retrieves full list of categories
@@ -139,42 +123,6 @@ const EditPostModal = ({ handleEditModalClose, post }) => {
             });
           }
         }
-      });
-    let editUserPost = await db
-      .collection("users")
-      .doc(currentUser.uid)
-      .collection("userPosts")
-      .doc(currentUser.uid, "==", post.userId)
-      .get()
-      .then((doc) => {
-        console.log(doc.title);
-        // if (doc.exists) {
-        //   if (title) {
-        //     doc.ref.update({
-        //       title: title,
-        //     });
-        //   }
-        //   if (body) {
-        //     doc.ref.update({
-        //       body: body,
-        //     });
-        //   }
-        //   if (imageUrl) {
-        //     doc.ref.update({
-        //       imageUrl: imageUrl,
-        //     });
-        //   }
-        //   if (type) {
-        //     doc.ref.update({
-        //       type: type,
-        //     });
-        //   }
-        //   if (category !== []) {
-        //     doc.ref.update({
-        //       category: category,
-        //     });
-        //   }
-        // }
       });
     setEditCatPost([]);
     handleEditModalClose();

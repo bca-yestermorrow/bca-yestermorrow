@@ -5,7 +5,6 @@ import { db } from "../../firebase";
 import { useState, useEffect } from "react";
 import firebase from "firebase/app";
 import { Autocomplete } from "@material-ui/lab";
-// import { useLocation } from "react-router-dom";
 // imports for material ui
 import {
   TextField,
@@ -22,6 +21,7 @@ const EditProfile = ({
   handleModalClosed,
   locationDisplay,
   setLocationDisplay,
+  profile,
 }) => {
   const [user, setUser] = useState("");
   const [categories, setCategories] = useState("");
@@ -29,15 +29,13 @@ const EditProfile = ({
   const [roles, setRoles] = useState([]);
   const [userRoles, setUserRoles] = useState([]);
   const [bool, setBool] = useState(false);
-  const [states, setStates] = useState([]);
   const [currentState, setCurrentState] = useState("");
-  // const location = useLocation();
-  // const { posts } = location.state;
-  // const [postsArr, setPostsArr] = useState([]);
-  // const [updated, setUpdated] = useState(false);
 
+  const [states, setStates] = useState([]);
+  const [locationPrivate, setLocationPrivate] = useState(false);
+  let target = "edit";
   const { currentUser } = useAuth();
-  let categoryArray = [];
+
   // allows use of various customized styles on material ui components
   const useStyles = makeStyles({
     // to be used for larger profile pics/avatars
@@ -69,34 +67,23 @@ const EditProfile = ({
   // allows use of classes.whatever on mui components
   const classes = useStyles();
 
-  // function to get the user document of the current user from the database
   const getCurrentUser = async () => {
-    // from the users collection, get the doc with the id of currentuser.uid
-    await db
-      .collection("users")
-      .doc(currentUser.uid)
-      .get()
-      .then((doc) => {
-        // if there is a doc with this id
-        if (doc.exists) {
-          // doc.data() is never undefined for query doc snapshots
-          setUser(doc.data());
-          doc.data().interests.forEach((interest) => {
-            categoryName.push(interest);
-          });
-          doc.data().roles.forEach((role) => {
-            userRoles.push(role);
-          });
-        } else {
-          console.log("No document");
-        }
-      })
-      .catch((error) => {
-        console.log("Error getting documents: ", error);
+    setUser(profile);
+    if (profile.interests > 0) {
+      profile.interests.forEach((interest) => {
+        categoryName.push(interest);
       });
+    }
+    if (profile.roles > 0) {
+      profile.roles.forEach((role) => {
+        userRoles.push(role);
+      });
+    }
   };
+
   // function to get the list of categories from the database
   const getCategories = async () => {
+    let categoryArray = [];
     await db
       .collection("categories")
       .get()
@@ -106,30 +93,11 @@ const EditProfile = ({
           categoryArray.push(doc.data());
         });
       });
+
     // setCategories to the array of docs to be used in the form dropdown
     setCategories(categoryArray);
     setRoles(["Student", "Intern", "Staff/Instructor"]);
   };
-
-  //sets postsArr to specific posts made by the current user
-  // useEffect(() => {
-  //   if (postsArr.length === 0) {
-  //     db.collection("posts")
-  //       .where("userId", "==", currentUser.uid)
-  //       .get()
-  //       .then((querySnapshot) => {
-  //         let arrayPosts = [];
-  //         querySnapshot.forEach((doc) => {
-  //           arrayPosts.push(doc.data());
-  //           setPostsArr(arrayPosts);
-  //         });
-  //       });
-  //   } else {
-  //     console.log("no posts by this user");
-  //   }
-  // });
-  // console.log(postsArr);
-  // function to handle form submit. updates user doc with new information
 
   function handleSubmit(evt) {
     handleUpdateProfile(evt);
@@ -138,9 +106,11 @@ const EditProfile = ({
 
   async function handleUpdateUserInfo(evt) {
     evt.preventDefault();
-    let userFirstName = evt.target.firstName.value;
-    let userLastName = evt.target.lastName.value;
-    let userState = evt.target.state.value;
+    let changedUserInfo = {
+      "user.firstName": evt.target.firstName.value,
+      "user.lastName": evt.target.lastName.value,
+      "user.state": evt.target.state.value,
+    };
 
     const userInfo = await db
       .collection("posts")
@@ -150,19 +120,7 @@ const EditProfile = ({
         querySnapshot.forEach((doc) => {
           console.log(doc.data());
           if (doc.exists) {
-            if (userFirstName) {
-              doc.ref.update({ user: { firstName: userFirstName } });
-            }
-            if (userLastName) {
-              doc.ref.update({
-                user: { lastName: userLastName }
-              });
-            }
-            if (userState) {
-              doc.ref.update({
-                user: { state: userState }
-              });
-            }
+            doc.ref.update(removeEmptyVal(changedUserInfo));
           } else {
             console.log("no documents to be updated");
           }
@@ -170,18 +128,32 @@ const EditProfile = ({
       });
   }
 
+  function removeEmptyVal(obj) {
+    for (let property in obj) {
+      if (obj[property] === "" || obj[property] === false) {
+        delete obj[property];
+      }
+    }
+    return obj;
+  }
+
   const handleUpdateProfile = async (evt) => {
     evt.preventDefault();
-    let userFirstName = evt.target.firstName.value;
-    let userLastName = evt.target.lastName.value;
-    let userBio = evt.target.bio.value;
-    let userProjects = evt.target.projects.value;
-    let userPortfolio = evt.target.portfolio.value;
-    let userCity = evt.target.city.value;
-    let userState = evt.target.state.value;
-    let userCountry = evt.target.country.value;
-    let categoryLength = categoryName.length;
+
     let rolesLength = userRoles.length;
+
+    let formVals = {
+      firstName: evt.target.firstName.value,
+      lastName: evt.target.lastName.value,
+      bio: evt.target.bio.value,
+      projects: evt.target.projects.value,
+      portfolio: evt.target.portfolio.value,
+      "location.city": evt.target.city.value,
+      "location.state": evt.target.state.value,
+      "location.country": evt.target.country.value,
+      "location.private": locationPrivate,
+    };
+
     let removeInterestArray = [];
     let removeRoleArray = [];
 
@@ -197,7 +169,7 @@ const EditProfile = ({
       }
     });
 
-    let userProfile = await db
+    await db
       .collection("users")
       .doc(currentUser.uid)
       .get()
@@ -206,43 +178,7 @@ const EditProfile = ({
         //we are doing this twice, here and getCurrentUser
         // each if statement is separate so the database isnt updated with empty values
         if (doc.exists) {
-          // if userFirstName, the user input value, is true, update the user doc
-          if (userFirstName) {
-            doc.ref.update({ firstName: userFirstName });
-          }
-          if (userLastName) {
-            doc.ref.update({
-              lastName: userLastName,
-            });
-          }
-          if (userBio) {
-            doc.ref.update({
-              bio: userBio,
-            });
-          }
-          if (userProjects) {
-            doc.ref.update({ projects: userProjects });
-          }
-          if (userPortfolio) {
-            doc.ref.update({ portfolio: userPortfolio });
-          }
-
-          if (categoryLength > 0) {
-            categoryLength = categoryLength - 1;
-            while (categoryLength >= 0) {
-              doc.ref.update({
-                interests: firebase.firestore.FieldValue.arrayUnion(
-                  categoryName[categoryLength]
-                ),
-              });
-              categoryLength -= 1;
-            }
-            removeInterestArray.forEach((category) => {
-              doc.ref.update({
-                interests: firebase.firestore.FieldValue.arrayRemove(category),
-              });
-            });
-          }
+          doc.ref.update(removeEmptyVal(formVals));
 
           if (rolesLength > 0) {
             rolesLength = rolesLength - 1;
@@ -260,27 +196,23 @@ const EditProfile = ({
               });
             });
           }
-          if (userCity) {
+
+          categoryName.forEach((category) => {
             doc.ref.update({
-              "location.city": userCity,
+              interests: firebase.firestore.FieldValue.arrayUnion(category),
             });
-          }
-          if (userState) {
+          });
+
+          //if catagorey was already in catagories it would add cat again
+          removeInterestArray.forEach((category) => {
             doc.ref.update({
-              "location.state": userState,
+              interests: firebase.firestore.FieldValue.arrayRemove(category),
             });
-          }
-          if (userCountry) {
-            doc.ref.update({
-              "location.country": userCountry,
-            });
-          }
-          setUser(doc.data());
+          });
         } else {
           console.log("no document");
         }
       })
-
       .catch((error) => {
         console.log("Error getting documents: ", error);
       });
@@ -288,12 +220,12 @@ const EditProfile = ({
     // after updating, call getcurrentuser to get updated info, reset categoryname and close modal
     getCurrentUser();
     setCategoryName([]);
-    handleModalClosed();
+    handleModalClosed(target);
   };
 
   const handleClose = (evt) => {
     if (evt.target.className === "edit-profile-container") {
-      handleModalClosed();
+      handleModalClosed(target);
     }
   };
 
@@ -316,22 +248,12 @@ const EditProfile = ({
 
   useEffect(() => {
     getCurrentUser();
-  }, []);
 
-  useEffect(() => {
     if (!categories) {
       getCategories();
     }
   }, []);
 
-  const displayClickHandler = () => {
-    if (locationDisplay === "block") {
-      setLocationDisplay("none");
-    } else {
-      setLocationDisplay("block");
-    }
-    console.log(locationDisplay);
-  };
   return (
     <div className="edit-profile-container" onClick={handleClose}>
       <div className="form-container">
@@ -389,7 +311,6 @@ const EditProfile = ({
                 State:
               </label>
               <Autocomplete
-                onChange={(e) => setCurrentState(e.currentTarget.textContent)}
                 options={states}
                 getOptionLabel={(state) => state.name}
                 style={{ width: "100%" }}
@@ -427,7 +348,6 @@ const EditProfile = ({
             id="profile-interests"
             onChange={handleChange}
             value={categoryName}
-            input={<Input />}
             name="classes"
             multiple
           >
@@ -500,17 +420,7 @@ const EditProfile = ({
             </MenuItem>
           </Select>
 
-          <label className="label" for="private-check">
-            Make my location private
-          </label>
-          <Checkbox
-            id="private-check"
-            checked={locationDisplay === "none"}
-            onClick={displayClickHandler}
-            color="secondary"
-          />
           <Button
-            disabled={bool}
             id="profile-submit"
             color="secondary"
             variant="contained"
@@ -518,6 +428,18 @@ const EditProfile = ({
           >
             Submit
           </Button>
+          <div>
+            <h3>
+              Allow other users to see my location {profile.location.private}
+            </h3>
+            <Select
+              value={locationPrivate}
+              onChange={(e) => setLocationPrivate(e.target.value)}
+            >
+              <MenuItem value="yes">Yes</MenuItem>
+              <MenuItem value="no">No</MenuItem>
+            </Select>
+          </div>
         </form>
       </div>
     </div>

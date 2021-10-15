@@ -43,7 +43,15 @@ const useStyles = makeStyles({
   filterField: {},
 });
 
-export const FilterFeed = ({ setCategory, setCurrentState, posts }) => {
+export const FilterFeed = ({
+  setChecked,
+  setCategory,
+  setCurrentState,
+  currentState,
+  checked,
+  category,
+  sticky
+}) => {
   // const [category, setCategory] = useState(["General"]);
   // const [posts, setPosts] = useState([]);
   const [categoryList, setCategoryList] = useState([]);
@@ -78,7 +86,11 @@ export const FilterFeed = ({ setCategory, setCurrentState, posts }) => {
   const classes = useStyles();
 
   return (
-    <Paper elevation={5} className="createPost">
+    <Paper
+      elevation={5}
+      className={sticky ? "createPost-sticky" : "createPost"}
+      style={{ overflowY: "hidden" }}
+    >
       <h1 id="filterTitle">FILTER</h1>
 
       <Box className={classes.filterFlex}>
@@ -129,7 +141,7 @@ export const FilterFeed = ({ setCategory, setCurrentState, posts }) => {
           />
         </FormControl>
 
-        <Link to={{pathname: "/profile", state:{ posts: {posts} }}}>
+        <Link to={{pathname: "/profile"}}>
           <Button
             style={{ width: "100%" }}
             color="secondary"

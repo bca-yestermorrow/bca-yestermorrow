@@ -4,14 +4,14 @@ import ProfilePicture from "./ProfilePicture";
 import { db } from "../../firebase";
 import { useAuth } from "../../context/AuthContext";
 
-const ProfilePicModal = ({ handleImageModalClosed, profile, classes }) => {
+const ProfilePicModal = ({ handleModalClosed, profile, classes }) => {
   const [imageURL, setImageURL] = useState(profile.profilePic);
-  const [bool, setBool] = useState(false);
+  const [disabled, setDisabled] = useState(false);
   const { currentUser } = useAuth()
-  
+  let target = "image"
   const handleClose = (evt) => {
     if (evt.target.className === "edit-profile-container") {
-      handleImageModalClosed();
+      handleModalClosed(target);
     }
   };
 
@@ -19,6 +19,43 @@ const ProfilePicModal = ({ handleImageModalClosed, profile, classes }) => {
     setImageURL(url);
     console.log(imageURL, "line 17");
   };
+
+  function removeEmptyVal(obj) {
+    for (let property in obj) {
+      if (obj[property] === "" || obj[property] === false) {
+        delete obj[property];
+      }
+    }
+    return obj;
+  }
+
+  function handleFormSubmit(evt) {
+    handleSubmit(evt)
+    handleUpdateUserPic(evt)
+  }
+
+  async function handleUpdateUserPic(evt) {
+    evt.preventDefault();
+
+    let changedImage = ({
+      "user.profilePic": imageURL
+    })
+
+    const userInfo = await db
+      .collection("posts")
+      .where("userId", "==", currentUser.uid)
+      .get()
+      .then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          console.log(doc.data());
+          if (doc.exists) {
+            doc.ref.update(removeEmptyVal(changedImage));
+          } else {
+            console.log("no picture to be updated");
+          }
+        });
+      });
+  }
 
   const handleSubmit = async (evt) => {
     evt.preventDefault()
@@ -39,7 +76,7 @@ const ProfilePicModal = ({ handleImageModalClosed, profile, classes }) => {
     .catch((error) => {
       console.log("Error getting documents: ", error);
     });
-    handleImageModalClosed()
+    handleModalClosed(target)
   }
 
   return (
@@ -55,15 +92,15 @@ const ProfilePicModal = ({ handleImageModalClosed, profile, classes }) => {
               {profile.firstName[0]}
             </Avatar>
 
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleFormSubmit}>
 
             <ProfilePicture
               getImageURL={getImageURL}
-              setBool={setBool}
+              setDisabled={setDisabled}
               id="profile-picture"
             />
             <Button
-            disabled={bool}
+            disabled={disabled}
             id="profile-submit"
             color="secondary"
             variant="contained"

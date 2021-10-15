@@ -4,18 +4,19 @@ import BannerPicture from "./BannerPicture";
 import { db } from "../../firebase";
 import { useAuth } from "../../context/AuthContext";
 
-const BannerModal = ({ handleBannerModalClosed, profile, yesterLogo }) => {
+const BannerModal = ({ handleModalClosed, profile, yesterLogo }) => {
   const [bannerURL, setBannerURL] = useState(profile.bannerImg);
-  const [bool, setBool] = useState(false);
+  const [disabled, setDisabled] = useState(false);
   const { currentUser } = useAuth();
-
+  let target = "banner"
   const getBannerURL = (url) => {
     setBannerURL(url);
   };
 
   const handleClose = (evt) => {
+    
     if (evt.target.className === "edit-profile-container") {
-      handleBannerModalClosed();
+      handleModalClosed(target);
     }
   };
 
@@ -37,7 +38,7 @@ const BannerModal = ({ handleBannerModalClosed, profile, yesterLogo }) => {
       .catch((error) => {
         console.log("Error getting documents: ", error);
       });
-    handleBannerModalClosed();
+    handleModalClosed(target);
   };
 
   return (
@@ -53,11 +54,11 @@ const BannerModal = ({ handleBannerModalClosed, profile, yesterLogo }) => {
           <form onSubmit={handleSubmit}>
             <BannerPicture
               getBannerURL={getBannerURL}
-              setBool={setBool}
+              setDisabled={setDisabled}
               id="profile-picture"
             />
             <Button
-              disabled={bool}
+              disabled={disabled}
               id="profile-submit"
               color="secondary"
               variant="contained"
